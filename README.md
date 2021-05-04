@@ -14,6 +14,7 @@ A tool program manager (or person X) can use to check the issues. The toolautoma
   - list of licences (and conflicting dependencies?)
   - point to (Turing Way/NLeSC guide) in case of issues
   - suggest user to contact to Mister X/SSS
+  - focus on (Python, Java, C++, , JavaScript/TypeScript, R, Julia)
 
 ## Out of scope
 - 2nd order dependencies
