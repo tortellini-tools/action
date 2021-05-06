@@ -19,7 +19,7 @@ Edit the first post of this issue thread such that it
   1. Does the tool work based on a (list of) URL(s) or do you need a local copy?
   1. Does the tool depend on installation of the software in order to do the analysis?
   1. Show example of the kind of feedback the tool returns about compliance
-  1. Provide a list of (dependency file, software registry) that the tool supports, e.g.:
+  1. Provide a list of (dependency file, software registry) combinations that the tool supports, e.g.:
     - requirements.txt - PyPI
     - Pipfile - PyPI
     - Pipfile.lock - PyPI
@@ -33,4 +33,4 @@ Edit the first post of this issue thread such that it
     - yarn.lock - npmjs.com
     - something - CRAN
   1. Can the tool handle dependencies that have multiple licenses?
-  1. Does the tool differentiate between runtime and other sets of dependencies? Can it be forced to check runtime only?
+  1. Does the tool differentiate between runtime and other sets of dependencies? Or, can it be forced to check runtime only?
