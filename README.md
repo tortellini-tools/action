@@ -8,8 +8,8 @@ A tool program manager (or person X) can use to check the issues. The tool autom
 ## Features of the intended tool
 
 - check licensing issues of given GitHub repositories
-- list of urls
-- external tools that can check the conflicts
+- list of GH repo urls
+- existing tools that can check the conflicts
 - generate a report:
   - color: red (big issues?), green (no issues), orange (some issues), gray (cannot determine)
   - list of licenses (and conflicting dependencies?)
