@@ -11,13 +11,18 @@ A tool program manager (or person X) can use to check the issues. The tool autom
 - list of GH repo urls
 - existing tools (an be cli, web application or (paid) service) that can check the conflicts
 - generate a report:
-  - color: red (big issues?), green (no issues), orange (some issues), gray (cannot determine)
-  - list of licenses (and conflicting dependencies?)
-  - point to (Turing Way/NLeSC guide) in case of issues
-  - suggest user to contact to Mister X/SSS
+  - some feedback on compliance
+    - by exit code
+    - or some compliance score
+    - optionally drilldown on found licenses in dependencies
 - focus on repository written in Python, Java, C++, JavaScript/TypeScript, R, Julia
 
 ## Out of scope
 
 - 2nd order dependencies
 - Automatically fixing license conflicts
+
+## Follow up
+
+- point to (Turing Way/NLeSC guide) in case of issues
+- suggest user to contact to that can help determine severity and/or resolve conflict
