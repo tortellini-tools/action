@@ -37,4 +37,5 @@ Open questions:
 
 1. how to deal with multi-licensed packages
 2. which set of dependencies to use (runtime would be minimum case, but perhaps you need more than that)
+3. Perhaps we can use part of an existing tool once we have established the tree. This would require mangling our results into something that e.g. LicenseFinder can process
 
