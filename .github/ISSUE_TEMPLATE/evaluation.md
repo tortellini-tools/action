@@ -8,7 +8,7 @@ assignees: ''
 
 ---
 
-Describe which tool you are going to evaluate.
+Describe which command line tool or service you are going to evaluate.
 
 Describe which repository you are using to evaluate with.
 
