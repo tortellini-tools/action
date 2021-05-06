@@ -10,7 +10,7 @@ assignees: ''
 
 Describe which command line tool or service you are going to evaluate.
 
-For each repository you are using to evaluate the tool or service, create a new comment in this issue and add a description of how to run the tool, and what output it generated there.
+For each repository you are using to evaluate the tool or service, create a new comment in this issue thread and add a description of how you ran the tool, what output it generated, etc there.
 
 Edit the first post of this issue thread such that it 
 
