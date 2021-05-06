@@ -13,9 +13,10 @@ Regardless of whether we chose to use an existing tool/service or make something
     1. package.json
     1. package-lock.json
     1. build.gradle
-    1. ?pom.xml
-    1. Cargo.toml
-    1. ?NAMESPACE
+    2. conanfile.txt
+    3. ?pom.xml
+    4. Cargo.toml
+    5. ?NAMESPACE
 
     repositories with microservices (e.g. repository has root level docker-compose.yml and subdirs with Dockerfile) may require separate evaluation
 1. for each of the project dependencies,
