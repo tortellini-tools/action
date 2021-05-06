@@ -2,7 +2,7 @@
 name: evaluation
 about: Evaluation report of tool or service that can check licences of dependencies
   of a piece of software
-title: ''
+title: '<Name of tool>'
 labels: evaluation
 assignees: ''
 
