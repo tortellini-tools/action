@@ -1,4 +1,4 @@
-Regardless of whether we chose to use an existing tool/service or make something ourselves, the solution needs to have the following elements:
+Regardless of whether we choose to use an existing tool/service or make something ourselves, the solution needs to have the following elements:
 
 1. input is a list of URLs to our repositories on GitHub, e.g. from Research Software Directory
 1. visit each, look in the root of the repository for a list of runtime (?) dependencies, for example from dependency files such as 
