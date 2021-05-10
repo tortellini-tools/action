@@ -18,7 +18,7 @@ Regardless of whether we choose to use an existing tool/service or make somethin
     4. Cargo.toml
     5. ?NAMESPACE
 
-    repositories with microservices (e.g. repository has root level docker-compose.yml and subdirs with Dockerfile) may require separate evaluation
+    when repositories contain subdirectories with any of these dependency files, we need to do more nested/recursing evaluation
 1. for each of the project dependencies,
     1. figure out whose copy is being used (e.g. PyPI, GitHub, crates.io, npm, maven, Anaconda cloud, bower, etc. more [here](https://en.wikipedia.org/wiki/List_of_software_package_management_systems#Application-level_package_managers))
     1. identify the license as stated on the platform whose copy we're using
