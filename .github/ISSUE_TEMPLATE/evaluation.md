@@ -10,19 +10,27 @@ assignees: ''
 
 Describe which command line tool or service you are going to evaluate.
 
-For each repository you are using to evaluate create a new comment in this issue.
+For each repository you are using to evaluate the tool or service, create a new comment in this issue thread and add a description of how you ran the tool, what output it generated, etc there.
 
-Describe commands / output used to evaluate.
+Edit the first post of this issue thread such that it 
 
-Describe pros and cons of the tool.
-
-Questions that need answers:
-1. Can tool/service be given multiple repository URLs to check?
-1. Can tool/service be given a repostory URL to check, if not describe how to check repository?
-1. What kind of feedback does tool return about compliance, if so please show example?
-
-Questions that would be nice to answers:
-1. Which software package registries was used during evaluation? For example pure python uses pypi or R uses cran + bioconductor or did it find sub directories with package.json
-1. Which dependency resolver / build chain was use during evaluation? For example requirement.txt with pip or environment.yml with conda
-1. Can tool handle dependency with multiple licenses?
-1. Does it check between runtime and other sets of dependencies? Can it be forced to check runtime only?
+1. describes pros and cons of the tool.
+1. answers the following questions:
+  1. Does the tool work based on a (list of) URL(s) or do you need a local copy?
+  1. Does the tool depend on an existing installation of the software in order to do the analysis?
+  1. Show example of the kind of feedback the tool returns about compliance
+  1. Provide a list of (dependency file, software registry) combinations that the tool supports, e.g.:
+    - requirements.txt - PyPI
+    - Pipfile - PyPI
+    - Pipfile.lock - PyPI
+    - setup.cfg - PyPI
+    - setup.py - PyPI
+    - environment.yml - Anaconda Cloud
+    - environment.yml - PyPI
+    - conanfile.txt - conan.io
+    - package.json - npmjs.com
+    - package-lock.json - npmjs.com
+    - yarn.lock - npmjs.com
+    - something - CRAN
+  1. Can the tool handle dependencies that have multiple licenses?
+  1. Does the tool differentiate between runtime and other sets of dependencies? Or, can it be forced to check runtime only?
