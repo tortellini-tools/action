@@ -1,101 +1,101 @@
 --- 
-counts:
-  - runtime: 11
-  - all: 24
-dependencies:
+counts: 
+  all: 24
+  runtime: 11
+dependencies: 
   - 
+    license: MIT
     name: backoff
-    license: MIT
     scopes: runtime
   - 
+    license: MIT
     name: beautifulsoup4
-    license: MIT
     scopes: runtime
   - 
+    license: BSD-3-Clause
     name: click
-    license: BSD-3-Clause
     scopes: runtime
   - 
+    license: BSD-3-Clause
     name: colorama
-    license: BSD-3-Clause
     scopes: runtime
   - 
+    license: "BSD-3-Clause, GPL-3.0-or-later, PSF-2.0, Public Domain"
     name: docutils
-    license: BSD-3-Clause, GPL-3.0-or-later, PSF-2.0, Public Domain
     scopes: runtime
   - 
+    license: BSD-2-Clause
     name: pygments
-    license: BSD-2-Clause
     scopes: runtime
   - 
+    license: MIT
     name: ratelimit
-    license: MIT
     scopes: runtime
   - 
+    license: Apache-2.0
     name: requests
-    license: Apache-2.0
     scopes: runtime
   - 
+    license: MIT
     name: ruamel.yaml
-    license: MIT
     scopes: runtime
   - 
-    name: voluptuous
     license: BSD-3-Clause
+    name: voluptuous
     scopes: runtime
   - 
+    license: MIT
     name: bumpversion
-    license: MIT
     scopes: runtime
   - 
-    name: "prospector[with_pyroma]"
     license: GPL-2.0
+    name: "prospector[with_pyroma]"
     scopes: all
   - 
+    license: MIT
     name: pycodestyle
-    license: MIT
     scopes: all
   - 
+    license: MIT
     name: pytest-cov
-    license: MIT
     scopes: all
   - 
+    license: MIT
     name: pytest-runner
-    license: MIT
     scopes: all
   - 
+    license: MIT
     name: pytest
-    license: MIT
     scopes: all
   - 
+    license: MIT
     name: recommonmark
-    license: MIT
     scopes: all
   - 
+    license: Apache-2.0
     name: requests_mock
-    license: Apache-2.0
     scopes: all
   - 
+    license: MIT
     name: sphinx_rtd_theme
-    license: MIT
     scopes: all
   - 
+    license: MIT
     name: sphinx-click
-    license: MIT
     scopes: all
   - 
-    name: sphinx
     license: BSD-2-Clause
+    name: sphinx
     scopes: all
   - 
+    license: Apache-2.0
     name: yapf
-    license: Apache-2.0
     scopes: all
   - 
+    license: Apache-2.0
     name: twine
-    license: Apache-2.0
     scopes: all
   - 
-    name: wheel
     license: MIT
+    name: wheel
     scopes: all
