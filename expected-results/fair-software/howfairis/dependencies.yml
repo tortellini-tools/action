@@ -1,73 +1,73 @@
 --- 
 - 
   dependency: backoff
-  license: ~
+  license: MIT
 - 
   dependency: beautifulsoup4
-  license: ~
+  license: MIT
 - 
   dependency: click
-  license: ~
+  license: BSD-3-Clause
 - 
   dependency: colorama
-  license: ~
+  license: BSD
 - 
   dependency: docutils
-  license: ~
+  license: BSD, GPL, PSF, Public Domain
 - 
   dependency: pygments
-  license: ~
+  license: BSD
 - 
   dependency: ratelimit
-  license: ~
+  license: MIT
 - 
   dependency: requests
-  license: ~
+  license: Apache-2.0
 - 
   dependency: ruamel.yaml
-  license: ~
+  license: MIT
 - 
   dependency: voluptuous
-  license: ~
+  license: BSD
 - 
   dependency: bumpversion
-  license: ~
+  license: MIT
 - 
   dependency: "prospector[with_pyroma]"
-  license: ~
+  license: GPLv2+
 - 
   dependency: pycodestyle
-  license: ~
+  license: MIT
 - 
   dependency: pytest-cov
-  license: ~
+  license: BSD
 - 
   dependency: pytest-runner
-  license: ~
+  license: MIT
 - 
   dependency: pytest
-  license: ~
+  license: MIT
 - 
   dependency: recommonmark
-  license: ~
+  license: MIT
 - 
   dependency: requests_mock
-  license: ~
+  license: Apache-2.0
 - 
   dependency: sphinx_rtd_theme
-  license: ~
+  license: MIT
 - 
   dependency: sphinx-click
-  license: ~
+  license: MIT
 - 
   dependency: sphinx
-  license: ~
+  license: BSD
 - 
   dependency: yapf
-  license: ~
+  license: Apache-2.0
 - 
   dependency: twine
-  license: ~
+  license: Apache-2.0
 - 
   dependency: wheel
-  license: ~
+  license: MIT
