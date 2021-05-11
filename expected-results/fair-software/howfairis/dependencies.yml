@@ -20,7 +20,7 @@ dependencies:
     name: colorama
     scopes: runtime
   - 
-    license: "BSD-3-Clause, GPL-3.0-or-later, PSF-2.0, Public Domain"
+    license: "BSD-3-Clause OR GPL-3.0-or-later OR PSF-2.0 OR Public Domain"
     name: docutils
     scopes: runtime
   - 
