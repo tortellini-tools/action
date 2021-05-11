@@ -12,7 +12,7 @@ Regardless of whether we choose to use an existing tool/service or make somethin
     1. yarn.lock
     1. package.json
     1. package-lock.json
-    1. NAMESPACE
+    1. DESCRIPTION
 
     when repositories contain subdirectories with any of these dependency files, we need to do more nested/recursing evaluation
 1. for each of the project dependencies,
