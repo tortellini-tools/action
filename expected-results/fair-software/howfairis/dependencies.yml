@@ -1,73 +1,101 @@
 --- 
-- 
-  dependency: backoff
-  license: MIT
-- 
-  dependency: beautifulsoup4
-  license: MIT
-- 
-  dependency: click
-  license: BSD-3-Clause
-- 
-  dependency: colorama
-  license: BSD
-- 
-  dependency: docutils
-  license: BSD, GPL, PSF, Public Domain
-- 
-  dependency: pygments
-  license: BSD
-- 
-  dependency: ratelimit
-  license: MIT
-- 
-  dependency: requests
-  license: Apache-2.0
-- 
-  dependency: ruamel.yaml
-  license: MIT
-- 
-  dependency: voluptuous
-  license: BSD
-- 
-  dependency: bumpversion
-  license: MIT
-- 
-  dependency: "prospector[with_pyroma]"
-  license: GPLv2+
-- 
-  dependency: pycodestyle
-  license: MIT
-- 
-  dependency: pytest-cov
-  license: BSD
-- 
-  dependency: pytest-runner
-  license: MIT
-- 
-  dependency: pytest
-  license: MIT
-- 
-  dependency: recommonmark
-  license: MIT
-- 
-  dependency: requests_mock
-  license: Apache-2.0
-- 
-  dependency: sphinx_rtd_theme
-  license: MIT
-- 
-  dependency: sphinx-click
-  license: MIT
-- 
-  dependency: sphinx
-  license: BSD
-- 
-  dependency: yapf
-  license: Apache-2.0
-- 
-  dependency: twine
-  license: Apache-2.0
-- 
-  dependency: wheel
-  license: MIT
+counts:
+  - runtime: 11
+  - all: 24
+dependencies:
+  - 
+    name: backoff
+    license: MIT
+    scopes: runtime
+  - 
+    name: beautifulsoup4
+    license: MIT
+    scopes: runtime
+  - 
+    name: click
+    license: BSD-3-Clause
+    scopes: runtime
+  - 
+    name: colorama
+    license: BSD-3-Clause
+    scopes: runtime
+  - 
+    name: docutils
+    license: BSD-3-Clause, GPL-3.0-or-later, PSF-2.0, Public Domain
+    scopes: runtime
+  - 
+    name: pygments
+    license: BSD-2-Clause
+    scopes: runtime
+  - 
+    name: ratelimit
+    license: MIT
+    scopes: runtime
+  - 
+    name: requests
+    license: Apache-2.0
+    scopes: runtime
+  - 
+    name: ruamel.yaml
+    license: MIT
+    scopes: runtime
+  - 
+    name: voluptuous
+    license: BSD-3-Clause
+    scopes: runtime
+  - 
+    name: bumpversion
+    license: MIT
+    scopes: runtime
+  - 
+    name: "prospector[with_pyroma]"
+    license: GPL-2.0
+    scopes: all
+  - 
+    name: pycodestyle
+    license: MIT
+    scopes: all
+  - 
+    name: pytest-cov
+    license: MIT
+    scopes: all
+  - 
+    name: pytest-runner
+    license: MIT
+    scopes: all
+  - 
+    name: pytest
+    license: MIT
+    scopes: all
+  - 
+    name: recommonmark
+    license: MIT
+    scopes: all
+  - 
+    name: requests_mock
+    license: Apache-2.0
+    scopes: all
+  - 
+    name: sphinx_rtd_theme
+    license: MIT
+    scopes: all
+  - 
+    name: sphinx-click
+    license: MIT
+    scopes: all
+  - 
+    name: sphinx
+    license: BSD-2-Clause
+    scopes: all
+  - 
+    name: yapf
+    license: Apache-2.0
+    scopes: all
+  - 
+    name: twine
+    license: Apache-2.0
+    scopes: all
+  - 
+    name: wheel
+    license: MIT
+    scopes: all
