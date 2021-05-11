@@ -1,0 +1,73 @@
+--- 
+- 
+  dependency: backoff
+  license: ~
+- 
+  dependency: beautifulsoup4
+  license: ~
+- 
+  dependency: click
+  license: ~
+- 
+  dependency: colorama
+  license: ~
+- 
+  dependency: docutils
+  license: ~
+- 
+  dependency: pygments
+  license: ~
+- 
+  dependency: ratelimit
+  license: ~
+- 
+  dependency: requests
+  license: ~
+- 
+  dependency: ruamel.yaml
+  license: ~
+- 
+  dependency: voluptuous
+  license: ~
+- 
+  dependency: bumpversion
+  license: ~
+- 
+  dependency: "prospector[with_pyroma]"
+  license: ~
+- 
+  dependency: pycodestyle
+  license: ~
+- 
+  dependency: pytest-cov
+  license: ~
+- 
+  dependency: pytest-runner
+  license: ~
+- 
+  dependency: pytest
+  license: ~
+- 
+  dependency: recommonmark
+  license: ~
+- 
+  dependency: requests_mock
+  license: ~
+- 
+  dependency: sphinx_rtd_theme
+  license: ~
+- 
+  dependency: sphinx-click
+  license: ~
+- 
+  dependency: sphinx
+  license: ~
+- 
+  dependency: yapf
+  license: ~
+- 
+  dependency: twine
+  license: ~
+- 
+  dependency: wheel
+  license: ~
