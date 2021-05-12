@@ -42,17 +42,24 @@ See [requirements.md](requirements.md)
     2. Weekly scheduled (eg [fairtally-test](https://github.com/jmaassen/fairtally-test/blob/main/.github/workflows/fairtally.yml))
     3. Action fetches repos from RSD
     4. Use ort Docker image from https://hub.docker.com/r/philipssoftware/ort/
-    5. Run https://github.com/NLeSC/licenseguard/blob/rsd-software-vs-ort/ort/batch.sh
-    6. Create index-<timestamp>.json with stats per repo
-    7. Create symlink index-latest.json of index-<timestamp>.json
+    5. Run https://github.com/NLeSC/licenseguard/blob/rsd-software-vs-ort/ort/batch.sh, replace shell script with Javascript
+    6. Create index-<timestamp>.json with stats per repo using Javascript
+    7. Create symlink/copy index-latest.json of index-<timestamp>.json
     8. To S3 Upload index-latest.json, index-<timestamp>.json and for each repo
         - scan-report-web-app.html, 
         - out.txt
         - evaluation-result.yml
+    9. Vue app index.html which shows index-latest.json in table, file should be uploaded S3
 
 Steps 44 .. 51 could be captured in Github Actions like
 
 ```
+on:  
+  schedule:   
+    - cron: "0 0 * * 4"  # Every thursday
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
 jobs:
   batchort:
     runs-on: ubuntu-latest
@@ -68,10 +75,7 @@ jobs:
         uses: NLeSC/batchort@v1
         with:
            repositories: urls.txt
-           s3:
-             bucket: blalb
-             prefix: /
-             token: ${{ secrets.S3_TOKEN }}
+           outputdir: results
            package-curation-file: conf/curations.yml
            rules-file: conf/rules.kts
            license-classifications-file: conf/license-classifications.yml
@@ -79,9 +83,31 @@ jobs:
              - WebApp
              - stdout
              - evaluation-result
-
+    - uses: jakejarvis/s3-sync-action@master
+      with:
+        args: --acl public-read --follow-symlinks --delete
+      env:
+        AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: 'us-west-1'   # optional: defaults to us-east-1
+        SOURCE_DIR: 'results' 
+     # Or
+    - uses: actions/upload-artifact@v2
+      with:
+        name: batchort-results
+        path: results/**
 ```
 
-1 Vue app index.html which shows index-latest.json in table, file should be on S3
+
 6. S3 bucket can be visted with web browser
 
+Repo will have:
+
+- conf/,  with ort default config files
+- action.yml, ACtion def file
+- src/index.ts which will clone repos, start ort container, save output to repos/<OWNER>/<REPO>, render index-latest.json
+- package.json with docker library
+- README/LICENSE
+
+Start repo from boilerplate https://github.com/actions/typescript-action
