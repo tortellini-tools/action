@@ -70,10 +70,16 @@ jobs:
            repositories: urls.txt
            s3:
              bucket: blalb
+             prefix: /
              token: ${{ secrets.S3_TOKEN }}
            package-curation-file: conf/curations.yml
            rules-file: conf/rules.kts
            license-classifications-file: conf/license-classifications.yml
+           report-formats:
+             - WebApp
+             - stdout
+             - evaluation-result
+
 ```
 
 1 Vue app index.html which shows index-latest.json in table, file should be on S3
