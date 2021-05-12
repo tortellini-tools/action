@@ -38,6 +38,7 @@ See [requirements.md](requirements.md)
 
 
 1. Github action which performs analysis
+
     2. Weekly scheduled (eg [fairtally-test](https://github.com/jmaassen/fairtally-test/blob/main/.github/workflows/fairtally.yml))
     3. Action fetches repos from RSD
     4. Use ort Docker image from https://hub.docker.com/r/philipssoftware/ort/
