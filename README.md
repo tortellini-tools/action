@@ -42,12 +42,14 @@ See [requirements.md](requirements.md)
     2. Weekly scheduled (eg [fairtally-test](https://github.com/jmaassen/fairtally-test/blob/main/.github/workflows/fairtally.yml))
     3. Action fetches repos from RSD
     4. Use ort Docker image from https://hub.docker.com/r/philipssoftware/ort/
-    5. Run https://github.com/NLeSC/licenseguard/blob/rsd-software-vs-ort/ort/run.sh
+    5. Run https://github.com/NLeSC/licenseguard/blob/rsd-software-vs-ort/ort/batch.sh
     6. Create index-<timestamp>.json with stats per repo
     7. Create symlink index-latest.json of index-<timestamp>.json
-    8. Upload Vue app index.html which shows index-latest.json in table (can be done once)
-3. uploads html/json of each repo to S3
-4. Create timestamped index.html for every run and archives them to S3
-5. Create link to latest index.html
+    8. To S3 Upload index-latest.json, index-<timestamp>.json and for each repo
+        - scan-report-web-app.html, 
+        - out.txt
+        - evaluation-result.yml
+
+1 Vue app index.html which shows index-latest.json in table, file should be on S3
 6. S3 bucket can be visted with web browser
 
