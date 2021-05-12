@@ -112,3 +112,4 @@ Repo will have:
 - README/LICENSE
 
 Start repo from boilerplate https://github.com/actions/typescript-action
+Use same repo as a test
