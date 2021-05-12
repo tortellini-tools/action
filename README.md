@@ -35,16 +35,16 @@ See [requirements.md](requirements.md)
     - How to run analysis if you are an engineer
     - How to update curations
 
-
+## Technical implementation details
 
 1. Github action which performs analysis
 
     2. Weekly scheduled (eg [fairtally-test](https://github.com/jmaassen/fairtally-test/blob/main/.github/workflows/fairtally.yml))
     3. Action fetches repos from RSD
     4. Use ort Docker image from https://hub.docker.com/r/philipssoftware/ort/
-    5. Run https://github.com/NLeSC/licenseguard/blob/rsd-software-vs-ort/ort/batch.sh, replace shell script with Javascript
-    6. Create index-<timestamp>.json with stats per repo using Javascript
-    7. Create symlink/copy index-latest.json of index-<timestamp>.json
+    5. Run https://github.com/NLeSC/licenseguard/blob/rsd-software-vs-ort/ort/batch.sh, replace shell script with Typescript
+    6. Create index-<timestamp>.json with stats of all repos using Typescript
+    7. Create symlink/copy index-<timestamp>.json to index-latest.json
     8. To S3 Upload index-latest.json, index-<timestamp>.json and for each repo
         - scan-report-web-app.html, 
         - out.txt
@@ -83,6 +83,7 @@ jobs:
              - WebApp
              - stdout
              - evaluation-result
+           only-first-order-deps: True
     - uses: jakejarvis/s3-sync-action@master
       with:
         args: --acl public-read --follow-symlinks --delete
