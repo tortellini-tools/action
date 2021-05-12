@@ -22,15 +22,15 @@ See [requirements.md](requirements.md)
 ## Implementation plan
 
 1. Write a Python scripts to regularly
-  - Clone the repository under `repos/OWNER/REPO`
-  - For each repo generate a report
+    - Clone the repository under `repos/OWNER/REPO`
+    - For each repo generate a report
 2. Define curation files
-  - Start with some predefined curations
-  - If users want to change or overwrite these curations they can add them to a folder/file which will be discovered by the tool
+    - Start with some predefined curations
+    - If users want to change or overwrite these curations they can add them to a folder/file which will be discovered by the tool
 3. Add index page to list repos
-  - remove high order dependencies (see [here](https://github.com/NLeSC/licenseguard/issues/13#issuecomment-834514303) and [here](https://github.com/oss-review-toolkit/ort/blob/e5b135df72f809563296912f99c59149571279a6/docs/config-file-ort-yml.md#excluding-paths))
-  - Each repo should have a detailed report (html webapp)
+    - remove high order dependencies (see [here](https://github.com/NLeSC/licenseguard/issues/13#issuecomment-834514303) and [here](https://github.com/oss-review-toolkit/ort/blob/e5b135df72f809563296912f99c59149571279a6/docs/config-file-ort-yml.md#excluding-paths))
+    - Each repo should have a detailed report (html webapp)
 4. Instructions for program managers and engineers
-  - How to run analysis if you are a program manager
-  - How to run analysis if you are an engineer
-  - How to update curations
+    - How to run analysis if you are a program manager
+    - How to run analysis if you are an engineer
+    - How to update curations
