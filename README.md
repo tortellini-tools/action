@@ -50,6 +50,32 @@ See [requirements.md](requirements.md)
         - out.txt
         - evaluation-result.yml
 
+Steps 44 .. 51 could be captured in Github Actions like
+
+```
+jobs:
+  batchort:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Get the data dump from the RSD
+        run: curl https://research-software.nl/api/software > software.json
+
+      - name: Extract the list of URLs 
+        run: cat software.json | jq -r '[.[].repositoryURLs.github] | flatten | .[]' > urls.txt
+        
+      - name: Run ort on urls
+        uses: NLeSC/batchort@v1
+        with:
+           repositories: urls.txt
+           s3:
+             bucket: blalb
+             token: ${{ secrets.S3_TOKEN }}
+           package-curation-file: conf/curations.yml
+           rules-file: conf/rules.kts
+           license-classifications-file: conf/license-classifications.yml
+```
+
 1 Vue app index.html which shows index-latest.json in table, file should be on S3
 6. S3 bucket can be visted with web browser
 
