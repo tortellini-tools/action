@@ -43,9 +43,9 @@ See [requirements.md](requirements.md)
     3. Action fetches repos from RSD
     4. Use ort Docker image from https://hub.docker.com/r/philipssoftware/ort/
     5. Run https://github.com/NLeSC/licenseguard/blob/rsd-software-vs-ort/ort/batch.sh, replace shell script with Typescript
-    6. Create index-<timestamp>.json with stats of all repos using Typescript
-    7. Create symlink/copy index-<timestamp>.json to index-latest.json
-    8. To S3 Upload index-latest.json, index-<timestamp>.json and for each repo
+    6. Create `index-<timestamp>.json` with stats of all repos using Typescript
+    7. Create symlink/copy `index-<timestamp>.json` to index-latest.json
+    8. To S3 Upload index-latest.json, `index-<timestamp>.json` and for each repo
         - scan-report-web-app.html, 
         - out.txt
         - evaluation-result.yml
