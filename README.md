@@ -4,7 +4,7 @@
 
 # License Guard GitHub Action
 
-GitHub Action that checks dependency licence issues using [ort]().
+GitHub Action that checks dependency licence issues using [ort](https://github.com/oss-review-toolkit/ort).
 
 ## Developer documentation
 
