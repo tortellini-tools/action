@@ -1,0 +1,39 @@
+name: 'licenseguard'
+description: 'GitHub Action that checks dependency licence issues using ort.'
+author: 'Netherlands eScience Center'
+inputs:
+  milliseconds: # change this
+    required: true
+    description: 'input description here'
+    default: 'default value if applicable'
+  repositories:
+    required: true
+    description: 'input description here'
+    default: 'default value if applicable'
+  outputdir:
+    required: true
+    description: 'input description here'
+    default: 'default value if applicable'
+  package-curation-file:
+    required: true
+    description: 'input description here'
+    default: 'default value if applicable'
+  rules-file:
+    required: true
+    description: 'input description here'
+    default: 'default value if applicable'
+  license-classifications-file:
+    required: true
+    description: 'input description here'
+    default: 'default value if applicable'
+  report-formats:
+    required: true
+    description: 'input description here'
+    default: 'default value if applicable'
+  only-first-order-deps:
+    required: true
+    description: 'input description here'
+    default: 'default value if applicable'
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
