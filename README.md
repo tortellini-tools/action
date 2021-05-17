@@ -8,4 +8,4 @@ GitHub Action that checks dependency licence issues using [ort]().
 
 ## Developer documentation
 
-See <README.dev.md>
+See [README.dev.md](README.dev.md)
