@@ -5,3 +5,7 @@
 # License Guard GitHub Action
 
 GitHub Action that checks dependency licence issues using [ort]().
+
+## Developer documentation
+
+See <README.dev.md>
