@@ -2,17 +2,9 @@
   <a href="https://github.com/NLeSC/licenseguard/actions"><img alt="typescript-action status" src="https://github.com/NLeSC/licenseguard/workflows/build-test/badge.svg"></a>
 </p>
 
-# Create a JavaScript Action using TypeScript
+# License Guard GitHub Action
 
-Use this template to bootstrap the creation of a TypeScript action.:rocket:
-
-This template includes compilation support, tests, a validation workflow, publishing, and versioning guidance.
-
-If you are new, there's also a simpler introduction.  See the [Hello World JavaScript Action](https://github.com/actions/hello-world-javascript-action)
-
-## Create an action from this template
-
-Click the `Use this Template` and provide the new repo details for your action
+GitHub Action that checks dependency licence issues using [ort]().
 
 ## Code in Main
 
