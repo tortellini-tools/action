@@ -19,9 +19,8 @@
 
 import * as shell from '@actions/exec';
 
-const showmeitworks = (): void => {
-    const pwd = "/tmp/ortolan.BEFrxB";
+const showmeitworks = (pwd: string): void => {
     shell.exec(`docker run -v ${pwd}:/project ort analyze -i /project -o /project/ort/analyzer`)
 }
 
-showmeitworks()
+showmeitworks("/tmp/ortolan.BEFrxB")

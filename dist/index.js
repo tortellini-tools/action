@@ -45,11 +45,10 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const shell = __importStar(__nccwpck_require__(514));
-const showmeitworks = () => {
-    const pwd = "/tmp/ortolan.BEFrxB";
+const showmeitworks = (pwd) => {
     shell.exec(`docker run -v ${pwd}:/project ort analyze -i /project -o /project/ort/analyzer`);
 };
-showmeitworks();
+showmeitworks("/tmp/ortolan.BEFrxB");
 
 
 /***/ }),
