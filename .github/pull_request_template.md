@@ -5,7 +5,7 @@
     items that seem relevant. If in doubt, just keep everything and add your
     own text at the top, a reviewer will update the checklist for you.
 
-    While the checklist is intended to be filled in by the technical and scientific
+    While the checklist is intended to be filled in by the 
     reviewers, it is the responsibility of the author of the pull request to make
     sure all items on it are properly implemented.
 -->
