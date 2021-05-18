@@ -17,7 +17,7 @@
 
     Before you start, please read our contribution guidelines: https://github.com/NLeSC/licenseguard/blob/main/CONTRIBUTING.md
 
-    Please fill in the GitHub issue that is closed by this pull request, e.g. Closes #1903
+    Please fill in the GitHub issue that is closed by this pull request, e.g. Refs #1903
 -->
 
 Refs: #issue_number
@@ -36,7 +36,7 @@ Refs: #issue_number
 
 ## Checklist
 
-It is the responsibility of the author to make sure the pull request is ready to review.
+This section should be filled in by the creator of this pull request to make sure the pull request is ready to review.
 
 - [ ] This pull request has a descriptive title
 - [ ] Code is written according to the code quality guidelines
