@@ -1,8 +1,8 @@
 {
-  "name": "typescript-action",
-  "version": "0.0.0",
+  "name": "ortolan",
+  "version": "0.1.0",
   "private": true,
-  "description": "GitHub Action that checks dependency licence issues using ort",
+  "description": "check dependency licence issues using ort",
   "main": "lib/main.js",
   "scripts": {
     "build": "tsc",
@@ -22,13 +22,14 @@
     "node",
     "setup"
   ],
-  "author": "",
+  "author": "Netherlands eScience Center",
   "license": "Apache-2.0",
   "dependencies": {
     "@actions/core": "^1.2.6",
     "js-yaml": "^4.1.0"
   },
   "devDependencies": {
+    "@actions/exec": "^1.0.4",
     "@types/jest": "^26.0.15",
     "@types/node": "^15.3.0",
     "@typescript-eslint/parser": "^4.8.1",
