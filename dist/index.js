@@ -6,24 +6,6 @@ require('./sourcemap-register.js');/******/ (() => { // webpackBootstrap
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 
-// import * as core from '@actions/core'
-// import {wait} from './wait'
-//
-// async function run(): Promise<void> {
-//   try {
-//     const ms: string = core.getInput('milliseconds')
-//     core.debug(`Waiting ${ms} milliseconds ...`) // debug is only output if you set the secret `ACTIONS_RUNNER_DEBUG` to true
-//
-//     core.debug(new Date().toTimeString())
-//     await wait(parseInt(ms, 10))
-//     core.debug(new Date().toTimeString())
-//
-//     core.setOutput('time', new Date().toTimeString())
-//   } catch (error) {
-//     core.setFailed(error.message)
-//   }
-// }
-//
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
@@ -65,14 +47,13 @@ class Ortolan {
     }
 }
 const repositories = [
-    { owner: "iomega", repo: "zenodo-upload" },
-    { owner: "xenon-middleware", repo: "xenon-cli" }
+    { owner: 'iomega', repo: 'zenodo-upload' },
+    { owner: 'xenon-middleware', repo: 'xenon-cli' }
 ];
-repositories.forEach((repository) => {
-    const { owner, repo } = repository;
+for (const { owner, repo } of repositories) {
     const ortolan = new Ortolan(owner, repo);
     ortolan.run();
-});
+}
 
 
 /***/ }),
