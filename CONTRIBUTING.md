@@ -14,7 +14,7 @@ The sections below outline the steps in each case.
 
 1. use the search functionality [here](https://github.com/NLeSC/licenseguard/issues) to see if someone already filed the same issue;
 1. if your issue search did not yield any relevant results, make a new issue;
-1. apply the "Question" label; apply other labels when relevant.
+1. apply the "question" label; apply other labels when relevant.
 
 ## You think you may have found a bug
 
@@ -37,4 +37,4 @@ The sections below outline the steps in each case.
 1. [push](http://rogerdudler.github.io/git-guide/) your feature branch to (your fork of) the this repository on GitHub;
 1. create the pull request, e.g. following the instructions [here](https://help.github.com/articles/creating-a-pull-request/).
 
-In case you feel like you've made a valuable contribution, but you don't know how to write or run tests for it, or how to generate the documentation: don't let this discourage you from making the pull request; we can help you! Just go ahead and submit the pull request, but keep in mind that you might be asked to append additional commits to your pull request (have a look at some of our old pull requests to see how this works.
+In case you feel like you've made a valuable contribution, but you don't know how to write or run tests for it, or how to generate the documentation: don't let this discourage you from making the pull request; we can help you! Just go ahead and submit the pull request, but keep in mind that you might be asked to append additional commits to your pull request (have a look at some of our old pull requests to see how this works).
