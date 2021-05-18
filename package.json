@@ -26,10 +26,10 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@actions/core": "^1.2.6",
+    "@actions/exec": "^1.0.4",
     "js-yaml": "^4.1.0"
   },
   "devDependencies": {
-    "@actions/exec": "^1.0.4",
     "@types/jest": "^26.0.15",
     "@types/node": "^15.3.0",
     "@typescript-eslint/parser": "^4.8.1",
