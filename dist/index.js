@@ -45,10 +45,34 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const shell = __importStar(__nccwpck_require__(514));
-const showmeitworks = (pwd) => {
-    shell.exec(`docker run -v ${pwd}:/project ort analyze -i /project -o /project/ort/analyzer`);
-};
-showmeitworks("/tmp/ortolan.BEFrxB");
+class Ortolan {
+    constructor(owner, repo) {
+        this.owner = owner;
+        this.repo = repo;
+    }
+    analyze() {
+        const cwd = process.cwd();
+        const bindMountInput = `${cwd}/in/${this.owner}/${this.repo}:/project`;
+        const bindMountOutput = `${cwd}/out/${this.owner}/${this.repo}:/out`;
+        shell.exec(`docker run --rm -v ${bindMountInput} -v ${bindMountOutput} ort analyze -i /project -o /out`);
+    }
+    clone() {
+        shell.exec(`git clone https://github.com/${this.owner}/${this.repo} in/${this.owner}/${this.repo}`);
+    }
+    run() {
+        this.clone();
+        this.analyze();
+    }
+}
+const repositories = [
+    { owner: "iomega", repo: "zenodo-upload" },
+    { owner: "xenon-middleware", repo: "xenon-cli" }
+];
+repositories.forEach((repository) => {
+    const { owner, repo } = repository;
+    const ortolan = new Ortolan(owner, repo);
+    ortolan.run();
+});
 
 
 /***/ }),
