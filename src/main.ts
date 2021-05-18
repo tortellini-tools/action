@@ -20,7 +20,8 @@
 import * as shell from '@actions/exec';
 
 const showmeitworks = (): void => {
-    shell.exec("docker run hello-world")
+    const pwd = "/tmp/ortolan.BEFrxB";
+    shell.exec(`docker run -v ${pwd}:/project ort analyze -i /project -o /project/ort/analyzer`)
 }
 
 showmeitworks()
