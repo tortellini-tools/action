@@ -41,6 +41,9 @@ class Ortolan {
     clone(owner, repo) {
         shell.exec(`git clone https://github.com/${owner}/${repo} in/${owner}/${repo}`);
     }
+    /* eslint-disable @typescript-eslint/no-unused-vars */
+    evaluate(owner, repo) { }
+    /* eslint-enable @typescript-eslint/no-unused-vars */
     run(type) {
         switch (type) {
             case 'list-of-repositories': {
@@ -51,15 +54,15 @@ class Ortolan {
                 }
                 break;
             }
-            case 'local-path':
-            default: {
+            case 'local-path': {
                 // statements
-                /* eslint no-console: "off" */
                 console.log('analyze path on local system in this clause');
                 break;
             }
         }
     }
+    /* eslint-disable @typescript-eslint/no-unused-vars */
+    report(owner, repo) { }
 }
 exports.Ortolan = Ortolan;
 //# sourceMappingURL=ortolan.js.map
