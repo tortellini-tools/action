@@ -29,6 +29,10 @@ export class Ortolan {
         )
     }
 
+    /* eslint-disable @typescript-eslint/no-unused-vars */
+    evaluate(owner: string, repo: string): void {}
+    /* eslint-enable @typescript-eslint/no-unused-vars */
+
     run(type: RunType): void {
         switch (type) {
             case 'list-of-repositories': {
@@ -39,13 +43,15 @@ export class Ortolan {
                 }
                 break
             }
-            case 'local-path':
-            default: {
+            case 'local-path': {
                 // statements
-                /* eslint no-console: "off" */
                 console.log('analyze path on local system in this clause')
                 break
             }
         }
     }
+
+    /* eslint-disable @typescript-eslint/no-unused-vars */
+    report(owner: string, repo: string): void {}
+    /* eslint-enable @typescript-eslint/no-unused-vars */
 }
