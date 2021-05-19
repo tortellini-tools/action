@@ -113,3 +113,53 @@ Repo will have:
 
 Start repo from boilerplate https://github.com/actions/typescript-action
 Use same repo as a test
+
+    
+    
+    
+## Notes from Sprint planning meeting
+    
+- A single GitHub action for both engineers and program managers
+repo:NAME/action (GitHub Action)
+- has NLeSC specific default ort config files
+- For checked out repo only (default)
+- If a list of urls are given run for these urls (this is for program managers)
+- Write a documentation to give examples
+
+- Workflow example for engineers to use in their repos
+repo:NAME/example-workflow (workflow)
+
+- Workflow for program managers (to check RSD)
+- Overview of the analysis that includes results form each repo in urllist
+repo:NLeSC/NAME-batch-rsd (workflow)
+on:scheduled
+creates list of repos from RSD API
+runs ortolan-tools/action action with list of repos
+uploads the results to S3
+
+
+
+Demonstrate a workflow that will take configurable urls from RSD and generate analysis yml file.
+
+Sprint 2
+Milestone:
+- Github Action should run the analysis for the current repo
+- Example workflow to show how to use it
+Milestone:
+- GitHub Aaction with an argument allows using multiple urls to run the analysis
+- Result will be the collection of analysis for each repos
+- Example workflow to show how to use the action with list of urls
+- Manual workflow (dispatch) to use urls from RSD
+    
+Sprint 3
+Milestone:
+- Add default ort config rules, classification, curration (needed to run evaluate)
+- GA runs ort evaluate
+- GA runs ort report
+- Example workflow to show the report using actions/upload-artifact
+- Documentation for the action
+Milestone:
+- Summary report for the program manager (check fairtally Vue app)
+- Setup S3 and upload results
+Milestone:
+- Allow users to use custom config for ort
