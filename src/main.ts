@@ -1,34 +1,4 @@
-import * as shell from '@actions/exec'
-
-class Ortolan {
-    private owner: string
-    private repo: string
-
-    constructor(owner: string, repo: string) {
-        this.owner = owner
-        this.repo = repo
-    }
-
-    analyze(): void {
-        const cwd = process.cwd()
-        const bindMountInput = `${cwd}/in/${this.owner}/${this.repo}:/project`
-        const bindMountOutput = `${cwd}/out/${this.owner}/${this.repo}:/out`
-        shell.exec(
-            `docker run --rm -v ${bindMountInput} -v ${bindMountOutput} ort analyze -i /project -o /out`
-        )
-    }
-
-    clone(): void {
-        shell.exec(
-            `git clone https://github.com/${this.owner}/${this.repo} in/${this.owner}/${this.repo}`
-        )
-    }
-
-    run(): void {
-        this.clone()
-        this.analyze()
-    }
-}
+import { Ortolan } from './ortolan'
 
 const repositories = [
     {owner: 'iomega', repo: 'zenodo-upload'},
@@ -39,3 +9,4 @@ for (const {owner, repo} of repositories) {
     const ortolan = new Ortolan(owner, repo)
     ortolan.run()
 }
+

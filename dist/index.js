@@ -2,7 +2,7 @@ require('./sourcemap-register.js');/******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 109:
+/***/ 356:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 
@@ -26,6 +26,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.Ortolan = void 0;
 const shell = __importStar(__nccwpck_require__(514));
 class Ortolan {
     constructor(owner, repo) {
@@ -46,14 +47,7 @@ class Ortolan {
         this.analyze();
     }
 }
-const repositories = [
-    { owner: 'iomega', repo: 'zenodo-upload' },
-    { owner: 'xenon-middleware', repo: 'xenon-cli' }
-];
-for (const { owner, repo } of repositories) {
-    const ortolan = new Ortolan(owner, repo);
-    ortolan.run();
-}
+exports.Ortolan = Ortolan;
 
 
 /***/ }),
@@ -1325,13 +1319,25 @@ module.exports = require("util");;
 /******/ 	/* webpack/runtime/compat */
 /******/ 	
 /******/ 	if (typeof __nccwpck_require__ !== 'undefined') __nccwpck_require__.ab = __dirname + "/";/************************************************************************/
-/******/ 	
-/******/ 	// startup
-/******/ 	// Load entry module and return exports
-/******/ 	// This entry module is referenced by other modules so it can't be inlined
-/******/ 	var __webpack_exports__ = __nccwpck_require__(109);
-/******/ 	module.exports = __webpack_exports__;
-/******/ 	
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+(() => {
+var exports = __webpack_exports__;
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const ortolan_1 = __nccwpck_require__(356);
+const repositories = [
+    { owner: 'iomega', repo: 'zenodo-upload' },
+    { owner: 'xenon-middleware', repo: 'xenon-cli' }
+];
+for (const { owner, repo } of repositories) {
+    const ortolan = new ortolan_1.Ortolan(owner, repo);
+    ortolan.run();
+}
+
+})();
+
+module.exports = __webpack_exports__;
 /******/ })()
 ;
 //# sourceMappingURL=index.js.map
