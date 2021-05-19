@@ -1,12 +1,9 @@
-import { Ortolan } from './ortolan'
+import {Ortolan} from './ortolan'
 
 const repositories = [
     {owner: 'iomega', repo: 'zenodo-upload'},
     {owner: 'xenon-middleware', repo: 'xenon-cli'}
 ]
 
-for (const {owner, repo} of repositories) {
-    const ortolan = new Ortolan(owner, repo)
-    ortolan.run()
-}
-
+const ortolan = new Ortolan(repositories)
+ortolan.run('list-of-repositories')

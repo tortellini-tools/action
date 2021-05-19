@@ -1,33 +1,51 @@
 import * as shell from '@actions/exec'
 
+type Repository = {
+    owner: string
+    repo: string
+}
+type Repositories = Repository[]
+type RunType = 'local-path' | 'list-of-repositories'
 
 export class Ortolan {
-    private owner: string
-    private repo: string
+    private repositories: Repositories
 
-    constructor(owner: string, repo: string) {
-        this.owner = owner
-        this.repo = repo
+    constructor(repositories: Repositories) {
+        this.repositories = repositories
     }
 
-    analyze(): void {
+    analyze(owner: string, repo: string): void {
         const cwd = process.cwd()
-        const bindMountInput = `${cwd}/in/${this.owner}/${this.repo}:/project`
-        const bindMountOutput = `${cwd}/out/${this.owner}/${this.repo}:/out`
+        const bindMountInput = `${cwd}/in/${owner}/${repo}:/project`
+        const bindMountOutput = `${cwd}/out/${owner}/${repo}:/out`
         shell.exec(
             `docker run --rm -v ${bindMountInput} -v ${bindMountOutput} ort analyze -i /project -o /out`
         )
     }
 
-    clone(): void {
+    clone(owner: string, repo: string): void {
         shell.exec(
-            `git clone https://github.com/${this.owner}/${this.repo} in/${this.owner}/${this.repo}`
+            `git clone https://github.com/${owner}/${repo} in/${owner}/${repo}`
         )
     }
 
-    run(): void {
-        this.clone()
-        this.analyze()
+    run(type: RunType): void {
+        switch (type) {
+            case 'list-of-repositories': {
+                for (const repository of this.repositories) {
+                    const {owner, repo} = repository
+                    this.clone(owner, repo)
+                    this.analyze(owner, repo)
+                }
+                break
+            }
+            case 'local-path':
+            default: {
+                // statements
+                /* eslint no-console: "off" */
+                console.log('analyze path on local system in this clause')
+                break
+            }
+        }
     }
 }
-

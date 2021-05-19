@@ -29,26 +29,40 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Ortolan = void 0;
 const shell = __importStar(__nccwpck_require__(514));
 class Ortolan {
-    constructor(owner, repo) {
-        this.owner = owner;
-        this.repo = repo;
+    constructor(repositories) {
+        this.repositories = repositories;
     }
-    analyze() {
+    analyze(owner, repo) {
         const cwd = process.cwd();
-        const bindMountInput = `${cwd}/in/${this.owner}/${this.repo}:/project`;
-        const bindMountOutput = `${cwd}/out/${this.owner}/${this.repo}:/out`;
+        const bindMountInput = `${cwd}/in/${owner}/${repo}:/project`;
+        const bindMountOutput = `${cwd}/out/${owner}/${repo}:/out`;
         shell.exec(`docker run --rm -v ${bindMountInput} -v ${bindMountOutput} ort analyze -i /project -o /out`);
     }
-    clone() {
-        shell.exec(`git clone https://github.com/${this.owner}/${this.repo} in/${this.owner}/${this.repo}`);
+    clone(owner, repo) {
+        shell.exec(`git clone https://github.com/${owner}/${repo} in/${owner}/${repo}`);
     }
-    run() {
-        this.clone();
-        this.analyze();
+    run(type) {
+        switch (type) {
+            case 'list-of-repositories': {
+                for (const repository of this.repositories) {
+                    const { owner, repo } = repository;
+                    this.clone(owner, repo);
+                    this.analyze(owner, repo);
+                }
+                break;
+            }
+            case 'local-path':
+            default: {
+                // statements
+                /* eslint no-console: "off" */
+                console.log('analyze path on local system in this clause');
+                break;
+            }
+        }
     }
 }
 exports.Ortolan = Ortolan;
-
+//# sourceMappingURL=ortolan.js.map
 
 /***/ }),
 
@@ -1330,11 +1344,9 @@ const repositories = [
     { owner: 'iomega', repo: 'zenodo-upload' },
     { owner: 'xenon-middleware', repo: 'xenon-cli' }
 ];
-for (const { owner, repo } of repositories) {
-    const ortolan = new ortolan_1.Ortolan(owner, repo);
-    ortolan.run();
-}
-
+const ortolan = new ortolan_1.Ortolan(repositories);
+ortolan.run('list-of-repositories');
+//# sourceMappingURL=main.js.map
 })();
 
 module.exports = __webpack_exports__;
