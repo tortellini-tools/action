@@ -9,3 +9,7 @@ GitHub Action that checks dependency licence issues using [ort](https://github.c
 ## Developer documentation
 
 See [README.dev.md](README.dev.md)
+
+## Disclaimer
+
+`licenseguard` aims at providing insights into the license depencies of your package based on available information on open source licenses. We hope this information is helpful. However, we are not lawyers and we do make mistakes. Therefore `licenseguard` provides information on an "as-is" basis and does not make warranties regarding this information. For any questions regarding the issues related to the licenses in your code, please consult a professional.    
