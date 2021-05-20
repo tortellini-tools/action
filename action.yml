@@ -1,4 +1,4 @@
-name: 'tortellini'
+name: 'action'
 description: 'GitHub Action that checks dependency licence issues using ort.'
 author: 'Netherlands eScience Center'
 inputs:
