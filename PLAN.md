@@ -1,4 +1,4 @@
-# licenseguard
+# tortellini
 
 This is a repository that will eventually have a tool which will check the dependency licenses.
 At NLeSC there is need of more attention to the licensing issues. It is often difficult to find out the first order licenses of the dependencies and conflicts.

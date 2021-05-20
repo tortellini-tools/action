@@ -13,7 +13,7 @@
 ## Description
 
 <!--
-    Please describe your changes here, especially focusing on why this pull request makes licenseguard better and what problem it solves.
+    Please describe your changes here, especially focusing on why this pull request makes tortellini better and what problem it solves.
 
     Before you start, please read our contribution guidelines: https://github.com/tortellini-tools/action/blob/main/CONTRIBUTING.md
 
