@@ -1,7 +1,7 @@
 # licenseguard
 
 This is a repository that will eventually have a tool which will check the dependency licenses.
-At NLeSC there is need of more attention to the licensing issues. It is often difficult to find out the first order licenses of the dependencies and conflicts. 
+At NLeSC there is need of more attention to the licensing issues. It is often difficult to find out the first order licenses of the dependencies and conflicts.
 Find the software not following the requirements from NLeSC.
 A tool program manager (or person X) can use to check the issues. The tool automatically check these issues and point to some guides.
 
@@ -28,7 +28,7 @@ See [requirements.md](requirements.md)
     - Start with some predefined curations
     - If users want to change or overwrite these curations they can add them to a folder/file which will be discovered by the tool
 3. Add index page to list repos
-    - remove high order dependencies (see [here](https://github.com/NLeSC/licenseguard/issues/13#issuecomment-834514303) and [here](https://github.com/oss-review-toolkit/ort/blob/e5b135df72f809563296912f99c59149571279a6/docs/config-file-ort-yml.md#excluding-paths))
+    - remove high order dependencies (see [here](https://github.com/tortellini-tools/action/issues/13#issuecomment-834514303) and [here](https://github.com/oss-review-toolkit/ort/blob/e5b135df72f809563296912f99c59149571279a6/docs/config-file-ort-yml.md#excluding-paths))
     - Each repo should have a detailed report (html webapp)
 4. Instructions for program managers and engineers
     - How to run analysis if you are a program manager
@@ -42,11 +42,11 @@ See [requirements.md](requirements.md)
     2. Weekly scheduled (eg [fairtally-test](https://github.com/jmaassen/fairtally-test/blob/main/.github/workflows/fairtally.yml))
     3. Action fetches repos from RSD
     4. Use ort Docker image from https://hub.docker.com/r/philipssoftware/ort/
-    5. Run https://github.com/NLeSC/licenseguard/blob/rsd-software-vs-ort/ort/batch.sh, replace shell script with Typescript
+    5. Run https://github.com/tortellini-tools/action/blob/rsd-software-vs-ort/ort/batch.sh, replace shell script with Typescript
     6. Create `index-<timestamp>.json` with stats of all repos using Typescript
     7. Create symlink/copy `index-<timestamp>.json` to index-latest.json
     8. To S3 Upload index-latest.json, `index-<timestamp>.json` and for each repo
-        - scan-report-web-app.html, 
+        - scan-report-web-app.html,
         - out.txt
         - evaluation-result.yml
     9. Vue app index.html which shows index-latest.json in table, file should be uploaded S3
@@ -54,8 +54,8 @@ See [requirements.md](requirements.md)
 Steps 44 .. 51 could be captured in Github Actions like
 
 ```
-on:  
-  schedule:   
+on:
+  schedule:
     - cron: "0 0 * * 4"  # Every thursday
 
   # Allows you to run this workflow manually from the Actions tab
@@ -68,9 +68,9 @@ jobs:
       - name: Get the data dump from the RSD
         run: curl https://research-software.nl/api/software > software.json
 
-      - name: Extract the list of URLs 
+      - name: Extract the list of URLs
         run: cat software.json | jq -r '[.[].repositoryURLs.github] | flatten | .[]' > urls.txt
-        
+
       - name: Run ort on urls
         uses: NLeSC/batchort@v1
         with:
@@ -92,7 +92,7 @@ jobs:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_REGION: 'us-west-1'   # optional: defaults to us-east-1
-        SOURCE_DIR: 'results' 
+        SOURCE_DIR: 'results'
      # Or
     - uses: actions/upload-artifact@v2
       with:
@@ -114,11 +114,11 @@ Repo will have:
 Start repo from boilerplate https://github.com/actions/typescript-action
 Use same repo as a test
 
-    
-    
-    
+
+
+
 ## Notes from Sprint planning meeting
-    
+
 - A single GitHub action for both engineers and program managers
 repo:NAME/action (GitHub Action)
 - has NLeSC specific default ort config files
@@ -142,10 +142,10 @@ uploads the results to S3
 Demonstrate a workflow that will take configurable urls from RSD and generate analysis yml file.
 
 Sprint 2
-- https://github.com/NLeSC/licenseguard/milestone/1
-- https://github.com/NLeSC/licenseguard/milestone/2    
-    
+- https://github.com/tortellini-tools/action/milestone/1
+- https://github.com/tortellini-tools/action/milestone/2
+
 Sprint 3
-- https://github.com/NLeSC/licenseguard/milestone/3
-- https://github.com/NLeSC/licenseguard/milestone/4
-- https://github.com/NLeSC/licenseguard/milestone/5
+- https://github.com/tortellini-tools/action/milestone/3
+- https://github.com/tortellini-tools/action/milestone/4
+- https://github.com/tortellini-tools/action/milestone/5
