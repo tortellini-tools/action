@@ -1,4 +1,4 @@
-import * as shell from '@actions/exec'
+import {exec} from '@actions/exec'
 
 type Repository = {
     owner: string
@@ -18,13 +18,13 @@ export class Ortolan {
         const cwd = process.cwd()
         const bindMountInput = `${cwd}/in/${owner}/${repo}:/project`
         const bindMountOutput = `${cwd}/out/${owner}/${repo}:/out`
-        shell.exec(
+        exec(
             `docker run --rm -v ${bindMountInput} -v ${bindMountOutput} ort analyze -i /project -o /out`
         )
     }
 
     clone(owner: string, repo: string): void {
-        shell.exec(
+        exec(
             `git clone https://github.com/${owner}/${repo} in/${owner}/${repo}`
         )
     }
