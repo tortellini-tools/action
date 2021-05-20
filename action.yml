@@ -1,4 +1,4 @@
-name: 'licenseguard'
+name: 'tortellini'
 description: 'GitHub Action that checks dependency licence issues using ort.'
 author: 'Netherlands eScience Center'
 inputs:
