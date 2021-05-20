@@ -61,7 +61,7 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 jobs:
-  batchort:
+  tortellini:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -72,7 +72,7 @@ jobs:
         run: cat software.json | jq -r '[.[].repositoryURLs.github] | flatten | .[]' > urls.txt
 
       - name: Run ort on urls
-        uses: NLeSC/batchort@v1
+        uses: tortellini-tools/action@v1
         with:
            repositories: urls.txt
            outputdir: results
@@ -96,7 +96,7 @@ jobs:
      # Or
     - uses: actions/upload-artifact@v2
       with:
-        name: batchort-results
+        name: tortellini-results
         path: results/**
 ```
 
