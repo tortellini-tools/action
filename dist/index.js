@@ -3,31 +3,12 @@ require('./sourcemap-register.js');/******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
 /***/ 356:
-/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Ortolan = void 0;
-const shell = __importStar(__nccwpck_require__(514));
+const exec_1 = __nccwpck_require__(514);
 class Ortolan {
     constructor(repositories) {
         this.repositories = repositories;
@@ -36,10 +17,10 @@ class Ortolan {
         const cwd = process.cwd();
         const bindMountInput = `${cwd}/in/${owner}/${repo}:/project`;
         const bindMountOutput = `${cwd}/out/${owner}/${repo}:/out`;
-        shell.exec(`docker run --rm -v ${bindMountInput} -v ${bindMountOutput} ort analyze -i /project -o /out`);
+        exec_1.exec(`docker run --rm -v ${bindMountInput} -v ${bindMountOutput} ort analyze -i /project -o /out`);
     }
     clone(owner, repo) {
-        shell.exec(`git clone https://github.com/${owner}/${repo} in/${owner}/${repo}`);
+        exec_1.exec(`git clone https://github.com/${owner}/${repo} in/${owner}/${repo}`);
     }
     /* eslint-disable @typescript-eslint/no-unused-vars */
     evaluate(owner, repo) { }
