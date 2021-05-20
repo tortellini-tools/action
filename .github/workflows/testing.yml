@@ -7,7 +7,7 @@ on: # rebuild any PRs and main branch changes
       - 'releases/*'
 
 jobs:
-  test: 
+  unittest:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -19,4 +19,9 @@ jobs:
           npm run package
       - run: |
           npm run test
-  
+
+  test-action: # make sure the action works on a clean machine without building
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v2
+        - uses: ./
