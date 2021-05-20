@@ -142,24 +142,10 @@ uploads the results to S3
 Demonstrate a workflow that will take configurable urls from RSD and generate analysis yml file.
 
 Sprint 2
-Milestone:
-- Github Action should run the analysis for the current repo
-- Example workflow to show how to use it
-Milestone:
-- GitHub Aaction with an argument allows using multiple urls to run the analysis
-- Result will be the collection of analysis for each repos
-- Example workflow to show how to use the action with list of urls
-- Manual workflow (dispatch) to use urls from RSD
+- https://github.com/NLeSC/licenseguard/milestone/1
+- https://github.com/NLeSC/licenseguard/milestone/2    
     
 Sprint 3
-Milestone:
-- Add default ort config rules, classification, curration (needed to run evaluate)
-- GA runs ort evaluate
-- GA runs ort report
-- Example workflow to show the report using actions/upload-artifact
-- Documentation for the action
-Milestone:
-- Summary report for the program manager (check fairtally Vue app)
-- Setup S3 and upload results
-Milestone:
-- Allow users to use custom config for ort
+- https://github.com/NLeSC/licenseguard/milestone/3
+- https://github.com/NLeSC/licenseguard/milestone/4
+- https://github.com/NLeSC/licenseguard/milestone/5
