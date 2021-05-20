@@ -134,7 +134,7 @@ repo:NAME/example-workflow (workflow)
 repo:NLeSC/NAME-batch-rsd (workflow)
 on:scheduled
 creates list of repos from RSD API
-runs ortolan-tools/action action with list of repos
+runs tortellini-tools/action action with list of repos
 uploads the results to S3
 
 
