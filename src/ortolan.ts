@@ -18,8 +18,9 @@ export class Ortolan {
         const cwd = process.cwd()
         const bindMountInput = `${cwd}/in/${owner}/${repo}:/project`
         const bindMountOutput = `${cwd}/out/${owner}/${repo}:/out`
+        const image = 'philipssoftware/ort'
         exec(
-            `docker run --rm -v ${bindMountInput} -v ${bindMountOutput} ort analyze -i /project -o /out`
+            `docker run --rm -v ${bindMountInput} -v ${bindMountOutput} ${image} analyze -i /project -o /out`
         )
     }
 
