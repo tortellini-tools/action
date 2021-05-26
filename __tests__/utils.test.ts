@@ -23,25 +23,27 @@ describe('run_docker_container()', () => {
         })
 
         test('mount LICENSE', async () => {
-            const docker_args = [
-                '-v',
-                `${process.cwd()}:/repo`
-            ]
-            const ort_args = [
-                'md5sum',
-                '/repo/LICENSE'
-            ]
-            const result = await run_docker_container(docker_args, ort_args, image)
+            const docker_args = ['-v', `${process.cwd()}:/repo`]
+            const ort_args = ['md5sum', '/repo/LICENSE']
+            const result = await run_docker_container(
+                docker_args,
+                ort_args,
+                image
+            )
             expect(result.exit_code).toEqual(0)
-            expect(result.stdout).toContain('86d3f3a95c324c9479bd8986968f4327  /repo/LICENSE')
+            expect(result.stdout).toContain(
+                '86d3f3a95c324c9479bd8986968f4327  /repo/LICENSE'
+            )
             expect(result.stderr).toEqual('')
         })
 
         test('ort_args = ls non existing file', async () => {
             const result = await run_docker_container([], ['ls', '/foo'], image)
             expect(result.exit_code).toEqual(1)
-            expect(result.stdout).toEqual("")
-            expect(result.stderr).toEqual("The process '/usr/bin/docker' failed with exit code 1")
+            expect(result.stdout).toEqual('')
+            expect(result.stderr).toEqual(
+                "The process '/usr/bin/docker' failed with exit code 1"
+            )
         })
     })
 })
