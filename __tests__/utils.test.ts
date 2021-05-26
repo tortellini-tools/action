@@ -5,8 +5,8 @@ describe('run_docker_container()', () => {
     describe('with hello-world image', () => {
         const image = 'hello-world'
 
-        beforeAll(() => {
-            exec('docker', ['pull', image])
+        beforeAll(async () => {
+            await exec('docker', ['pull', image])
         })
 
         test('empty arrays', async () => {
@@ -20,8 +20,8 @@ describe('run_docker_container()', () => {
     describe('with busybox image', () => {
         const image = 'busybox'
 
-        beforeAll(() => {
-            exec('docker', ['pull', image])
+        beforeAll(async () => {
+            await exec('docker', ['pull', image])
         })
 
         test('ort_args = whoami', async () => {
