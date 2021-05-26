@@ -2,7 +2,7 @@ require('./sourcemap-register.js');/******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 356:
+/***/ 194:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 
@@ -17,7 +17,8 @@ class Tortellini {
         const cwd = process.cwd();
         const bindMountInput = `${cwd}/in/${owner}/${repo}:/project`;
         const bindMountOutput = `${cwd}/out/${owner}/${repo}:/out`;
-        exec_1.exec(`docker run --rm -v ${bindMountInput} -v ${bindMountOutput} ort analyze -i /project -o /out`);
+        const image = 'philipssoftware/ort';
+        exec_1.exec(`docker run --rm -v ${bindMountInput} -v ${bindMountOutput} ${image} analyze -i /project -o /out`);
     }
     clone(owner, repo) {
         exec_1.exec(`git clone https://github.com/${owner}/${repo} in/${owner}/${repo}`);
@@ -1285,7 +1286,7 @@ module.exports = require("util");;
 /************************************************************************/
 /******/ 	// The module cache
 /******/ 	var __webpack_module_cache__ = {};
-/******/
+/******/ 	
 /******/ 	// The require function
 /******/ 	function __nccwpck_require__(moduleId) {
 /******/ 		// Check if module is in cache
@@ -1299,7 +1300,7 @@ module.exports = require("util");;
 /******/ 			// no module.loaded needed
 /******/ 			exports: {}
 /******/ 		};
-/******/
+/******/ 	
 /******/ 		// Execute the module function
 /******/ 		var threw = true;
 /******/ 		try {
@@ -1308,14 +1309,14 @@ module.exports = require("util");;
 /******/ 		} finally {
 /******/ 			if(threw) delete __webpack_module_cache__[moduleId];
 /******/ 		}
-/******/
+/******/ 	
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/
+/******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat */
-/******/
+/******/ 	
 /******/ 	if (typeof __nccwpck_require__ !== 'undefined') __nccwpck_require__.ab = __dirname + "/";/************************************************************************/
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
@@ -1323,7 +1324,7 @@ var __webpack_exports__ = {};
 var exports = __webpack_exports__;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-const tortellini_1 = __nccwpck_require__(356);
+const tortellini_1 = __nccwpck_require__(194);
 const repositories = [
     { owner: 'iomega', repo: 'zenodo-upload' },
     { owner: 'xenon-middleware', repo: 'xenon-cli' }
