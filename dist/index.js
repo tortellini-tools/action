@@ -2,52 +2,141 @@ require('./sourcemap-register.js');/******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 194:
+/***/ 139:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.Tortellini = void 0;
-const exec_1 = __nccwpck_require__(514);
-class Tortellini {
-    constructor(repositories) {
-        this.repositories = repositories;
-    }
-    analyze(owner, repo) {
-        const cwd = process.cwd();
-        const bindMountInput = `${cwd}/in/${owner}/${repo}:/project`;
-        const bindMountOutput = `${cwd}/out/${owner}/${repo}:/out`;
-        const image = 'philipssoftware/ort';
-        exec_1.exec(`docker run --rm -v ${bindMountInput} -v ${bindMountOutput} ${image} analyze -i /project -o /out`);
-    }
-    clone(owner, repo) {
-        exec_1.exec(`git clone https://github.com/${owner}/${repo} in/${owner}/${repo}`);
-    }
-    /* eslint-disable @typescript-eslint/no-unused-vars */
-    evaluate(owner, repo) { }
-    /* eslint-enable @typescript-eslint/no-unused-vars */
-    run(type) {
-        switch (type) {
-            case 'list-of-repositories': {
-                for (const repository of this.repositories) {
-                    const { owner, repo } = repository;
-                    this.clone(owner, repo);
-                    this.analyze(owner, repo);
-                }
-                break;
-            }
-            case 'local-path': {
-                // statements
-                console.log('analyze path on local system in this clause');
-                break;
-            }
-        }
-    }
-    /* eslint-disable @typescript-eslint/no-unused-vars */
-    report(owner, repo) { }
+exports.main = void 0;
+const check_1 = __nccwpck_require__(657);
+function main() {
+    check_1.check_directory();
 }
-exports.Tortellini = Tortellini;
-//# sourceMappingURL=tortellini.js.map
+exports.main = main;
+//# sourceMappingURL=action.js.map
+
+/***/ }),
+
+/***/ 657:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.check_directory = void 0;
+const ort_1 = __nccwpck_require__(249);
+function check_directory(repo_dir = '.', output_dir = 'out') {
+    ort_1.analyze(repo_dir, output_dir);
+}
+exports.check_directory = check_directory;
+//# sourceMappingURL=check.js.map
+
+/***/ }),
+
+/***/ 249:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.analyze = void 0;
+const utils_1 = __nccwpck_require__(918);
+/**
+ *
+ * @param repo_dir Relative path to repo directory
+ * @param analyze_dir Relative path to directory where result will be written
+ */
+function analyze(repo_dir, analyze_dir) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const volumes = {
+            [repo_dir]: '/repo',
+            [analyze_dir]: '/analyze'
+        };
+        const docker_args = utils_1.volume2dockerargs(volumes);
+        const ort_args = ['analyze', '-i', '/repo', '-o', '/analyze'];
+        yield utils_1.run_docker_container(docker_args, ort_args);
+    });
+}
+exports.analyze = analyze;
+//# sourceMappingURL=ort.js.map
+
+/***/ }),
+
+/***/ 918:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.volume2dockerargs = exports.run_docker_container = void 0;
+const exec_1 = __nccwpck_require__(514);
+const path_1 = __nccwpck_require__(622);
+function run_docker_container(docker_args, ort_args, image = 'philipssoftware/ort') {
+    return __awaiter(this, void 0, void 0, function* () {
+        const cmd = 'docker';
+        let args = ['run', '--rm'];
+        args = args.concat(docker_args);
+        args.push(image);
+        args = args.concat(ort_args);
+        let docker_stdout = '';
+        let docker_stderr = '';
+        const options = {};
+        options.listeners = {
+            stdout: (data) => {
+                docker_stdout += data.toString();
+            },
+            stderr: (data) => {
+                docker_stderr += data.toString();
+            }
+        };
+        try {
+            yield exec_1.exec(cmd, args, options);
+            return {
+                exit_code: 0,
+                stdout: docker_stdout,
+                stderr: docker_stderr
+            };
+        }
+        catch (error) {
+            return {
+                exit_code: 1,
+                stdout: '',
+                stderr: error.message
+            };
+        }
+    });
+}
+exports.run_docker_container = run_docker_container;
+function volume2dockerargs(volumes) {
+    const docker_args = [];
+    Object.entries(volumes).forEach(([outside, inside]) => {
+        const outside_absolute = path_1.resolve(outside);
+        if (!inside) {
+            throw Error('Value can not be falsy');
+        }
+        const bind_mount = `${outside_absolute}:${inside}`;
+        docker_args.push('-v');
+        docker_args.push(bind_mount);
+    });
+    return docker_args;
+}
+exports.volume2dockerargs = volume2dockerargs;
+//# sourceMappingURL=utils.js.map
 
 /***/ }),
 
@@ -1323,14 +1412,16 @@ var __webpack_exports__ = {};
 (() => {
 var exports = __webpack_exports__;
 
+// import {Tortellini} from './tortellini'
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-const tortellini_1 = __nccwpck_require__(194);
-const repositories = [
-    { owner: 'iomega', repo: 'zenodo-upload' },
-    { owner: 'xenon-middleware', repo: 'xenon-cli' }
-];
-const tortellini = new tortellini_1.Tortellini(repositories);
-tortellini.run('list-of-repositories');
+// const repositories = [
+//     {owner: 'iomega', repo: 'zenodo-upload'},
+//     {owner: 'xenon-middleware', repo: 'xenon-cli'}
+// ]
+// const tortellini = new Tortellini(repositories)
+// tortellini.run('list-of-repositories')
+const action_1 = __nccwpck_require__(139);
+action_1.main();
 //# sourceMappingURL=main.js.map
 })();
 
