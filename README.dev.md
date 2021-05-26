@@ -3,6 +3,19 @@
 
 ## Code in Main
 
+These tools rely on the availability of `Node.js`. Please check if you have `Node.js` and the related package manager
+`npm` available on your system and verify that the version of `Node.js` is at least `14`.
+
+```bash
+$ node --version
+v14.17.0
+$ npm --version
+6.14.13
+```
+
+`Node.js` and `npm` can be downloaded in one package from [nodejs.org](https://nodejs.org/en/). And here are
+[instructions for upgrading `Node.js`](https://phoenixnap.com/kb/update-node-js-version#ftoc-heading-3).
+
 Install the dependencies
 ```bash
 $ npm install
