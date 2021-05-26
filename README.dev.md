@@ -25,6 +25,16 @@ $ npm test
 ...
 ```
 
+# Run the analysis
+
+```shell
+npm install
+npm run build
+npm run package
+node dist/index.js
+```
+
+
 ## Change action.yml
 
 The action.yml contains defines the inputs and output for your action.

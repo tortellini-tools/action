@@ -1,19 +1,9 @@
-import * as core from '@actions/core'
-import {wait} from './wait'
+import {Ortolan} from './ortolan'
 
-async function run(): Promise<void> {
-  try {
-    const ms: string = core.getInput('milliseconds')
-    core.debug(`Waiting ${ms} milliseconds ...`) // debug is only output if you set the secret `ACTIONS_RUNNER_DEBUG` to true
+const repositories = [
+    {owner: 'iomega', repo: 'zenodo-upload'},
+    {owner: 'xenon-middleware', repo: 'xenon-cli'}
+]
 
-    core.debug(new Date().toTimeString())
-    await wait(parseInt(ms, 10))
-    core.debug(new Date().toTimeString())
-
-    core.setOutput('time', new Date().toTimeString())
-  } catch (error) {
-    core.setFailed(error.message)
-  }
-}
-
-run()
+const ortolan = new Ortolan(repositories)
+ortolan.run('list-of-repositories')
