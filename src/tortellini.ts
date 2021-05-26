@@ -7,7 +7,7 @@ type Repository = {
 type Repositories = Repository[]
 type RunType = 'local-path' | 'list-of-repositories'
 
-export class Ortolan {
+export class Tortellini {
     private repositories: Repositories
 
     constructor(repositories: Repositories) {

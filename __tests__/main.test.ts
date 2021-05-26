@@ -1,10 +1,10 @@
-import { Ortolan } from '../src/ortolan'
+import { Tortellini } from '../src/tortellini'
 
-test('can instantiate Ortolan', () => {
+test('can instantiate Tortellini', () => {
     const repos = [
         { owner: "myowner", repo: "myrepo" }
     ]
-    const ortolan = new Ortolan(repos)
-    expect(ortolan).toBeInstanceOf(Ortolan)
-    expect(ortolan).toHaveProperty("repositories")
+    const tortellini = new Tortellini(repos)
+    expect(tortellini).toBeInstanceOf(Tortellini)
+    expect(tortellini).toHaveProperty("repositories")
 })

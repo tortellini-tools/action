@@ -5,7 +5,7 @@
     items that seem relevant. If in doubt, just keep everything and add your
     own text at the top, a reviewer will update the checklist for you.
 
-    While the checklist is intended to be filled in by the 
+    While the checklist is intended to be filled in by the
     reviewers, it is the responsibility of the author of the pull request to make
     sure all items on it are properly implemented.
 -->
@@ -13,9 +13,9 @@
 ## Description
 
 <!--
-    Please describe your changes here, especially focusing on why this pull request makes licenseguard better and what problem it solves.
+    Please describe your changes here, especially focusing on why this pull request makes tortellini better and what problem it solves.
 
-    Before you start, please read our contribution guidelines: https://github.com/NLeSC/licenseguard/blob/main/CONTRIBUTING.md
+    Before you start, please read our contribution guidelines: https://github.com/tortellini-tools/action/blob/main/CONTRIBUTING.md
 
     Please fill in the GitHub issue that is closed by this pull request, e.g. Refs #1903
 -->
@@ -32,7 +32,7 @@ Refs: #issue_number
     to open a new issue on GitHub.
 -->
 
-- [ ] [☝ Create an issue](https://github.com/NLeSC/licenseguard/issues/new/choose) to discuss what you are going to do
+- [ ] [☝ Create an issue](https://github.com/tortellini-tools/action/issues/new/choose) to discuss what you are going to do
 
 ## Checklist
 

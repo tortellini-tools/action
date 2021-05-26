@@ -2,14 +2,14 @@ require('./sourcemap-register.js');/******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 356:
+/***/ 194:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.Ortolan = void 0;
+exports.Tortellini = void 0;
 const exec_1 = __nccwpck_require__(514);
-class Ortolan {
+class Tortellini {
     constructor(repositories) {
         this.repositories = repositories;
     }
@@ -17,7 +17,8 @@ class Ortolan {
         const cwd = process.cwd();
         const bindMountInput = `${cwd}/in/${owner}/${repo}:/project`;
         const bindMountOutput = `${cwd}/out/${owner}/${repo}:/out`;
-        exec_1.exec(`docker run --rm -v ${bindMountInput} -v ${bindMountOutput} ort analyze -i /project -o /out`);
+        const image = 'philipssoftware/ort';
+        exec_1.exec(`docker run --rm -v ${bindMountInput} -v ${bindMountOutput} ${image} analyze -i /project -o /out`);
     }
     clone(owner, repo) {
         exec_1.exec(`git clone https://github.com/${owner}/${repo} in/${owner}/${repo}`);
@@ -45,8 +46,8 @@ class Ortolan {
     /* eslint-disable @typescript-eslint/no-unused-vars */
     report(owner, repo) { }
 }
-exports.Ortolan = Ortolan;
-//# sourceMappingURL=ortolan.js.map
+exports.Tortellini = Tortellini;
+//# sourceMappingURL=tortellini.js.map
 
 /***/ }),
 
@@ -1323,13 +1324,13 @@ var __webpack_exports__ = {};
 var exports = __webpack_exports__;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-const ortolan_1 = __nccwpck_require__(356);
+const tortellini_1 = __nccwpck_require__(194);
 const repositories = [
     { owner: 'iomega', repo: 'zenodo-upload' },
     { owner: 'xenon-middleware', repo: 'xenon-cli' }
 ];
-const ortolan = new ortolan_1.Ortolan(repositories);
-ortolan.run('list-of-repositories');
+const tortellini = new tortellini_1.Tortellini(repositories);
+tortellini.run('list-of-repositories');
 //# sourceMappingURL=main.js.map
 })();
 
