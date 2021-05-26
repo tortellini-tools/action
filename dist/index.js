@@ -7,9 +7,9 @@ require('./sourcemap-register.js');/******/ (() => { // webpackBootstrap
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.Ortolan = void 0;
+exports.Tortellini = void 0;
 const exec_1 = __nccwpck_require__(514);
-class Ortolan {
+class Tortellini {
     constructor(repositories) {
         this.repositories = repositories;
     }
@@ -45,8 +45,8 @@ class Ortolan {
     /* eslint-disable @typescript-eslint/no-unused-vars */
     report(owner, repo) { }
 }
-exports.Ortolan = Ortolan;
-//# sourceMappingURL=ortolan.js.map
+exports.Tortellini = Tortellini;
+//# sourceMappingURL=tortellini.js.map
 
 /***/ }),
 
@@ -1285,7 +1285,7 @@ module.exports = require("util");;
 /************************************************************************/
 /******/ 	// The module cache
 /******/ 	var __webpack_module_cache__ = {};
-/******/ 	
+/******/
 /******/ 	// The require function
 /******/ 	function __nccwpck_require__(moduleId) {
 /******/ 		// Check if module is in cache
@@ -1299,7 +1299,7 @@ module.exports = require("util");;
 /******/ 			// no module.loaded needed
 /******/ 			exports: {}
 /******/ 		};
-/******/ 	
+/******/
 /******/ 		// Execute the module function
 /******/ 		var threw = true;
 /******/ 		try {
@@ -1308,14 +1308,14 @@ module.exports = require("util");;
 /******/ 		} finally {
 /******/ 			if(threw) delete __webpack_module_cache__[moduleId];
 /******/ 		}
-/******/ 	
+/******/
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/ 	
+/******/
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat */
-/******/ 	
+/******/
 /******/ 	if (typeof __nccwpck_require__ !== 'undefined') __nccwpck_require__.ab = __dirname + "/";/************************************************************************/
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
@@ -1323,13 +1323,13 @@ var __webpack_exports__ = {};
 var exports = __webpack_exports__;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-const ortolan_1 = __nccwpck_require__(356);
+const tortellini_1 = __nccwpck_require__(356);
 const repositories = [
     { owner: 'iomega', repo: 'zenodo-upload' },
     { owner: 'xenon-middleware', repo: 'xenon-cli' }
 ];
-const ortolan = new ortolan_1.Ortolan(repositories);
-ortolan.run('list-of-repositories');
+const tortellini = new tortellini_1.Tortellini(repositories);
+tortellini.run('list-of-repositories');
 //# sourceMappingURL=main.js.map
 })();
 
