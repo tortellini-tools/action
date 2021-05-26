@@ -5,7 +5,10 @@ import {run_docker_container, volume2dockerargs} from './utils'
  * @param repo_dir Relative path to repo directory
  * @param analyze_dir Relative path to directory where result will be written
  */
-export async function analyze(repo_dir: string, analyze_dir: string) {
+export async function analyze(
+    repo_dir: string,
+    analyze_dir: string
+): Promise<void> {
     const volumes = {
         [repo_dir]: '/repo',
         [analyze_dir]: '/analyze'

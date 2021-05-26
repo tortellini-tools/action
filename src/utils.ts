@@ -1,11 +1,17 @@
 import {exec, ExecOptions} from '@actions/exec'
 import {resolve} from 'path'
 
+interface RunResult {
+    exit_code: number
+    stdout: string
+    stderr: string
+}
+
 export async function run_docker_container(
     docker_args: string[],
     ort_args: string[],
     image = 'philipssoftware/ort'
-) {
+): Promise<RunResult> {
     const cmd = 'docker'
     let args = ['run', '--rm']
     args = args.concat(docker_args)
@@ -40,9 +46,9 @@ export async function run_docker_container(
     }
 }
 
-export function volume2dockerargs(volumes: {[x: string]: string}) {
+export function volume2dockerargs(volumes: {[x: string]: string}): string[] {
     const docker_args: string[] = []
-    Object.entries(volumes).forEach(([outside, inside]) => {
+    for (const [outside, inside] of Object.entries(volumes)) {
         const outside_absolute = resolve(outside)
         if (!inside) {
             throw Error('Value can not be falsy')
@@ -50,6 +56,6 @@ export function volume2dockerargs(volumes: {[x: string]: string}) {
         const bind_mount = `${outside_absolute}:${inside}`
         docker_args.push('-v')
         docker_args.push(bind_mount)
-    })
+    }
     return docker_args
 }
