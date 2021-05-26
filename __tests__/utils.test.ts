@@ -1,8 +1,13 @@
+import {exec} from '@actions/exec'
 import {run_docker_container, volume2dockerargs} from '../src/utils'
 
 describe('run_docker_container()', () => {
     describe('with hello-world image', () => {
         const image = 'hello-world'
+
+        beforeAll(() => {
+            exec('docker', ['pull', image])
+        })
 
         test('empty arrays', async () => {
             const result = await run_docker_container([], [], image)
@@ -14,6 +19,10 @@ describe('run_docker_container()', () => {
 
     describe('with busybox image', () => {
         const image = 'busybox'
+
+        beforeAll(() => {
+            exec('docker', ['pull', image])
+        })
 
         test('ort_args = whoami', async () => {
             const result = await run_docker_container([], ['whoami'], image)
