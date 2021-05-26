@@ -32,7 +32,8 @@ Refs: #issue_number
     to open a new issue on GitHub.
 -->
 
-- [ ] [☝ Create an issue](https://github.com/tortellini-tools/action/issues/new/choose) to discuss what you are going to do
+- [ ] I read and I followed [contributing guidelines](https://github.com/tortellini-tools/action/blob/main/CONTRIBUTING.md)
+- [ ] [☝ Create an issue](https://github.com/NLeSC/licenseguard/issues/new/choose) to discuss what you are going to do
 
 ## Checklist
 
