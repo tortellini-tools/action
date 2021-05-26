@@ -31,7 +31,7 @@ Refs: #issue_number
     to avoid disappointment or unnecessary work later. The way to do this is
     to open a new issue on GitHub.
 -->
-
+- [ ] I read and I follow [contributing guidelines](CONTRIBUTING.md)
 - [ ] [☝ Create an issue](https://github.com/NLeSC/licenseguard/issues/new/choose) to discuss what you are going to do
 
 ## Checklist
