@@ -7,7 +7,7 @@ describe('run_docker_container()', () => {
 
         beforeAll(async () => {
             await exec('docker', ['pull', image])
-        })
+        }, 30000)
 
         test('empty arrays', async () => {
             const result = await run_docker_container([], [], image)
@@ -22,7 +22,7 @@ describe('run_docker_container()', () => {
 
         beforeAll(async () => {
             await exec('docker', ['pull', image])
-        })
+        }, 30000)
 
         test('ort_args = whoami', async () => {
             const result = await run_docker_container([], ['whoami'], image)
