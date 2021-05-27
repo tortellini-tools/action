@@ -42,7 +42,7 @@ function main() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const repositories = core.getInput('repositories');
-            core.debug(`repositories file is ${repositories}`);
+            console.log(`repositories file is ${repositories}`);
             yield check_1.check_directory();
         }
         catch (error) {
