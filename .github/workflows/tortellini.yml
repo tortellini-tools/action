@@ -17,7 +17,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - uses: tortellini-tools/action@main
+      - uses: tortellini-tools/action@75-multiple-repos
+        with:
+          repositories: 'urls.txt'
       - run: |
           # make sure the output file exists
           ls -asl out/analyzer-result.yml
