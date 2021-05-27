@@ -12,7 +12,7 @@ on: # run any PRs and main branch changes
 
 jobs:
 
-  build:
+  tortellini:
     runs-on: ubuntu-latest
 
     steps:
