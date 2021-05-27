@@ -3,9 +3,9 @@ description: 'GitHub Action that checks dependency licence issues using ort.'
 author: 'Netherlands eScience Center'
 inputs:
   repositories:
-    required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+    required: false
+    description: 'a file contains list of GitHub repository urls'
+    default: 'urls.txt'
   outputdir:
     required: true
     description: 'input description here'
