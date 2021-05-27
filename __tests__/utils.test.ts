@@ -53,7 +53,6 @@ describe('run_docker_container()', () => {
             expect(result.stderr).toContain(
                 'ls: /foo: No such file or directory'
             )
-            expect(result.stderr).toContain('failed with exit code 1')
         })
     })
 })

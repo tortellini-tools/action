@@ -21,7 +21,9 @@ export async function run_docker_container(
     let docker_stdout = ''
     let docker_stderr = ''
 
-    const options: ExecOptions = {}
+    const options: ExecOptions = {
+        ignoreReturnCode: true
+    }
     options.listeners = {
         stdout: (data: Buffer) => {
             docker_stdout += data.toString()
@@ -30,19 +32,11 @@ export async function run_docker_container(
             docker_stderr += data.toString()
         }
     }
-    try {
-        await exec(cmd, args, options)
-        return {
-            exit_code: 0,
-            stdout: docker_stdout,
-            stderr: docker_stderr
-        }
-    } catch (error) {
-        return {
-            exit_code: 1,
-            stdout: '',
-            stderr: docker_stderr + error.message
-        }
+    const exit_code = await exec(cmd, args, options)
+    return {
+        exit_code,
+        stdout: docker_stdout,
+        stderr: docker_stderr
     }
 }
 
