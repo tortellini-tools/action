@@ -1,5 +1,6 @@
 <p align="center">
   <a href="https://github.com/tortellini-tools/action/actions"><img alt="typescript-action status" src="https://github.com/tortellini-tools/action/workflows/build-test/badge.svg"></a>
+  <a href="https://github.com/tortellini-tools/action/actions"><img alt="tortellini-action status" src="https://github.com/tortellini-tools/action/workflows/tortellini/badge.svg"></a>
 </p>
 
 # Tortellini GitHub Action
