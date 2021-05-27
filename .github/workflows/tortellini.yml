@@ -17,5 +17,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-
       - uses: tortellini-tools/action@main
+      - run: |
+          # make sure the output file exists
+          ls -asl out/analyzer-result.yml
+          # show first 10 lines of the file
+          head -n10 out/analyzer-result.yml
