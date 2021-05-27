@@ -4,7 +4,32 @@
 
 # Tortellini GitHub Action
 
-GitHub Action that checks dependency licence issues using [ort](https://github.com/oss-review-toolkit/ort).
+This action checks dependency licence issues using [ort](https://github.com/oss-review-toolkit/ort).
+
+<!-- ## Inputs
+
+### `who-to-greet`
+
+**Required** The name of the person to greet. Default `"World"`.
+
+## Outputs -->
+
+## Usage
+
+See [action.yml](action.yml)
+
+```yaml
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  tortellini:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: tortellini-tools/action@main
+```
 
 ## Developer documentation
 
