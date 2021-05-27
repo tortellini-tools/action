@@ -1,5 +1,5 @@
 import {exec} from '@actions/exec'
-import {run_docker_container, volume2dockerargs} from '../src/utils'
+import {run_docker_container, volume2dockerargs} from '../src/docker'
 
 describe('run_docker_container()', () => {
     describe('with hello-world image', () => {
@@ -50,9 +50,10 @@ describe('run_docker_container()', () => {
             const result = await run_docker_container([], ['ls', '/foo'], image)
             expect(result.exit_code).toEqual(1)
             expect(result.stdout).toEqual('')
-            expect(result.stderr).toEqual(
-                "The process '/usr/bin/docker' failed with exit code 1"
+            expect(result.stderr).toContain(
+                'ls: /foo: No such file or directory'
             )
+            expect(result.stderr).toContain('failed with exit code 1')
         })
     })
 })

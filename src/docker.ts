@@ -41,7 +41,7 @@ export async function run_docker_container(
         return {
             exit_code: 1,
             stdout: '',
-            stderr: error.message
+            stderr: docker_stderr + error.message
         }
     }
 }

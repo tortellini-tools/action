@@ -1,4 +1,4 @@
-import {run_docker_container, volume2dockerargs} from './utils'
+import {run_docker_container, volume2dockerargs} from './docker'
 
 /**
  *

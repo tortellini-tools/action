@@ -60,44 +60,7 @@ exports.check_directory = check_directory;
 
 /***/ }),
 
-/***/ 249:
-/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
-
-
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.analyze = void 0;
-const utils_1 = __nccwpck_require__(918);
-/**
- *
- * @param repo_dir Relative path to repo directory
- * @param analyze_dir Relative path to directory where result will be written
- */
-function analyze(repo_dir, analyze_dir) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const volumes = {
-            [repo_dir]: '/repo',
-            [analyze_dir]: '/analyze'
-        };
-        const docker_args = utils_1.volume2dockerargs(volumes);
-        const ort_args = ['analyze', '-i', '/repo', '-o', '/analyze'];
-        yield utils_1.run_docker_container(docker_args, ort_args);
-    });
-}
-exports.analyze = analyze;
-//# sourceMappingURL=ort.js.map
-
-/***/ }),
-
-/***/ 918:
+/***/ 758:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 
@@ -144,7 +107,7 @@ function run_docker_container(docker_args, ort_args, image = 'philipssoftware/or
             return {
                 exit_code: 1,
                 stdout: '',
-                stderr: error.message
+                stderr: docker_stderr + error.message
             };
         }
     });
@@ -164,7 +127,44 @@ function volume2dockerargs(volumes) {
     return docker_args;
 }
 exports.volume2dockerargs = volume2dockerargs;
-//# sourceMappingURL=utils.js.map
+//# sourceMappingURL=docker.js.map
+
+/***/ }),
+
+/***/ 249:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.analyze = void 0;
+const docker_1 = __nccwpck_require__(758);
+/**
+ *
+ * @param repo_dir Relative path to repo directory
+ * @param analyze_dir Relative path to directory where result will be written
+ */
+function analyze(repo_dir, analyze_dir) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const volumes = {
+            [repo_dir]: '/repo',
+            [analyze_dir]: '/analyze'
+        };
+        const docker_args = docker_1.volume2dockerargs(volumes);
+        const ort_args = ['analyze', '-i', '/repo', '-o', '/analyze'];
+        yield docker_1.run_docker_container(docker_args, ort_args);
+    });
+}
+exports.analyze = analyze;
+//# sourceMappingURL=ort.js.map
 
 /***/ }),
 
