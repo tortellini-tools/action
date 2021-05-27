@@ -1,0 +1,25 @@
+name: tortellini
+
+on: # run any PRs and main branch changes
+  pull_request:
+  push:
+    branches:
+      - main
+      - 'releases/*'
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+
+  tortellini:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: tortellini-tools/action@main
+      - run: |
+          # make sure the output file exists
+          ls -asl out/analyzer-result.yml
+          # show first 10 lines of the file
+          head -n10 out/analyzer-result.yml
