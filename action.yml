@@ -4,32 +4,8 @@ author: 'Netherlands eScience Center'
 inputs:
   repositories:
     required: false
-    description: 'a file contains list of GitHub repository urls'
+    description: 'A file contains list of GitHub repository urls'
     default: 'urls.txt'
-  outputdir:
-    required: true
-    description: 'input description here'
-    default: 'default value if applicable'
-  package-curation-file:
-    required: true
-    description: 'input description here'
-    default: 'default value if applicable'
-  rules-file:
-    required: true
-    description: 'input description here'
-    default: 'default value if applicable'
-  license-classifications-file:
-    required: true
-    description: 'input description here'
-    default: 'default value if applicable'
-  report-formats:
-    required: true
-    description: 'input description here'
-    default: 'default value if applicable'
-  only-first-order-deps:
-    required: true
-    description: 'input description here'
-    default: 'default value if applicable'
 runs:
   using: 'node12'
   main: 'dist/index.js'
