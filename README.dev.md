@@ -1,9 +1,10 @@
 
 # Developer documentation
 
+
 ## Code in Main
 
-These tools rely on the availability of `Node.js`. Please check if you have `Node.js` and the related package manager
+This tool relies on the availability of `Node.js`. Please check if you have `Node.js` and the related package manager
 `npm` available on your system and verify that the version of `Node.js` is at least `14`.
 
 ```bash
@@ -38,7 +39,11 @@ $ npm test
 ...
 ```
 
+
 # Run the analysis
+
+The tool will analyze the license dependencies in predefined Github repositories and store reports of the analyses
+in the files `out/<organization>/<repository>/analyzer-result.xml`
 
 ```shell
 npm install
