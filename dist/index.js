@@ -109,7 +109,7 @@ function check_urls(repositories) {
             // split the contents by new line
             const url_list = url_data.split(/\r?\n/);
             // iterate over list of urls, clone and run analyze
-            for (const line of Object.entries(url_list)) {
+            for (const line of Object.values(url_list)) {
                 console.log(line);
                 // clone_repo()
                 // await analyze(repo_dir, output_dir)
