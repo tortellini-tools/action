@@ -2,10 +2,6 @@ name: 'tortellini-action'
 description: 'GitHub Action that checks dependency licence issues using ort.'
 author: 'Netherlands eScience Center'
 inputs:
-  milliseconds: # change this
-    required: true
-    description: 'input description here'
-    default: 'default value if applicable'
   repositories:
     required: true
     description: 'input description here'
