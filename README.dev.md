@@ -1,4 +1,3 @@
-
 # Developer documentation
 
 
@@ -40,10 +39,9 @@ $ npm test
 ```
 
 
-# Run the analysis
+## Run the analysis
 
-The tool will analyze the license dependencies in predefined Github repositories and store reports of the analyses
-in the files `out/<organization>/<repository>/analyzer-result.xml`
+The tool will analyze the license dependencies in predefined Github repositories (see variable `repositories` in file `src/main.ts`) and store reports of the analyses in the files `out/<organization>/<repository>/analyzer-result.xml` .
 
 ```shell
 npm install
@@ -53,17 +51,13 @@ node dist/index.js
 ```
 
 
-## Change action.yml
+## Changing action.yml
 
-The action.yml contains defines the inputs and output for your action.
+The action perfomed by the tool, is defined in the file [action.yml](action.yml). Update this file if you want to adapt this action. In the file, you can add your name, a description and inputs and outputs for your action. See the [documentation on Github actions](https://help.github.com/en/articles/metadata-syntax-for-github-actions) for more information.
 
-Update the action.yml with your name, description, inputs and outputs for your action.
+## Changing the Code
 
-See the [documentation](https://help.github.com/en/articles/metadata-syntax-for-github-actions)
-
-## Change the Code
-
-Most toolkit and CI/CD operations involve async operations so the action is run in an async function.
+Most toolkit and CI/CD operations involve async operations so the action should be run in an async function.
 
 ```javascript
 import * as core from '@actions/core';
@@ -85,9 +79,8 @@ See the [toolkit documentation](https://github.com/actions/toolkit/blob/master/R
 
 ## Publish to a distribution branch
 
-Actions are run from GitHub repos so we will checkin the packed dist folder.
+Actions are run from GitHub repos so we need to generate the Javascript files in the`dist` folder and push the results:
 
-Then run [ncc](https://github.com/zeit/ncc) and push the results:
 ```bash
 $ npm run package
 $ git add dist
@@ -95,7 +88,7 @@ $ git commit -a -m "prod dependencies"
 $ git push origin releases/v1
 ```
 
-Note: We recommend using the `--license` option for ncc, which will create a license file for all of the production node modules used in your project.
+Note: if you use [ncc](https://github.com/zeit/ncc) here, we recommend including the `--license`, which will create a license file for all of the production node modules used in your project.
 
 Your action is now published! :rocket:
 
@@ -103,16 +96,14 @@ See the [versioning documentation](https://github.com/actions/toolkit/blob/maste
 
 ## Validate
 
-You can now validate the action by referencing `./` in a workflow in your repo (see [test.yml](.github/workflows/test.yml))
+You can now validate the action by referencing `./` in a workflow in your repo (see [testing.yml](.github/workflows/testing.yml))
 
 ```yaml
 uses: ./
-with:
-  milliseconds: 1000
 ```
 
-See the [actions tab](https://github.com/actions/typescript-action/actions) for runs of this action! :rocket:
+See the actions tab of the repository on Github for runs of this action! :rocket:
 
 ## Usage:
 
-After testing you can [create a v1 tag](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md) to reference the stable and latest V1 action
+After testing you can [create a v1 tag](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md) to reference to the stable and latest V1 action
