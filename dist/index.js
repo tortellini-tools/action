@@ -42,7 +42,6 @@ function main() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const repositories = core.getInput('repositories');
-            console.log(`repositories file is ${repositories}`);
             if (repositories === '') {
                 yield check_1.check_directory();
             }
@@ -109,10 +108,19 @@ function check_urls(repositories) {
             // split the contents by new line
             const url_list = url_data.split(/\r?\n/);
             // iterate over list of urls, clone and run analyze
-            for (const line of Object.values(url_list)) {
-                console.log(line);
-                // clone_repo()
-                // await analyze(repo_dir, output_dir)
+            for (const repo_url of Object.values(url_list)) {
+                console.log(repo_url);
+                const github_regexp = /(?<protocol>(git@|https:\/\/))(?<host>[\w\.@]+)(\/|:)(?<owner>[\w,\-\_]+)\/(?<repo>[\w,\-.\_]+)(.git)/;
+                const matches = github_regexp.exec(repo_url);
+                if (matches) {
+                    const groups = matches['groups'];
+                    console.log(groups);
+                }
+                else {
+                    console.error(`Invalid URL: ${repo_url}`);
+                }
+                // run_git_clone(repo_url) // dest folder should define the folder
+                // await analyze(repo_dir, output_dir) //run analyze
             }
         }
         catch (err) {
