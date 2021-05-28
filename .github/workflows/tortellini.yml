@@ -18,8 +18,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: |
-          echo 'https://github.com/tortellini-tools/action' > urls.txt
-          echo 'https://github.com/fair-software/howfairis' >> urls.txt
+          echo 'https://github.com/tortellini-tools/action.git' > urls.txt
+          echo 'https://github.com/fair-software/howfairis.git' >> urls.txt
       - uses: tortellini-tools/action@75-multiple-repos
         with:
           repositories: 'urls.txt'
