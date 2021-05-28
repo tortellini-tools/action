@@ -21,18 +21,18 @@ export async function check_urls(repositories: string): Promise<void> {
             console.log(repo_url)
 
             const github_regexp =
-                /(?<protocol>(git@|https:\/\/))(?<host>[\w\.@]+)(\/|:)(?<owner>[\w,\-\_]+)\/(?<repo>[\w,\-.\_]+)(.git)/
+                /(?<protocol>(git@|https:\/\/))(?<host>[\w\.@]+)(\/|:)(?<owner>[\w,\-\_]+)\/(?<repo>[\w,\-.\_]+)(.git){0,1}/
             const matches = github_regexp.exec(repo_url)
 
             if (matches) {
                 const groups = matches['groups']
                 console.log(groups)
+                run_git_clone(repo_url, groups['owner'] ) // dest folder should define the folder
+                // await analyze(repo_dir, output_dir) //run analyze
             } else {
                 console.error(`Invalid URL: ${repo_url}`)
             }
 
-            // run_git_clone(repo_url) // dest folder should define the folder
-            // await analyze(repo_dir, output_dir) //run analyze
         }
     } catch (err) {
         console.error(err)
