@@ -4,7 +4,6 @@ import {check_directory, check_urls} from './check'
 export async function main(): Promise<void> {
     try {
         const repositories: string = core.getInput('repositories')
-        console.log(`repositories file is ${repositories}`)
 
         if (repositories === '') {
             await check_directory()
