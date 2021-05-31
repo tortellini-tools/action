@@ -24,20 +24,20 @@ export async function check_urls(
         const url_list: string[] = url_data.split(/\r?\n/)
 
         // get repo owner and repo name
-        const repo_info: GitRepo[] = url_list.map(get_owner_and_repo)
+        const all_repo_info: GitRepo[] = url_list.map(get_owner_and_repo)
 
         // clone each repo and run analyze
-        for (const [index, val] of repo_info.entries()) {
+        for (const [index, repo_info] of all_repo_info.entries()) {
             const clone_path = clone_dir.concat(
-                repo_info[index].owner,
                 '/',
-                repo_info[index].repo
+                repo_info.owner,
+                '/',
+                repo_info.repo
             )
             const analyze_path = output_dir.concat('/', clone_path)
             await run_git_clone(url_list[index], clone_path)
             await analyze(clone_path, analyze_path)
         }
-
     } catch (err) {
         console.error(err)
     }
