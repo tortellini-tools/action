@@ -22,13 +22,15 @@ export async function check_urls(repositories: string): Promise<void> {
 
             const github_regexp =
                 /(?<protocol>(git@|https:\/\/))(?<host>[\w.@]+)(\/|:)(?<owner>[\w,\-_]+)\/(?<repo>[\w,\-._]+)(.git){0,1}/
-            const regex_matches = github_regexp.exec(repo_url)
+            const regex_matches: string[] = github_regexp.exec(
+                repo_url
+            ) as string[]
 
-            if (matches) {
-                const regex_groups = regex_matches['groups']
-                console.log(regex_groups)
-                console.log(regex_groups['owner'])
-                console.log(regex_groups['repo'])
+            if (regex_matches) {
+                console.log(regex_matches)
+                // const regex_groups: string[] = regex_matches['groups']
+                // console.log(regex_groups['owner'])
+                // console.log(regex_groups['repo'])
 
                 // run_git_clone(repo_url, groups['owner']) // dest folder should define the folder
                 // await analyze(repo_dir, output_dir) //run analyze

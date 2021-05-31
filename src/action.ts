@@ -13,7 +13,6 @@ export async function main(): Promise<void> {
         // }
 
         await check_urls(repositories)
-
     } catch (error) {
         core.setFailed(error.message)
     }
