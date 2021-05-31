@@ -103,7 +103,7 @@ function check_directory(repo_dir = '.', output_dir = 'out') {
     });
 }
 exports.check_directory = check_directory;
-function check_urls(repositories) {
+function check_urls(repositories, output_dir = 'out') {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const url_data = fs
@@ -120,7 +120,23 @@ function check_urls(repositories) {
             //     // await analyze(repo_dir, output_dir) //run analyze
             // }
             const repo_info = url_list.map(git_1.get_owner_and_repo);
-            git_1.run_git_clone(url_list[0], repo_info[0].owner, repo_info[0].repo);
+            // for (const repo_detail of Object.values(repo_info)) {
+            //     console.log(repo_detail)
+            //     const clone_path = repo_detail.owner.concat('/', repo_detail.repo)
+            //     await run_git_clone(url_list[0], clone_path)
+            //     await analyze(repo_dir, output_dir)
+            // }
+            for (const [index, val] of repo_info.entries()) {
+                // your code goes here
+                console.log(index);
+                console.log(val);
+                const clone_path = repo_info[index].owner.concat('/', repo_info[index].repo);
+                console.log(clone_path);
+                const analyze_path = output_dir.concat(clone_path);
+                console.log(analyze_path);
+                yield git_1.run_git_clone(url_list[index], clone_path);
+                yield ort_1.analyze(clone_path, analyze_path);
+            }
             // console.log(repo_info)
         }
         catch (err) {
@@ -213,14 +229,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.get_owner_and_repo = exports.run_git_clone = void 0;
 const exec_1 = __nccwpck_require__(514);
-function run_git_clone(repo_url, repo_owner, repo_name, git_args = ['--verbose']) {
+function run_git_clone(repo_url, clone_path, git_args = ['--verbose']) {
     return __awaiter(this, void 0, void 0, function* () {
-        const dest_folder = repo_owner.concat('/', repo_name);
         const cmd = 'git';
         let args = ['clone'];
         args = args.concat(git_args);
         args.push(repo_url);
-        args.push(dest_folder);
+        args.push(clone_path);
         let git_stdout = '';
         let git_stderr = '';
         const options = {
