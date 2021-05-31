@@ -41,6 +41,7 @@ export async function run_git_clone(
 export interface GitRepo {
     owner: string
     repo: string
+    url: string
 }
 
 export function get_owner_and_repo(url: string): GitRepo {
@@ -59,6 +60,7 @@ export function get_owner_and_repo(url: string): GitRepo {
     }
     return {
         owner,
-        repo
+        repo,
+        url
     }
 }

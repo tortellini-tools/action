@@ -114,10 +114,10 @@ function check_urls(repositories, clone_dir = 'in', output_dir = 'out') {
             // get repo owner and repo name
             const all_repo_info = url_list.map(git_1.get_owner_and_repo);
             // clone each repo and run analyze
-            for (const [index, repo_info] of all_repo_info.entries()) {
+            for (const repo_info of all_repo_info) {
                 const clone_path = clone_dir.concat('/', repo_info.owner, '/', repo_info.repo);
-                const analyze_path = output_dir.concat('/', clone_path);
-                yield git_1.run_git_clone(url_list[index], clone_path);
+                const analyze_path = output_dir.concat('/', repo_info.owner, '/', repo_info.repo);
+                yield git_1.run_git_clone(repo_info.url, clone_path);
                 yield ort_1.analyze(clone_path, analyze_path);
             }
         }
@@ -257,7 +257,8 @@ function get_owner_and_repo(url) {
     }
     return {
         owner,
-        repo
+        repo,
+        url
     };
 }
 exports.get_owner_and_repo = get_owner_and_repo;
