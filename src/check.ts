@@ -48,7 +48,7 @@ export async function check_urls(
                 repo_info[index].repo
             )
             console.log(clone_path)
-            const analyze_path = output_dir.concat(clone_path)
+            const analyze_path = output_dir.concat('/', clone_path)
             console.log(analyze_path)
             await run_git_clone(url_list[index], clone_path)
             await analyze(clone_path, analyze_path)
