@@ -24,6 +24,8 @@ jobs:
         with:
           repositories: 'urls.txt'
       - run: |
+          tree ./
+      - run: |
           # make sure the output file exists
           ls -asl out/analyzer-result.yml
           # show first 10 lines of the file
