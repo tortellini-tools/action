@@ -94,6 +94,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.check_urls = exports.check_directory = void 0;
+const git_1 = __nccwpck_require__(374);
 // import {run_git_clone} from './git'
 const ort_1 = __nccwpck_require__(249);
 const fs = __importStar(__nccwpck_require__(747));
@@ -109,23 +110,15 @@ function check_urls(repositories) {
             const url_data = fs.readFileSync(repositories, 'utf-8');
             // split the contents by new line
             const url_list = url_data.split(/\r?\n/);
-            // iterate over list of urls, clone and run analyze
-            for (const repo_url of Object.values(url_list)) {
-                console.log(repo_url);
-                const github_regexp = /(?<protocol>(git@|https:\/\/))(?<host>[\w.@]+)(\/|:)(?<owner>[\w,\-_]+)\/(?<repo>[\w,\-._]+)(.git){0,1}/;
-                const regex_matches = github_regexp.exec(repo_url);
-                if (regex_matches) {
-                    console.log(regex_matches);
-                    // const regex_groups: string[] = regex_matches['groups']
-                    // console.log(regex_groups['owner'])
-                    // console.log(regex_groups['repo'])
-                    // run_git_clone(repo_url, groups['owner']) // dest folder should define the folder
-                    // await analyze(repo_dir, output_dir) //run analyze
-                }
-                else {
-                    console.error(`Invalid URL: ${repo_url}`);
-                }
-            }
+            // // iterate over list of urls, clone and run analyze
+            // for (const repo_url of Object.values(url_list)) {
+            //     console.log(repo_url)
+            //     const {owner, repo} = get_owner_and_repo(repo_url)
+            //     // run_git_clone(repo_url, groups['owner']) // dest folder should define the folder
+            //     // await analyze(repo_dir, output_dir) //run analyze
+            // }
+            const repo_info = url_list.map(git_1.get_owner_and_repo);
+            console.log(repo_info);
         }
         catch (err) {
             console.error(err);
@@ -198,6 +191,73 @@ function volume2dockerargs(volumes) {
 }
 exports.volume2dockerargs = volume2dockerargs;
 //# sourceMappingURL=docker.js.map
+
+/***/ }),
+
+/***/ 374:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.get_owner_and_repo = exports.run_git_clone = void 0;
+const exec_1 = __nccwpck_require__(514);
+function run_git_clone(repo_url, repo_dir, git_args = ['--verbose']) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const cmd = 'git';
+        let args = ['clone'];
+        args = args.concat(git_args);
+        args.push(repo_url);
+        args.push(repo_dir);
+        let git_stdout = '';
+        let git_stderr = '';
+        const options = {
+            ignoreReturnCode: true
+        };
+        options.listeners = {
+            stdout: (data) => {
+                git_stdout += data.toString();
+            },
+            stderr: (data) => {
+                git_stderr += data.toString();
+            }
+        };
+        const exit_code = yield exec_1.exec(cmd, args, options);
+        return {
+            exit_code,
+            stdout: git_stdout,
+            stderr: git_stderr
+        };
+    });
+}
+exports.run_git_clone = run_git_clone;
+function get_owner_and_repo(url) {
+    const url_prefix = 'https://github.com/';
+    let owner = '';
+    let repo = '';
+    try {
+        const url_split = url.slice(url_prefix.length).split('/');
+        owner = url_split[0];
+        repo = url_split[1];
+    }
+    catch (error) {
+        console.error(error.message);
+    }
+    return {
+        owner,
+        repo
+    };
+}
+exports.get_owner_and_repo = get_owner_and_repo;
+//# sourceMappingURL=git.js.map
 
 /***/ }),
 
