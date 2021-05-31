@@ -11,7 +11,9 @@ export async function check_directory(
 
 export async function check_urls(repositories: string): Promise<void> {
     try {
-        const url_data: string = fs.readFileSync(repositories, 'utf-8')
+        const url_data: string = fs
+            .readFileSync(repositories, 'utf-8')
+            .toString()
 
         // split the contents by new line
         const url_list: string[] = url_data.split(/\r?\n/)

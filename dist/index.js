@@ -106,7 +106,9 @@ exports.check_directory = check_directory;
 function check_urls(repositories) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const url_data = fs.readFileSync(repositories, 'utf-8');
+            const url_data = fs
+                .readFileSync(repositories, 'utf-8')
+                .toString();
             // split the contents by new line
             const url_list = url_data.split(/\r?\n/);
             // iterate over list of urls, clone and run analyze
