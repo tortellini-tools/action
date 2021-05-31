@@ -6,13 +6,12 @@ export async function main(): Promise<void> {
     try {
         const repositories: string = core.getInput('repositories')
 
-        // if (repositories === '') {
-        //     await check_directory()
-        // } else {
-        //     await check_urls(repositories)
-        // }
+        if (repositories === '') {
+            await check_directory()
+        } else {
+            await check_urls(repositories)
+        }
 
-        await check_urls(repositories)
     } catch (error) {
         core.setFailed(error.message)
     }
