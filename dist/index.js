@@ -37,17 +37,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.main = void 0;
 const core = __importStar(__nccwpck_require__(186));
+// import {check_directory, check_urls} from './check'
 const check_1 = __nccwpck_require__(657);
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const repositories = core.getInput('repositories');
-            if (repositories === '') {
-                yield check_1.check_directory();
-            }
-            else {
-                yield check_1.check_urls(repositories);
-            }
+            // if (repositories === '') {
+            //     await check_directory()
+            // } else {
+            //     await check_urls(repositories)
+            // }
+            yield check_1.check_urls(repositories);
         }
         catch (error) {
             core.setFailed(error.message);
