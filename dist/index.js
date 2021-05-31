@@ -95,7 +95,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.check_urls = exports.check_directory = void 0;
 const git_1 = __nccwpck_require__(374);
-// import {run_git_clone} from './git'
 const ort_1 = __nccwpck_require__(249);
 const fs = __importStar(__nccwpck_require__(747));
 function check_directory(repo_dir = '.', output_dir = 'out') {
@@ -110,15 +109,17 @@ function check_urls(repositories) {
             const url_data = fs.readFileSync(repositories, 'utf-8');
             // split the contents by new line
             const url_list = url_data.split(/\r?\n/);
-            // // iterate over list of urls, clone and run analyze
-            // for (const repo_url of Object.values(url_list)) {
-            //     console.log(repo_url)
-            //     const {owner, repo} = get_owner_and_repo(repo_url)
-            //     // run_git_clone(repo_url, groups['owner']) // dest folder should define the folder
-            //     // await analyze(repo_dir, output_dir) //run analyze
-            // }
-            const repo_info = url_list.map(git_1.get_owner_and_repo);
-            console.log(repo_info);
+            // iterate over list of urls, clone and run analyze
+            for (const repo_url of Object.values(url_list)) {
+                console.log(repo_url);
+                // const {owner, repo} = get_owner_and_repo(repo_url)
+                git_1.run_git_clone(repo_url); // dest folder should define the folder
+                // await analyze(repo_dir, output_dir) //run analyze
+            }
+            // const repo_info: GitRepo[] = url_list.map(get_owner_and_repo)
+            // console.log(repo_info)
+            // run_git_clone(repo_url) // dest folder should define the folder
+            // await analyze(repo_dir, output_dir) //run analyze
         }
         catch (err) {
             console.error(err);
@@ -210,13 +211,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.get_owner_and_repo = exports.run_git_clone = void 0;
 const exec_1 = __nccwpck_require__(514);
-function run_git_clone(repo_url, repo_dir, git_args = ['--verbose']) {
+function run_git_clone(repo_url, git_args = ['--verbose']) {
     return __awaiter(this, void 0, void 0, function* () {
+        const { owner, repo } = get_owner_and_repo(repo_url);
         const cmd = 'git';
         let args = ['clone'];
         args = args.concat(git_args);
         args.push(repo_url);
-        args.push(repo_dir);
+        args.concat(owner, '/', repo);
         let git_stdout = '';
         let git_stderr = '';
         const options = {
