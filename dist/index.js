@@ -215,11 +215,12 @@ exports.get_owner_and_repo = exports.run_git_clone = void 0;
 const exec_1 = __nccwpck_require__(514);
 function run_git_clone(repo_url, repo_owner, repo_name, git_args = ['--verbose']) {
     return __awaiter(this, void 0, void 0, function* () {
+        const dest_folder = repo_owner.concat('/', repo_name);
         const cmd = 'git';
         let args = ['clone'];
         args = args.concat(git_args);
         args.push(repo_url);
-        args.concat(repo_owner, '/', repo_name);
+        args.push(dest_folder);
         let git_stdout = '';
         let git_stderr = '';
         const options = {

@@ -11,11 +11,12 @@ export async function run_git_clone(
     repo_name: string,
     git_args: string[] = ['--verbose']
 ): Promise<RunResult> {
+    const dest_folder = repo_owner.concat('/', repo_name)
     const cmd = 'git'
     let args = ['clone']
     args = args.concat(git_args)
     args.push(repo_url)
-    args.concat(repo_owner, '/', repo_name)
+    args.push(dest_folder)
 
     let git_stdout = ''
     let git_stderr = ''
