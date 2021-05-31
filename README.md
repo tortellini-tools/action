@@ -20,6 +20,7 @@ This action checks dependency licence issues using [ort](https://github.com/oss-
 
 See [action.yml](action.yml)
 
+### Own repository
 ```yaml
 on:
   # Allows you to run this workflow manually from the Actions tab
@@ -31,6 +32,25 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - uses: tortellini-tools/action@main
+```
+
+### Multiple repositories
+```yaml
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  tortellini:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - run: |
+        echo 'https://github.com/tortellini-tools/action' > urls.txt
+        echo 'https://github.com/fair-software/howfairis' >> urls.txt
+    - uses: tortellini-tools/action@main
+      with:
+        repositories: 'urls.txt'
 ```
 
 ## Developer documentation
