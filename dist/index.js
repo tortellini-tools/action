@@ -93,6 +93,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.check_urls = exports.check_directory = void 0;
+// import {run_git_clone} from './git'
 const ort_1 = __nccwpck_require__(249);
 const fs = __importStar(__nccwpck_require__(747));
 function check_directory(repo_dir = '.', output_dir = 'out') {
@@ -110,17 +111,17 @@ function check_urls(repositories) {
             // iterate over list of urls, clone and run analyze
             for (const repo_url of Object.values(url_list)) {
                 console.log(repo_url);
-                const github_regexp = /(?<protocol>(git@|https:\/\/))(?<host>[\w\.@]+)(\/|:)(?<owner>[\w,\-\_]+)\/(?<repo>[\w,\-.\_]+)(.git)/;
+                const github_regexp = /(?<protocol>(git@|https:\/\/))(?<host>[\w.@]+)(\/|:)(?<owner>[\w,\-_]+)\/(?<repo>[\w,\-._]+)(.git){0,1}/;
                 const matches = github_regexp.exec(repo_url);
                 if (matches) {
                     const groups = matches['groups'];
                     console.log(groups);
+                    // run_git_clone(repo_url, groups['owner']) // dest folder should define the folder
+                    // await analyze(repo_dir, output_dir) //run analyze
                 }
                 else {
                     console.error(`Invalid URL: ${repo_url}`);
                 }
-                // run_git_clone(repo_url) // dest folder should define the folder
-                // await analyze(repo_dir, output_dir) //run analyze
             }
         }
         catch (err) {
