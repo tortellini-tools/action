@@ -6,6 +6,25 @@ require('./sourcemap-register.js');/******/ (() => { // webpackBootstrap
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -17,15 +36,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.main = void 0;
-const core_1 = __nccwpck_require__(186);
+const core = __importStar(__nccwpck_require__(186));
 const check_1 = __nccwpck_require__(657);
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            yield check_1.check_directory();
+            const repositories = core.getInput('repositories');
+            if (repositories === '') {
+                yield check_1.check_directory();
+            }
+            else {
+                yield check_1.check_urls(repositories);
+            }
         }
         catch (error) {
-            core_1.setFailed(error.message);
+            core.setFailed(error.message);
         }
     });
 }
@@ -38,6 +63,25 @@ exports.main = main;
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -48,14 +92,41 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.check_directory = void 0;
+exports.check_urls = exports.check_directory = void 0;
+const git_1 = __nccwpck_require__(374);
 const ort_1 = __nccwpck_require__(249);
+const fs = __importStar(__nccwpck_require__(747));
 function check_directory(repo_dir = '.', output_dir = 'out') {
     return __awaiter(this, void 0, void 0, function* () {
         yield ort_1.analyze(repo_dir, output_dir);
     });
 }
 exports.check_directory = check_directory;
+function check_urls(repositories, clone_dir = 'in', output_dir = 'out') {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const url_data = fs
+                .readFileSync(repositories, 'utf-8')
+                .toString()
+                .trim();
+            // split the contents by new line
+            const url_list = url_data.split(/\r?\n/);
+            // get repo owner and repo name
+            const all_repo_info = url_list.map(git_1.get_owner_and_repo);
+            // clone each repo and run analyze
+            for (const repo_info of all_repo_info) {
+                const clone_path = clone_dir.concat('/', repo_info.owner, '/', repo_info.repo);
+                const analyze_path = output_dir.concat('/', repo_info.owner, '/', repo_info.repo);
+                yield git_1.run_git_clone(repo_info.url, clone_path);
+                yield ort_1.analyze(clone_path, analyze_path);
+            }
+        }
+        catch (err) {
+            console.error(err);
+        }
+    });
+}
+exports.check_urls = check_urls;
 //# sourceMappingURL=check.js.map
 
 /***/ }),
@@ -86,7 +157,9 @@ function run_docker_container(docker_args, ort_args, image = 'philipssoftware/or
         args = args.concat(ort_args);
         let docker_stdout = '';
         let docker_stderr = '';
-        const options = {};
+        const options = {
+            ignoreReturnCode: true
+        };
         options.listeners = {
             stdout: (data) => {
                 docker_stdout += data.toString();
@@ -95,21 +168,12 @@ function run_docker_container(docker_args, ort_args, image = 'philipssoftware/or
                 docker_stderr += data.toString();
             }
         };
-        try {
-            yield exec_1.exec(cmd, args, options);
-            return {
-                exit_code: 0,
-                stdout: docker_stdout,
-                stderr: docker_stderr
-            };
-        }
-        catch (error) {
-            return {
-                exit_code: 1,
-                stdout: '',
-                stderr: docker_stderr + error.message
-            };
-        }
+        const exit_code = yield exec_1.exec(cmd, args, options);
+        return {
+            exit_code,
+            stdout: docker_stdout,
+            stderr: docker_stderr
+        };
     });
 }
 exports.run_docker_container = run_docker_container;
@@ -128,6 +192,77 @@ function volume2dockerargs(volumes) {
 }
 exports.volume2dockerargs = volume2dockerargs;
 //# sourceMappingURL=docker.js.map
+
+/***/ }),
+
+/***/ 374:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.get_owner_and_repo = exports.run_git_clone = void 0;
+const exec_1 = __nccwpck_require__(514);
+function run_git_clone(repo_url, clone_path, git_args = ['--verbose']) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const cmd = 'git';
+        let args = ['clone'];
+        args = args.concat(git_args);
+        args.push(repo_url);
+        args.push(clone_path);
+        let git_stdout = '';
+        let git_stderr = '';
+        const options = {
+            ignoreReturnCode: true
+        };
+        options.listeners = {
+            stdout: (data) => {
+                git_stdout += data.toString();
+            },
+            stderr: (data) => {
+                git_stderr += data.toString();
+            }
+        };
+        const exit_code = yield exec_1.exec(cmd, args, options);
+        return {
+            exit_code,
+            stdout: git_stdout,
+            stderr: git_stderr
+        };
+    });
+}
+exports.run_git_clone = run_git_clone;
+function get_owner_and_repo(url) {
+    const url_prefix = 'https://github.com/';
+    let owner = '';
+    let repo = '';
+    try {
+        const url_split = url.slice(url_prefix.length).split('/');
+        owner = url_split[0];
+        repo = url_split[1];
+        if (!owner || !repo) {
+            throw Error('Cannot get owner or repo name.');
+        }
+    }
+    catch (error) {
+        console.error(error.message);
+    }
+    return {
+        owner,
+        repo,
+        url
+    };
+}
+exports.get_owner_and_repo = get_owner_and_repo;
+//# sourceMappingURL=git.js.map
 
 /***/ }),
 

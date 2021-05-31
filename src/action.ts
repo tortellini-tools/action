@@ -1,10 +1,16 @@
-import {setFailed} from '@actions/core'
-import {check_directory} from './check'
+import * as core from '@actions/core'
+import {check_directory, check_urls} from './check'
 
 export async function main(): Promise<void> {
     try {
-        await check_directory()
+        const repositories: string = core.getInput('repositories')
+
+        if (repositories === '') {
+            await check_directory()
+        } else {
+            await check_urls(repositories)
+        }
     } catch (error) {
-        setFailed(error.message)
+        core.setFailed(error.message)
     }
 }
