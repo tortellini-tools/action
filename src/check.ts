@@ -11,6 +11,7 @@ export async function check_directory(
 
 export async function check_urls(
     repositories: string,
+    clone_dir = 'in',
     output_dir = 'out'
 ): Promise<void> {
     try {
@@ -43,7 +44,8 @@ export async function check_urls(
             // your code goes here
             console.log(index)
             console.log(val)
-            const clone_path = repo_info[index].owner.concat(
+            const clone_path = clone_dir.concat(
+                repo_info[index].owner,
                 '/',
                 repo_info[index].repo
             )

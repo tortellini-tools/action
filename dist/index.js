@@ -103,7 +103,7 @@ function check_directory(repo_dir = '.', output_dir = 'out') {
     });
 }
 exports.check_directory = check_directory;
-function check_urls(repositories, output_dir = 'out') {
+function check_urls(repositories, clone_dir = 'in', output_dir = 'out') {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const url_data = fs
@@ -130,9 +130,9 @@ function check_urls(repositories, output_dir = 'out') {
                 // your code goes here
                 console.log(index);
                 console.log(val);
-                const clone_path = repo_info[index].owner.concat('/', repo_info[index].repo);
+                const clone_path = clone_dir.concat(repo_info[index].owner, '/', repo_info[index].repo);
                 console.log(clone_path);
-                const analyze_path = output_dir.concat(clone_path);
+                const analyze_path = output_dir.concat('/', clone_path);
                 console.log(analyze_path);
                 yield git_1.run_git_clone(url_list[index], clone_path);
                 yield ort_1.analyze(clone_path, analyze_path);
