@@ -51,6 +51,9 @@ export function get_owner_and_repo(url: string): GitRepo {
         const url_split = url.slice(url_prefix.length).split('/')
         owner = url_split[0]
         repo = url_split[1]
+        if (!owner || !repo) {
+            throw Error('Cannot get owner or repo name.')
+        }
     } catch (error) {
         console.error(error.message)
     }
