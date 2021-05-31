@@ -7,15 +7,15 @@ interface RunResult {
 
 export async function run_git_clone(
     repo_url: string,
+    repo_owner: string,
+    repo_name: string,
     git_args: string[] = ['--verbose']
 ): Promise<RunResult> {
-    const {owner, repo} = get_owner_and_repo(repo_url)
-
     const cmd = 'git'
     let args = ['clone']
     args = args.concat(git_args)
     args.push(repo_url)
-    args.concat(owner, '/', repo)
+    args.concat(repo_owner, '/', repo_name)
 
     let git_stdout = ''
     let git_stderr = ''
