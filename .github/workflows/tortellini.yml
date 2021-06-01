@@ -21,7 +21,7 @@ jobs:
           echo contents
           echo '##[endgroup]'
 
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@${GITHUB_REF##*/}
       - run: |
           echo 'https://github.com/tortellini-tools/action' > urls.txt
           echo 'https://github.com/fair-software/howfairis' >> urls.txt
