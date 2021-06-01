@@ -45,19 +45,24 @@ export interface GitRepo {
 }
 
 export function get_owner_and_repo(url: string): GitRepo {
-    const url_prefix = 'https://github.com/'
-    let owner = ''
-    let repo = ''
+    const prefix = 'https://github.com/'
+
+    if (url.length < prefix.length) {
+        throw Error('Cannot get owner or repo name: url too short.')
+    }
+    if (!url.startsWith(prefix)) {
+        throw Error(`Cannot get owner or repo name: expected url to start with '${prefix}'.`)
+    }
+
+    let owner: string = ''
+    let repo: string = ''
+
     try {
-        const url_split = url.slice(url_prefix.length).split('/')
-        owner = url_split[0]
-        repo = url_split[1]
-        if (!owner || !repo) {
-            throw Error('Cannot get owner or repo name.')
-        }
+        [owner, repo] = url.slice(prefix.length).split('/').slice(0, 2)
     } catch (error) {
         console.error(error.message)
     }
+
     return {
         owner,
         repo,

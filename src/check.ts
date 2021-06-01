@@ -3,45 +3,30 @@ import {analyze} from './ort'
 import * as fs from 'fs'
 
 export async function check_directory(
-    repo_dir = '.',
+    input_dir = '.',
     output_dir = 'out'
 ): Promise<void> {
-    await analyze(repo_dir, output_dir)
+    await analyze(input_dir, output_dir)
 }
 
 export async function check_urls(
     repositories: string,
-    clone_dir = 'in',
+    input_dir = 'in',
     output_dir = 'out'
 ): Promise<void> {
     try {
-        const url_data: string = fs
-            .readFileSync(repositories, 'utf-8')
-            .toString()
-            .trim()
-
-        // split the contents by new line
-        const url_list: string[] = url_data.split(/\r?\n/)
+        // read the list of urls from file
+        const urls: string[] = fs.readFileSync(repositories, 'utf-8').trim().split(/\r?\n/)
 
         // get repo owner and repo name
-        const all_repo_info: GitRepo[] = url_list.map(get_owner_and_repo)
+        const gitrepos: GitRepo[] = urls.map(get_owner_and_repo)
 
         // clone each repo and run analyze
-        for (const repo_info of all_repo_info) {
-            const clone_path = clone_dir.concat(
-                '/',
-                repo_info.owner,
-                '/',
-                repo_info.repo
-            )
-            const analyze_path = output_dir.concat(
-                '/',
-                repo_info.owner,
-                '/',
-                repo_info.repo
-            )
-            await run_git_clone(repo_info.url, clone_path)
-            await analyze(clone_path, analyze_path)
+        for (const gitrepo of gitrepos) {
+            const input_path = `${input_dir}/${gitrepo.owner}/${gitrepo.repo}`
+            const output_path = `${output_dir}/${gitrepo.owner}/${gitrepo.repo}`
+            await run_git_clone(gitrepo.url, input_path)
+            await analyze(input_path, output_path)
         }
     } catch (err) {
         console.error(err)
