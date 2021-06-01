@@ -16,6 +16,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - run: |
+          echo '##[group] the group'
+          echo '##[endgroup]'
+
       - uses: actions/checkout@v2
       - run: |
           echo 'https://github.com/tortellini-tools/action' > urls.txt
