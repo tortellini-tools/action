@@ -96,29 +96,32 @@ exports.check_urls = exports.check_directory = void 0;
 const git_1 = __nccwpck_require__(374);
 const ort_1 = __nccwpck_require__(249);
 const fs = __importStar(__nccwpck_require__(747));
-function check_directory(repo_dir = '.', output_dir = 'out') {
+function check_directory(input_dir = '.', output_dir = 'out') {
     return __awaiter(this, void 0, void 0, function* () {
-        yield ort_1.analyze(repo_dir, output_dir);
+        yield ort_1.analyze(input_dir, output_dir);
     });
 }
 exports.check_directory = check_directory;
-function check_urls(repositories, clone_dir = 'in', output_dir = 'out') {
+function check_urls(repositories, input_dir = 'in', output_dir = 'out') {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const url_data = fs
+            // read the list of urls from file
+            const urls = fs
                 .readFileSync(repositories, 'utf-8')
-                .toString()
-                .trim();
-            // split the contents by new line
-            const url_list = url_data.split(/\r?\n/);
+                .trim()
+                .split(/\r?\n/);
             // get repo owner and repo name
-            const all_repo_info = url_list.map(git_1.get_owner_and_repo);
+            const gitrepos = urls.map(git_1.get_owner_and_repo);
+            // get the total number of repositories
+            const n_gitrepos = gitrepos.length;
             // clone each repo and run analyze
-            for (const repo_info of all_repo_info) {
-                const clone_path = clone_dir.concat('/', repo_info.owner, '/', repo_info.repo);
-                const analyze_path = output_dir.concat('/', repo_info.owner, '/', repo_info.repo);
-                yield git_1.run_git_clone(repo_info.url, clone_path);
-                yield ort_1.analyze(clone_path, analyze_path);
+            for (const [i_gitrepo, gitrepo] of gitrepos.entries()) {
+                print_collapsable_start(i_gitrepo, n_gitrepos, gitrepo);
+                const input_path = `${input_dir}/${gitrepo.owner}/${gitrepo.repo}`;
+                const output_path = `${output_dir}/${gitrepo.owner}/${gitrepo.repo}`;
+                yield git_1.run_git_clone(gitrepo.url, input_path);
+                yield ort_1.analyze(input_path, output_path);
+                print_collapsable_end();
             }
         }
         catch (err) {
@@ -127,6 +130,12 @@ function check_urls(repositories, clone_dir = 'in', output_dir = 'out') {
     });
 }
 exports.check_urls = check_urls;
+function print_collapsable_end() {
+    console.log('##[endgroup]');
+}
+function print_collapsable_start(i, n, gitrepo) {
+    console.log(`##[group]${i}/${n}: ${gitrepo.owner}/${gitrepo.repo}`);
+}
 //# sourceMappingURL=check.js.map
 
 /***/ }),
@@ -241,18 +250,21 @@ function run_git_clone(repo_url, clone_path, git_args = ['--verbose']) {
 }
 exports.run_git_clone = run_git_clone;
 function get_owner_and_repo(url) {
-    const url_prefix = 'https://github.com/';
+    const prefix = 'https://github.com/';
+    if (url.length < prefix.length) {
+        throw Error('Cannot get owner or repo name: url too short.');
+    }
+    if (!url.startsWith(prefix)) {
+        throw Error(`Cannot get owner or repo name: expected url to start with '${prefix}'.`);
+    }
     let owner = '';
     let repo = '';
     try {
-        const url_split = url.slice(url_prefix.length).split('/');
-        owner = url_split[0];
-        repo = url_split[1];
-        if (!owner || !repo) {
-            throw Error('Cannot get owner or repo name.');
-        }
+        ;
+        [owner, repo] = url.slice(prefix.length).split('/').slice(0, 2);
     }
     catch (error) {
+        console.error(url);
         console.error(error.message);
     }
     return {
@@ -2032,14 +2044,7 @@ var __webpack_exports__ = {};
 (() => {
 var exports = __webpack_exports__;
 
-// import {Tortellini} from './tortellini'
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-// const repositories = [
-//     {owner: 'iomega', repo: 'zenodo-upload'},
-//     {owner: 'xenon-middleware', repo: 'xenon-cli'}
-// ]
-// const tortellini = new Tortellini(repositories)
-// tortellini.run('list-of-repositories')
 const action_1 = __nccwpck_require__(139);
 action_1.main();
 //# sourceMappingURL=main.js.map
