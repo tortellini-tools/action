@@ -11,4 +11,4 @@ runs:
   main: 'dist/index.js'
 branding:
   color: 'purple'
-  brand: 'align-left'
+  icon: 'align-left'
