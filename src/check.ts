@@ -41,10 +41,10 @@ export async function check_urls(
     }
 }
 
-function print_collapsable_end() {
+function print_collapsable_end(): void {
     console.log('::endgroup::')
 }
 
-function print_collapsable_start(i: number, n: number, gitrepo: GitRepo) {
+function print_collapsable_start(i: number, n: number, gitrepo: GitRepo): void {
     console.log(`::group::${i}/${n}: ${gitrepo.owner}/${gitrepo.repo}`)
 }
