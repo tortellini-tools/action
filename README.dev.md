@@ -115,14 +115,18 @@ The analyses will be stored in the directories
 Actions are run from GitHub repos so we need to generate the Javascript files in the`dist` folder and push the results:
 
 ```bash
-$ npm run build
-$ npm run package
+$ cd $(mktemp --directory --tmpdir tortellini-prep-release.XXXXXX)
+$ git clone https://github.com/tortellini-tools/action .
+$ npm install
+$ npm run all
 $ git add dist
-$ git commit -a -m "prod dependencies"
+$ git commit --message "prod dependencies"
 $ git push origin main
 ```
 
-Next, create a release on the Github page via 
+Next, check if the top three actions on the [action page](https://github.com/tortellini-tools/action/actions?query=branch%3Amain+workflow%3Atortellini+event%3Apush) are green.
+
+Create a release on the Github page via 
 [Create a new release](https://github.com/tortellini-tools/action/releases/new).
 
 On the new release page, for `Tag version` use `v` and the next version number, for example `v3`.
@@ -130,6 +134,8 @@ See the [versioning documentation](https://github.com/actions/toolkit/blob/maste
 for more information.
 
 Your action is now published! :rocket:
+
+Check if the new version has been published on the [Github Marketplace](https://github.com/marketplace/actions/tortellini-action).
 
 You can now validate the action by going to 
 [this workflow](https://github.com/tortellini-tools/action/actions/workflows/tortellini.yml)
