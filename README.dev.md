@@ -1,16 +1,26 @@
 # Developer documentation
 
+This [action](https://docs.github.com/en/actions/creating-actions/creating-a-javascript-action) is written in 
+[Typescript](https://www.typescriptlang.org) 
+and makes use of the
+[Github @actions packages](https://github.com/actions/toolkit/blob/master/README.md#packages).
 
-## Code in Main
 
-This tool relies on the availability of `Node.js`. Please check if you have `Node.js` and the related package manager
-`npm` available on your system and verify that the version of `Node.js` is at least `14`.
+## Requirements
+
+This tool relies on the availability of [Node.js](https://nodejs.org/) and 
+[Docker](https://docs.docker.com/get-docker/).
+
+Please verify that you have `Node.js` and the related package manager `npm`, and `docker` available on your 
+system. Make sure that the version of `Node.js` is at least `12`.
 
 ```bash
 $ node --version
 v14.17.0
 $ npm --version
 6.14.13
+$ docker --version
+Docker version 20.10.6, build 370c289
 ```
 
 `Node.js` and `npm` can be downloaded in one package from [nodejs.org](https://nodejs.org/en/). And here are
@@ -21,10 +31,19 @@ Install the dependencies
 $ npm install
 ```
 
+
+## Build
+
 Build the typescript and package it for distribution
 ```bash
 $ npm run build && npm run package
 ```
+
+
+## Run unit test
+
+The tests are stored in the directory `__tests__` and are written using 
+[jestjs](https://jestjs.io/). 
 
 Run the tests :heavy_check_mark:
 ```bash
@@ -38,10 +57,34 @@ $ npm test
 ...
 ```
 
+To get information the test coverage, run the tests with 
+`coverage npm test -- --coverage` and 
+examine the file `coverage/lcov-report/index.html`
+
+## Linting
+
+The code in the `src` directory can be linted with:
+
+```bash
+npm run lint
+```
+
+## Formatting
+
+Some of the linting error can be fixed with formatting:
+
+```bash
+npm run format
+```
+
 
 ## Run the analysis
 
-The tool will analyze the license dependencies in predefined Github repositories (see variable `repositories` in file `src/main.ts`) and store reports of the analyses in the files `out/<organization>/<repository>/analyzer-result.xml` .
+### On the current repository
+
+The tool will analyze the license dependencies in current Github 
+repository and store reports of the analyses in the `out/` 
+directory.
 
 ```shell
 npm install
@@ -50,60 +93,44 @@ npm run package
 node dist/index.js
 ```
 
+### On other repositories
 
-## Changing action.yml
+You can also analyze other repositories  on Github by storing their addresses in
+a file and running node on the file.
 
-The action perfomed by the tool, is defined in the file [action.yml](action.yml). Update this file if you want to adapt this action. In the file, you can add your name, a description and inputs and outputs for your action. See the [documentation on Github actions](https://help.github.com/en/articles/metadata-syntax-for-github-actions) for more information.
-
-## Changing the Code
-
-Most toolkit and CI/CD operations involve async operations so the action should be run in an async function.
-
-```javascript
-import * as core from '@actions/core';
-...
-
-async function run() {
-  try {
-      ...
-  }
-  catch (error) {
-    core.setFailed(error.message);
-  }
-}
-
-run()
+```
+sudo rm -r in out
+echo 'https://github.com/tortellini-tools/action' > urls.txt
+echo 'https://github.com/fair-software/howfairis' >> urls.txt
+INPUT_REPOSITORIES=urls.txt node dist/index.js
 ```
 
-See the [toolkit documentation](https://github.com/actions/toolkit/blob/master/README.md#packages) for the various packages.
+The analyses will be stored in the directories 
+`out/<organization>/<repository>/` .
 
-## Publish to a distribution branch
+
+
+## How to create a release
 
 Actions are run from GitHub repos so we need to generate the Javascript files in the`dist` folder and push the results:
 
 ```bash
+$ npm run build
 $ npm run package
 $ git add dist
 $ git commit -a -m "prod dependencies"
-$ git push origin releases/v1
+$ git push origin main
 ```
 
-Note: if you use [ncc](https://github.com/zeit/ncc) here, we recommend including the `--license`, which will create a license file for all of the production node modules used in your project.
+Next, create a release on the Github page via 
+[Create a new release](https://github.com/tortellini-tools/action/releases/new).
+
+On the new release page, for `Tag version` use `v` and the next version number, for example `v3`.
+See the [versioning documentation](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md)
+for more information.
 
 Your action is now published! :rocket:
 
-See the [versioning documentation](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md)
-
-## Validate
-
-You can now validate the action by referencing `./` in a workflow in your repo (see [testing.yml](.github/workflows/testing.yml))
-
-```yaml
-uses: ./
-```
-
-See the actions tab of the repository on Github for runs of this action! :rocket:
-
-## Usage:
-
-After testing you can [create a v1 tag](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md) to reference to the stable and latest V1 action
+You can now validate the action by going to 
+[this workflow](https://github.com/tortellini-tools/action/actions/workflows/tortellini.yml)
+and then clicking on the button `Run workflow`.
