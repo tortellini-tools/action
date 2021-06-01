@@ -1,6 +1,8 @@
 import {run_git_clone, get_owner_and_repo, GitRepo} from './git'
 import {analyze} from './ort'
 import * as fs from 'fs'
+import * as core from '@actions/core'
+
 
 export async function check_directory(
     input_dir = '.',
@@ -29,22 +31,20 @@ export async function check_urls(
 
         // clone each repo and run analyze
         for (const [i_gitrepo, gitrepo] of gitrepos.entries()) {
-            print_collapsable_start(i_gitrepo, n_gitrepos, gitrepo)
-            const input_path = `${input_dir}/${gitrepo.owner}/${gitrepo.repo}`
-            const output_path = `${output_dir}/${gitrepo.owner}/${gitrepo.repo}`
-            await run_git_clone(gitrepo.url, input_path)
-            await analyze(input_path, output_path)
-            print_collapsable_end()
+           
+            const group_title = `${i_gitrepo}/${n_gitrepos}: ${gitrepo.owner}/${gitrepo.repo}`
+            await core.group(group_title, async () => {
+                await make_output_group(input_dir, output_dir, gitrepo)
+            })
         }
     } catch (err) {
         console.error(err)
     }
 }
 
-function print_collapsable_end(): void {
-    console.log('##[endgroup]')
-}
-
-function print_collapsable_start(i: number, n: number, gitrepo: GitRepo): void {
-    console.log(`##[group]${i}/${n}: ${gitrepo.owner}/${gitrepo.repo}`)
+const make_output_group = async (input_dir: string, output_dir: string, gitrepo: GitRepo): Promise<void> => {
+    const input_path = `${input_dir}/${gitrepo.owner}/${gitrepo.repo}`
+    const output_path = `${output_dir}/${gitrepo.owner}/${gitrepo.repo}`
+    await run_git_clone(gitrepo.url, input_path)
+    await analyze(input_path, output_path)
 }
