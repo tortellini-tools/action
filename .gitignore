@@ -1,3 +1,7 @@
+# Input and output folders
+in
+out
+
 # Dependency directory
 node_modules
 

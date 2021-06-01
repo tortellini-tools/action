@@ -1,5 +1,5 @@
 {
-  "name": "ortolan",
+  "name": "tortellini",
   "version": "0.1.0",
   "private": true,
   "description": "check dependency licence issues using ort",
@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/NLeSC/licenseguard.git"
+    "url": "git+https://github.com/tortellini-tools/action.git"
   },
   "keywords": [
     "actions",

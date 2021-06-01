@@ -1,9 +1,13 @@
-import {Ortolan} from './ortolan'
+// import {Tortellini} from './tortellini'
 
-const repositories = [
-    {owner: 'iomega', repo: 'zenodo-upload'},
-    {owner: 'xenon-middleware', repo: 'xenon-cli'}
-]
+// const repositories = [
+//     {owner: 'iomega', repo: 'zenodo-upload'},
+//     {owner: 'xenon-middleware', repo: 'xenon-cli'}
+// ]
 
-const ortolan = new Ortolan(repositories)
-ortolan.run('list-of-repositories')
+// const tortellini = new Tortellini(repositories)
+// tortellini.run('list-of-repositories')
+
+import {main} from './action'
+
+main()
