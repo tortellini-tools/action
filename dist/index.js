@@ -96,6 +96,7 @@ exports.check_urls = exports.check_directory = void 0;
 const git_1 = __nccwpck_require__(374);
 const ort_1 = __nccwpck_require__(249);
 const fs = __importStar(__nccwpck_require__(747));
+const core = __importStar(__nccwpck_require__(186));
 function check_directory(input_dir = '.', output_dir = 'out') {
     return __awaiter(this, void 0, void 0, function* () {
         yield ort_1.analyze(input_dir, output_dir);
@@ -116,12 +117,10 @@ function check_urls(repositories, input_dir = 'in', output_dir = 'out') {
             const n_gitrepos = gitrepos.length;
             // clone each repo and run analyze
             for (const [i_gitrepo, gitrepo] of gitrepos.entries()) {
-                print_collapsable_start(i_gitrepo, n_gitrepos, gitrepo);
-                const input_path = `${input_dir}/${gitrepo.owner}/${gitrepo.repo}`;
-                const output_path = `${output_dir}/${gitrepo.owner}/${gitrepo.repo}`;
-                yield git_1.run_git_clone(gitrepo.url, input_path);
-                yield ort_1.analyze(input_path, output_path);
-                print_collapsable_end();
+                const group_title = `${i_gitrepo}/${n_gitrepos}: ${gitrepo.owner}/${gitrepo.repo}`;
+                yield core.group(group_title, () => __awaiter(this, void 0, void 0, function* () {
+                    yield make_output_group(input_dir, output_dir, gitrepo);
+                }));
             }
         }
         catch (err) {
@@ -130,12 +129,12 @@ function check_urls(repositories, input_dir = 'in', output_dir = 'out') {
     });
 }
 exports.check_urls = check_urls;
-function print_collapsable_end() {
-    console.log('##[endgroup]');
-}
-function print_collapsable_start(i, n, gitrepo) {
-    console.log(`##[group]${i}/${n}: ${gitrepo.owner}/${gitrepo.repo}`);
-}
+const make_output_group = (input_dir, output_dir, gitrepo) => __awaiter(void 0, void 0, void 0, function* () {
+    const input_path = `${input_dir}/${gitrepo.owner}/${gitrepo.repo}`;
+    const output_path = `${output_dir}/${gitrepo.owner}/${gitrepo.repo}`;
+    yield git_1.run_git_clone(gitrepo.url, input_path);
+    yield ort_1.analyze(input_path, output_path);
+});
 //# sourceMappingURL=check.js.map
 
 /***/ }),
