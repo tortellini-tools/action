@@ -51,14 +51,16 @@ export function get_owner_and_repo(url: string): GitRepo {
         throw Error('Cannot get owner or repo name: url too short.')
     }
     if (!url.startsWith(prefix)) {
-        throw Error(`Cannot get owner or repo name: expected url to start with '${prefix}'.`)
+        throw Error(
+            `Cannot get owner or repo name: expected url to start with '${prefix}'.`
+        )
     }
 
-    let owner: string = ''
-    let repo: string = ''
+    let owner = ''
+    let repo = ''
 
     try {
-        [owner, repo] = url.slice(prefix.length).split('/').slice(0, 2)
+        ;[owner, repo] = url.slice(prefix.length).split('/').slice(0, 2)
     } catch (error) {
         console.error(url)
         console.error(error.message)

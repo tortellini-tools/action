@@ -16,7 +16,10 @@ export async function check_urls(
 ): Promise<void> {
     try {
         // read the list of urls from file
-        const urls: string[] = fs.readFileSync(repositories, 'utf-8').trim().split(/\r?\n/)
+        const urls: string[] = fs
+            .readFileSync(repositories, 'utf-8')
+            .trim()
+            .split(/\r?\n/)
 
         // get repo owner and repo name
         const gitrepos: GitRepo[] = urls.map(get_owner_and_repo)
