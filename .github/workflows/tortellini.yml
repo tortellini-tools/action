@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout
+      - uses: actions/checkout@v2
       - run: |
           echo 'https://github.com/tortellini-tools/action' > urls.txt
           echo 'https://github.com/fair-software/howfairis' >> urls.txt
