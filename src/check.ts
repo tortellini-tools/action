@@ -3,7 +3,6 @@ import {analyze} from './ort'
 import * as fs from 'fs'
 import * as core from '@actions/core'
 
-
 export async function check_directory(
     input_dir = '.',
     output_dir = 'out'
@@ -31,20 +30,15 @@ export async function check_urls(
 
         // clone each repo and run analyze
         for (const [i_gitrepo, gitrepo] of gitrepos.entries()) {
-           
-            const group_title = `${i_gitrepo}/${n_gitrepos}: ${gitrepo.owner}/${gitrepo.repo}`
-            await core.group(group_title, async () => {
-                await make_output_group(input_dir, output_dir, gitrepo)
-            })
+            core.startGroup(`${i_gitrepo}/${n_gitrepos}: ${gitrepo.owner}/${gitrepo.repo}`)
+            const input_path = `${input_dir}/${gitrepo.owner}/${gitrepo.repo}`
+            const output_path = `${output_dir}/${gitrepo.owner}/${gitrepo.repo}`
+            await run_git_clone(gitrepo.url, input_path)
+            await analyze(input_path, output_path)
+            core.endGroup()
         }
     } catch (err) {
         console.error(err)
     }
 }
 
-const make_output_group = async (input_dir: string, output_dir: string, gitrepo: GitRepo): Promise<void> => {
-    const input_path = `${input_dir}/${gitrepo.owner}/${gitrepo.repo}`
-    const output_path = `${output_dir}/${gitrepo.owner}/${gitrepo.repo}`
-    await run_git_clone(gitrepo.url, input_path)
-    await analyze(input_path, output_path)
-}

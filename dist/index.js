@@ -117,10 +117,12 @@ function check_urls(repositories, input_dir = 'in', output_dir = 'out') {
             const n_gitrepos = gitrepos.length;
             // clone each repo and run analyze
             for (const [i_gitrepo, gitrepo] of gitrepos.entries()) {
-                const group_title = `${i_gitrepo}/${n_gitrepos}: ${gitrepo.owner}/${gitrepo.repo}`;
-                yield core.group(group_title, () => __awaiter(this, void 0, void 0, function* () {
-                    yield make_output_group(input_dir, output_dir, gitrepo);
-                }));
+                core.startGroup(`${i_gitrepo}/${n_gitrepos}: ${gitrepo.owner}/${gitrepo.repo}`);
+                const input_path = `${input_dir}/${gitrepo.owner}/${gitrepo.repo}`;
+                const output_path = `${output_dir}/${gitrepo.owner}/${gitrepo.repo}`;
+                yield git_1.run_git_clone(gitrepo.url, input_path);
+                yield ort_1.analyze(input_path, output_path);
+                core.endGroup();
             }
         }
         catch (err) {
@@ -129,12 +131,6 @@ function check_urls(repositories, input_dir = 'in', output_dir = 'out') {
     });
 }
 exports.check_urls = check_urls;
-const make_output_group = (input_dir, output_dir, gitrepo) => __awaiter(void 0, void 0, void 0, function* () {
-    const input_path = `${input_dir}/${gitrepo.owner}/${gitrepo.repo}`;
-    const output_path = `${output_dir}/${gitrepo.owner}/${gitrepo.repo}`;
-    yield git_1.run_git_clone(gitrepo.url, input_path);
-    yield ort_1.analyze(input_path, output_path);
-});
 //# sourceMappingURL=check.js.map
 
 /***/ }),
