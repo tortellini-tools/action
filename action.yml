@@ -10,5 +10,5 @@ runs:
   using: 'node12'
   main: 'dist/index.js'
 branding:
-  icon: purple
-  color: align-left
+  icon: 'purple'
+  color: 'align-left'
