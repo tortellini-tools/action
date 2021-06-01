@@ -16,12 +16,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - run: |
-          echo '##[group] the group'
-          echo contents
-          echo '##[endgroup]'
-
-      - uses: actions/checkout@$neater-output
+      - uses: nelonoel/branch-name@v1.0.1
+      - uses: actions/checkout@${BRANCH_NAME}
       - run: |
           echo 'https://github.com/tortellini-tools/action' > urls.txt
           echo 'https://github.com/fair-software/howfairis' >> urls.txt
