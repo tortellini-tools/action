@@ -42,9 +42,9 @@ export async function check_urls(
 }
 
 function print_collapsable_end(): void {
-    console.log('##endgroup')
+    console.log('##[endgroup]')
 }
 
 function print_collapsable_start(i: number, n: number, gitrepo: GitRepo): void {
-    console.log(`##group${i}/${n}: ${gitrepo.owner}/${gitrepo.repo}`)
+    console.log(`##[group]${i}/${n}: ${gitrepo.owner}/${gitrepo.repo}`)
 }
