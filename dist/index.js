@@ -241,7 +241,7 @@ const path_1 = __nccwpck_require__(622);
 function run_docker_container(docker_args, ort_args, image = 'philipssoftware/ort') {
     return __awaiter(this, void 0, void 0, function* () {
         const cmd = 'docker';
-        let args = ['run', '--rm', ...docker_args, image, ...ort_args];
+        const args = ['run', '--rm', ...docker_args, image, ...ort_args];
         let docker_stdout = '';
         let docker_stderr = '';
         const options = {
