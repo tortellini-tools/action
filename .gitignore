@@ -1,6 +1,5 @@
-# Input and output folders
-in
-out
+# Config, input and output folders
+.tortellini
 
 # Dependency directory
 node_modules
