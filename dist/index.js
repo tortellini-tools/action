@@ -99,6 +99,7 @@ exports.check_urls = exports.check_directory = void 0;
 const git_1 = __nccwpck_require__(374);
 const ort_1 = __nccwpck_require__(249);
 const fs = __importStar(__nccwpck_require__(747));
+const core = __importStar(__nccwpck_require__(186));
 function check_directory(input_dir = '.', output_dir = '.tortellini/out'
 // config_dir = '.tortellini/config' // contains rules.kts, curations.yml, license-classifications.yml
 ) {
@@ -119,12 +120,16 @@ function check_urls(repositories, input_dir = '.tortellini/in', output_dir = '.t
                 .split(/\r?\n/);
             // get repo owner and repo name
             const gitrepos = urls.map(git_1.get_owner_and_repo);
+            // get the total number of repositories
+            const n_gitrepos = gitrepos.length;
             // clone each repo and run analyze
-            for (const gitrepo of gitrepos) {
+            for (const [i_gitrepo, gitrepo] of gitrepos.entries()) {
+                core.startGroup(`${i_gitrepo + 1}/${n_gitrepos}: ${gitrepo.owner}/${gitrepo.repo}`);
                 const input_path = `${input_dir}/${gitrepo.owner}/${gitrepo.repo}`;
                 const output_path = `${output_dir}/${gitrepo.owner}/${gitrepo.repo}`;
                 yield git_1.run_git_clone(gitrepo.url, input_path);
                 yield ort_1.analyze(input_path, output_path);
+                core.endGroup();
             }
         }
         catch (err) {
@@ -3848,14 +3853,7 @@ var __webpack_exports__ = {};
 "use strict";
 var exports = __webpack_exports__;
 
-// import {Tortellini} from './tortellini'
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-// const repositories = [
-//     {owner: 'iomega', repo: 'zenodo-upload'},
-//     {owner: 'xenon-middleware', repo: 'xenon-cli'}
-// ]
-// const tortellini = new Tortellini(repositories)
-// tortellini.run('list-of-repositories')
 const action_1 = __nccwpck_require__(139);
 action_1.main();
 //# sourceMappingURL=main.js.map
