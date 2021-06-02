@@ -33,7 +33,7 @@ jobs:
     - uses: actions/checkout@v2      
     - uses: tortellini-tools/action@main
       with:
-        curations: https://github.com/NLeSC/tortellini-on-rsd/raw/main/config/curations.yml
+        curations: .tortelllin/curations.yml or https://github.com/NLeSC/tortellini-on-rsd/raw/main/config/curations.yml
         rules: https://github.com/NLeSC/tortellini-on-rsd/raw/main/config/rules.kts
         classifications: https://github.com/NLeSC/tortellini-on-rsd/raw/main/config/license-classifications.yml
 ```
@@ -55,7 +55,6 @@ jobs:
     - uses: tortellini-tools/action@main
       with:
         repositories: 'urls.txt'
-        curations: https://github.com/NLeSC/tortellini-on-rsd/raw/main/config/curations.yml
         rules: https://github.com/NLeSC/tortellini-on-rsd/raw/main/config/rules.kts
         classifications: https://github.com/NLeSC/tortellini-on-rsd/raw/main/config/license-classifications.yml
 ```
