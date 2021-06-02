@@ -7,7 +7,7 @@ inputs:
     description: 'A file containing list of GitHub repository urls'
     default: ''
   curations:
-    required: false
+    required: true
     description: 'A file or URL containing curations correct invalid or missing package metadata and set the concluded license for packages. See https://github.com/oss-review-toolkit/ort/blob/master/docs/config-file-curations-yml.md'
     default: ''
   rules:
