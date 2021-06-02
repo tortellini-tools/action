@@ -26,4 +26,4 @@ jobs:
         - uses: actions/checkout@v2
         - uses: ./
         - name: Check that result file is generated
-          run: ls -l out/analyzer-result.yml
+          run: ls -l .tortellini/out/analyzer-result.yml
