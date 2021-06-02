@@ -18,7 +18,7 @@ inputs:
     description: 'A file or URL containing classes for each license. See https://github.com/oss-review-toolkit/ort/blob/master/docs/config-file-license-classifications-yml.md'
     default: https://github.com/NLeSC/tortellini-on-rsd/raw/main/config/license-classifications.yml
 runs:
-  using: 'node12'
+  using: 'node14'
   main: 'dist/index.js'
 branding:
   color: 'purple'
