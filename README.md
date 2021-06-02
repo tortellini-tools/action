@@ -30,7 +30,7 @@ jobs:
   tortellini:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2      
+    - uses: actions/checkout@v2
     - uses: tortellini-tools/action@main
       with:
         curations: .tortelllin/curations.yml or https://github.com/NLeSC/tortellini-on-rsd/raw/main/config/curations.yml
