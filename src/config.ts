@@ -38,7 +38,10 @@ async function set_up_configuration_file_or_url(
 
     if (name === 'curations' && source === '') {
         // TODO check that ort understands empty curations.yml file
-        await fs.promises.writeFile(target_filename, '--- ~\n')
+        await fs.promises.writeFile(
+            target_filename,
+            '- id: "PyPI::doenstexist930845729305784::version238923894"\n  curations:\n    comment: "Not a real curation."\n    concluded_license: "MIT"'
+        )
         return
     }
     if (source.startsWith('http')) {
