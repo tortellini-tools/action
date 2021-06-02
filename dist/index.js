@@ -187,19 +187,19 @@ function set_up_configuration(config_dir = path_1.default.join('.tortellini', 'c
     return __awaiter(this, void 0, void 0, function* () {
         yield io.mkdirP(config_dir);
         yield Promise.all([
-            set_up_configuration_file_or_url('curations', path_1.default.join(config_dir, 'curations.yml'), true),
+            set_up_configuration_file_or_url('curations', path_1.default.join(config_dir, 'curations.yml')),
             set_up_configuration_file_or_url('rules', path_1.default.join(config_dir, 'rules.kts')),
             set_up_configuration_file_or_url('classifications', path_1.default.join(config_dir, 'license-classifications.yml'))
         ]);
     });
 }
 exports.set_up_configuration = set_up_configuration;
-function set_up_configuration_file_or_url(name, target_filename, optional = false) {
+function set_up_configuration_file_or_url(name, target_filename) {
     return __awaiter(this, void 0, void 0, function* () {
         const source = core.getInput(name);
-        if (source === '' && optional) {
+        if (name === 'curations' && source === '') {
             // TODO check that ort understands empty curations.yml file
-            yield fs.promises.writeFile(target_filename, '');
+            yield fs.promises.writeFile(target_filename, '--- ~\n');
             return;
         }
         if (source.startsWith('http')) {

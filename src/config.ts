@@ -17,8 +17,7 @@ export async function set_up_configuration(
     await Promise.all([
         set_up_configuration_file_or_url(
             'curations',
-            path.join(config_dir, 'curations.yml'),
-            true
+            path.join(config_dir, 'curations.yml')
         ),
         set_up_configuration_file_or_url(
             'rules',
@@ -33,14 +32,13 @@ export async function set_up_configuration(
 
 async function set_up_configuration_file_or_url(
     name: string,
-    target_filename: string,
-    optional = false
+    target_filename: string
 ): Promise<void> {
     const source: string = core.getInput(name)
 
-    if (source === '' && optional) {
+    if (name === 'curations' && source === '') {
         // TODO check that ort understands empty curations.yml file
-        await fs.promises.writeFile(target_filename, '')
+        await fs.promises.writeFile(target_filename, '--- ~\n')
         return
     }
     if (source.startsWith('http')) {
