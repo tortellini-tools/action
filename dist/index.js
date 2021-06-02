@@ -201,9 +201,8 @@ function set_up_configuration_file_or_url(name, target_filename, optional = fals
         const source = core.getInput(name);
         if (source === '' && optional) {
             // TODO check that ort understands empty curations.yml file
-            console.log(target_filename);
             yield fs.promises.writeFile(target_filename, '');
-            console.log('sdfasdgfasd');
+            return;
         }
         if (source.startsWith('http')) {
             const response = yield node_fetch_1.default(source);
@@ -389,6 +388,7 @@ function analyze(input_dir, output_dir) {
         };
         const docker_args = docker_1.volume2dockerargs(volumes);
         const ort_args = ['analyze', '-i', '/in', '-o', '/out'];
+        console.log(docker_args, ort_args);
         yield docker_1.run_docker_container(docker_args, ort_args);
     });
 }
