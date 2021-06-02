@@ -202,14 +202,17 @@ function set_up_configuration_file_or_url(name, target_filename, optional = fals
         if (source === '' && optional) {
             // TODO check that ort understands empty curations.yml file
             yield fs.promises.writeFile(target_filename, '');
+            return;
         }
         if (source.startsWith('http')) {
             const response = yield node_fetch_1.default(source);
             const body = yield response.text();
             yield fs.promises.writeFile(target_filename, body);
+            return;
         }
         else {
             yield io.cp(source, target_filename);
+            return;
         }
     });
 }
