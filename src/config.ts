@@ -38,11 +38,11 @@ async function set_up_configuration_file_or_url(
 ): Promise<void> {
     const source: string = core.getInput(name)
 
-    console.log('sdfsdf' + source)
-
     if (source === '' && optional) {
         // TODO check that ort understands empty curations.yml file
+        console.log(target_filename)
         await fs.promises.writeFile(target_filename, '')
+        console.log('sdfasdgfasd')
     }
     if (source.startsWith('http')) {
         const response = await fetch(source)
