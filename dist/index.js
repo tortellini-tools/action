@@ -182,7 +182,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.set_up_configuration = void 0;
 const core = __importStar(__nccwpck_require__(186));
 const io = __importStar(__nccwpck_require__(436));
-const promises_1 = __nccwpck_require__(225);
+const fs = __importStar(__nccwpck_require__(747));
 const path_1 = __importDefault(__nccwpck_require__(622));
 const node_fetch_1 = __importDefault(__nccwpck_require__(467));
 function set_up_configuration(config_dir = path_1.default.join('.tortellini', 'config')) {
@@ -201,12 +201,12 @@ function set_up_configuration_file_or_url(name, target_filename, optional = fals
         const source = core.getInput(name);
         if (source === '' && optional) {
             // TODO check that ort understands empty curations.yml file
-            yield promises_1.writeFile(target_filename, '');
+            yield fs.promises.writeFile(target_filename, '');
         }
         if (source.startsWith('http')) {
             const response = yield node_fetch_1.default(source);
             const body = yield response.text();
-            yield promises_1.writeFile(target_filename, body);
+            yield fs.promises.writeFile(target_filename, body);
         }
         else {
             yield io.cp(source, target_filename);
@@ -3736,14 +3736,6 @@ module.exports = require("events");;
 
 "use strict";
 module.exports = require("fs");;
-
-/***/ }),
-
-/***/ 225:
-/***/ ((module) => {
-
-"use strict";
-module.exports = require("fs/promises");;
 
 /***/ }),
 
