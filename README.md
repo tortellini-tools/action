@@ -32,6 +32,10 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - uses: tortellini-tools/action@main
+      with:
+        curations: https://github.com/NLeSC/tortellini-on-rsd/raw/main/config/curations.yml
+        rules: https://github.com/NLeSC/tortellini-on-rsd/raw/main/config/rules.kts
+        classifications: https://github.com/NLeSC/tortellini-on-rsd/raw/main/config/license-classifications.yml
 ```
 
 ### Multiple repositories
@@ -51,6 +55,9 @@ jobs:
     - uses: tortellini-tools/action@main
       with:
         repositories: 'urls.txt'
+        curations: https://github.com/NLeSC/tortellini-on-rsd/raw/main/config/curations.yml
+        rules: https://github.com/NLeSC/tortellini-on-rsd/raw/main/config/rules.kts
+        classifications: https://github.com/NLeSC/tortellini-on-rsd/raw/main/config/license-classifications.yml
 ```
 
 ## Developer documentation
