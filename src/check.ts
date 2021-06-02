@@ -4,15 +4,17 @@ import * as fs from 'fs'
 
 export async function check_directory(
     input_dir = '.',
-    output_dir = 'out'
+    output_dir = '.tortellini/out'
+    // config_dir = '.tortellini/config' // contains rules.kts, curations.yml, license-classifications.yml
 ): Promise<void> {
     await analyze(input_dir, output_dir)
 }
 
 export async function check_urls(
     repositories: string,
-    input_dir = 'in',
-    output_dir = 'out'
+    input_dir = '.tortellini/in',
+    output_dir = '.tortellini/out'
+    // config_dir = '.tortellini/config' // contains rules.kts, curations.yml, license-classifications.yml
 ): Promise<void> {
     try {
         // read the list of urls from file
