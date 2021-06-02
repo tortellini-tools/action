@@ -117,10 +117,11 @@ function check_urls(repositories, input_dir = 'in', output_dir = 'out') {
             const n_gitrepos = gitrepos.length;
             // clone each repo and run analyze
             for (const [i_gitrepo, gitrepo] of gitrepos.entries()) {
-                core.startGroup(`${i_gitrepo + 1}/${n_gitrepos}: ${gitrepo.owner}/${gitrepo.repo}`);
-                const input_path = `${input_dir}/${gitrepo.owner}/${gitrepo.repo}`;
-                const output_path = `${output_dir}/${gitrepo.owner}/${gitrepo.repo}`;
-                yield git_1.run_git_clone(gitrepo.url, input_path);
+                const { owner, repo, url } = gitrepo;
+                core.startGroup(`${i_gitrepo + 1}/${n_gitrepos}: ${owner}/${repo}`);
+                const input_path = `${input_dir}/${owner}/${repo}`;
+                const output_path = `${output_dir}/${owner}/${repo}`;
+                yield git_1.run_git_clone(url, input_path);
                 yield ort_1.analyze(input_path, output_path);
                 core.endGroup();
             }
