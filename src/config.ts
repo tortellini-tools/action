@@ -1,6 +1,6 @@
 import * as core from '@actions/core'
 import * as io from '@actions/io'
-import {writeFile} from 'fs/promises'
+import * as fs from 'fs'
 import path from 'path'
 import fetch from 'node-fetch'
 
@@ -39,12 +39,12 @@ async function set_up_configuration_file_or_url(
     const source: string = core.getInput(name)
     if (source === '' && optional) {
         // TODO check that ort understands empty curations.yml file
-        await writeFile(target_filename, '')
+        await fs.promises.writeFile(target_filename, '')
     }
     if (source.startsWith('http')) {
         const response = await fetch(source)
         const body = await response.text()
-        await writeFile(target_filename, body)
+        await fs.promises.writeFile(target_filename, body)
     } else {
         await io.cp(source, target_filename)
     }
