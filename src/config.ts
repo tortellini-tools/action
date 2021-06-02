@@ -37,6 +37,7 @@ async function set_up_configuration_file_or_url(
     optional = false
 ): Promise<void> {
     const source: string = core.getInput(name)
+    console.log(source)
     if (source === '' && optional) {
         // TODO check that ort understands empty curations.yml file
         await fs.promises.writeFile(target_filename, '')
