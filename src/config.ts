@@ -41,12 +41,15 @@ async function set_up_configuration_file_or_url(
     if (source === '' && optional) {
         // TODO check that ort understands empty curations.yml file
         await fs.promises.writeFile(target_filename, '')
+        return
     }
     if (source.startsWith('http')) {
         const response = await fetch(source)
         const body = await response.text()
         await fs.promises.writeFile(target_filename, body)
+        return
     } else {
         await io.cp(source, target_filename)
+        return
     }
 }
