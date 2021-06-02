@@ -104,6 +104,7 @@ function check_directory(input_dir = '.', output_dir = '.tortellini/out', config
     return __awaiter(this, void 0, void 0, function* () {
         yield ort_1.analyze(input_dir, output_dir);
         yield ort_1.evaluate(output_dir, config_dir);
+        yield ort_1.report(output_dir);
     });
 }
 exports.check_directory = check_directory;
@@ -127,6 +128,7 @@ function check_urls(repositories, input_dir = '.tortellini/in', output_dir = '.t
                 yield git_1.run_git_clone(gitrepo.url, input_path);
                 yield ort_1.analyze(input_path, output_path);
                 yield ort_1.evaluate(output_path, config_dir);
+                yield ort_1.report(output_path);
                 core.endGroup();
             }
         }
@@ -370,7 +372,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.evaluate = exports.analyze = void 0;
+exports.report = exports.evaluate = exports.analyze = void 0;
 const docker_1 = __nccwpck_require__(758);
 /**
  *
@@ -413,6 +415,25 @@ function evaluate(output_dir, config_dir) {
     });
 }
 exports.evaluate = evaluate;
+function report(output_dir) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const volumes = {
+            [output_dir]: '/out'
+        };
+        const docker_args = docker_1.volume2dockerargs(volumes);
+        const ort_args = [
+            'report',
+            '-f',
+            'GitLabLicenseModel',
+            '-i',
+            '/out/evaluation-result.yml',
+            '-o',
+            '/out'
+        ];
+        yield docker_1.run_docker_container(docker_args, ort_args);
+    });
+}
+exports.report = report;
 //# sourceMappingURL=ort.js.map
 
 /***/ }),

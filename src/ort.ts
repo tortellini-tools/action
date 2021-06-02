@@ -28,7 +28,6 @@ export async function evaluate(
         [config_dir]: '/config'
     }
     const docker_args: string[] = volume2dockerargs(volumes)
-
     const ort_args = [
         'evaluate',
         '--package-curations-file',
@@ -39,6 +38,23 @@ export async function evaluate(
         '/config/license-classifications.yml',
         '-i',
         '/out/analyzer-result.yml',
+        '-o',
+        '/out'
+    ]
+    await run_docker_container(docker_args, ort_args)
+}
+
+export async function report(output_dir: string): Promise<void> {
+    const volumes = {
+        [output_dir]: '/out'
+    }
+    const docker_args: string[] = volume2dockerargs(volumes)
+    const ort_args = [
+        'report',
+        '-f',
+        'GitLabLicenseModel',
+        '-i',
+        '/out/evaluation-result.yml',
         '-o',
         '/out'
     ]

@@ -1,5 +1,5 @@
 import {run_git_clone, get_owner_and_repo, GitRepo} from './git'
-import {analyze, evaluate} from './ort'
+import {analyze, evaluate, report} from './ort'
 import * as fs from 'fs'
 import * as core from '@actions/core'
 
@@ -10,6 +10,7 @@ export async function check_directory(
 ): Promise<void> {
     await analyze(input_dir, output_dir)
     await evaluate(output_dir, config_dir)
+    await report(output_dir)
 }
 
 export async function check_urls(
@@ -43,6 +44,7 @@ export async function check_urls(
             await run_git_clone(gitrepo.url, input_path)
             await analyze(input_path, output_path)
             await evaluate(output_path, config_dir)
+            await report(output_path)
             core.endGroup()
         }
     } catch (err) {
