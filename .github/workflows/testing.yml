@@ -25,5 +25,7 @@ jobs:
       steps:
         - uses: actions/checkout@v2
         - uses: ./
+          with:
+            curations: '34534'
         - name: Check that result file is generated
-          run: ls -l .tortellini/out/analyzer-result.yml
+          run: tree -L 2 .tortellini
