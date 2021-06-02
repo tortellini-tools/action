@@ -19,8 +19,6 @@ export async function analyze(
     await run_docker_container(docker_args, ort_args)
 }
 
-
-
 export async function evaluate(
     input_dir: string,
     output_dir: string,
@@ -35,11 +33,16 @@ export async function evaluate(
 
     const ort_args = [
         'evaluate',
-        '--package-curations-file', '/config/curations.yml',
-        '--rules-file', '/config/rules.kts',
-        '--license-classifications-file', '/config/license-classifications.yml',
-        '-i', '/in',
-        '-o', '/out'
+        '--package-curations-file',
+        '/config/curations.yml',
+        '--rules-file',
+        '/config/rules.kts',
+        '--license-classifications-file',
+        '/config/license-classifications.yml',
+        '-i',
+        '/in',
+        '-o',
+        '/out'
     ]
     await run_docker_container(docker_args, ort_args)
 }
