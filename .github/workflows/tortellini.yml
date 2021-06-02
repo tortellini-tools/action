@@ -24,4 +24,4 @@ jobs:
         with:
           repositories: 'urls.txt'
       - run: |
-          tree -a -I '.git' -L 4 ./
+          tree -a -I '.git' -L 5 ./
