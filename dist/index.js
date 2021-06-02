@@ -202,7 +202,6 @@ function set_up_configuration_file_or_url(name, target_filename, optional = fals
         if (source === '' && optional) {
             // TODO check that ort understands empty curations.yml file
             yield fs.promises.writeFile(target_filename, '');
-            return;
         }
         if (source.startsWith('http')) {
             const response = yield node_fetch_1.default(source);
@@ -239,10 +238,7 @@ const path_1 = __nccwpck_require__(622);
 function run_docker_container(docker_args, ort_args, image = 'philipssoftware/ort') {
     return __awaiter(this, void 0, void 0, function* () {
         const cmd = 'docker';
-        let args = ['run', '--rm'];
-        args = args.concat(docker_args);
-        args.push(image);
-        args = args.concat(ort_args);
+        let args = ['run', '--rm', ...docker_args, image, ...ort_args];
         let docker_stdout = '';
         let docker_stderr = '';
         const options = {
@@ -388,7 +384,6 @@ function analyze(input_dir, output_dir) {
         };
         const docker_args = docker_1.volume2dockerargs(volumes);
         const ort_args = ['analyze', '-i', '/in', '-o', '/out'];
-        console.log(docker_args, ort_args);
         yield docker_1.run_docker_container(docker_args, ort_args);
     });
 }

@@ -16,6 +16,5 @@ export async function analyze(
     const docker_args: string[] = volume2dockerargs(volumes)
 
     const ort_args = ['analyze', '-i', '/in', '-o', '/out']
-    console.log(docker_args, ort_args)
     await run_docker_container(docker_args, ort_args)
 }

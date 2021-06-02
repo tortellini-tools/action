@@ -13,10 +13,7 @@ export async function run_docker_container(
     image = 'philipssoftware/ort'
 ): Promise<RunResult> {
     const cmd = 'docker'
-    let args = ['run', '--rm']
-    args = args.concat(docker_args)
-    args.push(image)
-    args = args.concat(ort_args)
+    let args = ['run', '--rm', ...docker_args, image, ...ort_args]
 
     let docker_stdout = ''
     let docker_stderr = ''
