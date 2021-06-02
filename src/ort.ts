@@ -20,12 +20,10 @@ export async function analyze(
 }
 
 export async function evaluate(
-    input_dir: string,
     output_dir: string,
     config_dir: string
 ): Promise<void> {
     const volumes = {
-        [input_dir]: '/in',
         [output_dir]: '/out',
         [config_dir]: '/config'
     }
@@ -40,7 +38,7 @@ export async function evaluate(
         '--license-classifications-file',
         '/config/license-classifications.yml',
         '-i',
-        '/in',
+        '/out/analyzer-result.yml',
         '-o',
         '/out'
     ]

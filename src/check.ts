@@ -9,7 +9,7 @@ export async function check_directory(
     config_dir = '.tortellini/config'
 ): Promise<void> {
     await analyze(input_dir, output_dir)
-    await evaluate(input_dir, output_dir, config_dir)
+    await evaluate(output_dir, config_dir)
 }
 
 export async function check_urls(
@@ -42,7 +42,7 @@ export async function check_urls(
             const output_path = `${output_dir}/${gitrepo.owner}/${gitrepo.repo}`
             await run_git_clone(gitrepo.url, input_path)
             await analyze(input_path, output_path)
-            await evaluate(input_path, output_path, config_dir)
+            await evaluate(output_path, config_dir)
             core.endGroup()
         }
     } catch (err) {

@@ -103,7 +103,7 @@ const core = __importStar(__nccwpck_require__(186));
 function check_directory(input_dir = '.', output_dir = '.tortellini/out', config_dir = '.tortellini/config') {
     return __awaiter(this, void 0, void 0, function* () {
         yield ort_1.analyze(input_dir, output_dir);
-        yield ort_1.evaluate(input_dir, output_dir, config_dir);
+        yield ort_1.evaluate(output_dir, config_dir);
     });
 }
 exports.check_directory = check_directory;
@@ -126,7 +126,7 @@ function check_urls(repositories, input_dir = '.tortellini/in', output_dir = '.t
                 const output_path = `${output_dir}/${gitrepo.owner}/${gitrepo.repo}`;
                 yield git_1.run_git_clone(gitrepo.url, input_path);
                 yield ort_1.analyze(input_path, output_path);
-                yield ort_1.evaluate(input_path, output_path, config_dir);
+                yield ort_1.evaluate(output_path, config_dir);
                 core.endGroup();
             }
         }
@@ -389,21 +389,25 @@ function analyze(input_dir, output_dir) {
     });
 }
 exports.analyze = analyze;
-function evaluate(input_dir, output_dir, config_dir) {
+function evaluate(output_dir, config_dir) {
     return __awaiter(this, void 0, void 0, function* () {
         const volumes = {
-            [input_dir]: '/in',
             [output_dir]: '/out',
             [config_dir]: '/config'
         };
         const docker_args = docker_1.volume2dockerargs(volumes);
         const ort_args = [
             'evaluate',
-            '--package-curations-file', '/config/curations.yml',
-            '--rules-file', '/config/rules.kts',
-            '--license-classifications-file', '/config/license-classifications.yml',
-            '-i', '/in',
-            '-o', '/out'
+            '--package-curations-file',
+            '/config/curations.yml',
+            '--rules-file',
+            '/config/rules.kts',
+            '--license-classifications-file',
+            '/config/license-classifications.yml',
+            '-i',
+            '/out/analyzer-result.yml',
+            '-o',
+            '/out'
         ];
         yield docker_1.run_docker_container(docker_args, ort_args);
     });
