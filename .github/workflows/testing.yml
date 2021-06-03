@@ -23,30 +23,39 @@ jobs:
   test-action: # make sure the action works on a clean machine without building
       runs-on: ubuntu-latest
       steps:
+
+
         - name: Clone this repository
           uses: actions/checkout@v2
 
 
-        - name: test without any input arguments
+        - name: Test without any input arguments
           uses: ./
-        - name: Check the resulting directory tree
           run: tree -a -L 5 -I '.git' .
 
-        - name: thename
+
+        - name: Test with a curations file from the internets
           uses: ./
             with:
-              repositories: urls.txt
-        - name: Check the resulting directory tree
+              curations: https://raw.githubusercontent.com/NLeSC/tortellini-on-rsd/main/config/curations.yml
           run: tree -a -L 5 -I '.git' .
-      
+
   
+        - name: Test with a local curations file
+          run: curl https://raw.githubusercontent.com/NLeSC/tortellini-on-rsd/main/config/curations.yml > curations.yml
+          uses: ./
+            with:
+              curations: curations.yml
+          run: tree -a -L 5 -I '.git' .
+
+  
+        - name: Test with input argument 'repositories'
         - run: |
             echo 'https://github.com/tortellini-tools/action' > urls.txt
             echo 'https://github.com/fair-software/howfairis' >> urls.txt
-        - name: test with input argument repositories
-          uses: ./
+        - uses: ./
             with:
               repositories: urls.txt
-        - name: Check the resulting directory tree
-          run: tree -a -L 5 -I '.git' .
-
+          run: |
+            tree -a -L 5 -I '.git' .
+            rm urls.txt
