@@ -131,7 +131,6 @@ The analyses will be stored in the directories
 See the [versioning documentation](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md)
 for more information.
 
-
 Your action is now published! :rocket:
 
 Check if the new version has been published on the [Github Marketplace](https://github.com/marketplace/actions/tortellini-action).
