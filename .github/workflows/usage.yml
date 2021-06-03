@@ -20,8 +20,7 @@ jobs:
       - run: |
           echo 'https://github.com/tortellini-tools/action' > urls.txt
           echo 'https://github.com/fair-software/howfairis' >> urls.txt
-      - uses: tortellini-tools/action@81-config-options-with-additions
+      - uses: tortellini-tools/action@main
         with:
-          repositories: 'urls.txt'
-      - run: |
-          tree -a -I '.git' -L 5 ./
+          repositories: urls.txt
+      - run: tree -a -I '.git' -L 5 ./
