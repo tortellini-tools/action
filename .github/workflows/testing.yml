@@ -46,7 +46,7 @@ jobs:
       steps:
         - name: Clone this repository
           uses: actions/checkout@v2
-        - name: Get a copy of a curations files
+        - name: Get a copy of a curations file
           run: curl https://raw.githubusercontent.com/NLeSC/tortellini-on-rsd/main/config/curations.yml > curations.yml
         - name: Test with a local curations file
           uses: ./
@@ -56,6 +56,68 @@ jobs:
           run: tree -a -L 5 -I '.git' .
         - name: Cleanup
           run: rm curations.yml
+
+
+  rules-url:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Clone this repository
+          uses: actions/checkout@v2
+        - name: Test with a rules file from the internets
+          uses: ./
+          with:
+            rules: https://raw.githubusercontent.com/NLeSC/tortellini-on-rsd/main/config/rules.kts
+        - name: Check the resulting directory tree
+          run: tree -a -L 5 -I '.git' .
+
+
+  rules-local-file:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Clone this repository
+          uses: actions/checkout@v2
+        - name: Get a copy of a rules file
+          run: curl https://raw.githubusercontent.com/NLeSC/tortellini-on-rsd/main/config/rules.kts > rules.kts
+        - name: Test with a local rules file
+          uses: ./
+          with:
+            rules: rules.kts
+        - name: Check the resulting directory tree
+          run: tree -a -L 5 -I '.git' .
+        - name: Cleanup
+          run: rm rules.kts
+
+
+
+  classifications-url:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Clone this repository
+          uses: actions/checkout@v2
+        - name: Test with a classifications file from the internets
+          uses: ./
+          with:
+            classifications: https://raw.githubusercontent.com/NLeSC/tortellini-on-rsd/main/config/license-classifications.yml
+        - name: Check the resulting directory tree
+          run: tree -a -L 5 -I '.git' .
+
+
+  classifications-local-file:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Clone this repository
+          uses: actions/checkout@v2
+        - name: Get a copy of a classifications file
+          run: curl https://raw.githubusercontent.com/NLeSC/tortellini-on-rsd/main/config/license-classifications.yml > classifications.yml
+        - name: Test with a local classifications file
+          uses: ./
+          with:
+            classifications: classifications.yml
+        - name: Check the resulting directory tree
+          run: tree -a -L 5 -I '.git' .
+        - name: Cleanup
+          run: rm classifications.yml
+
 
 
   repositories:
@@ -68,7 +130,7 @@ jobs:
             echo 'https://github.com/tortellini-tools/action' > urls.txt
             echo 'https://github.com/fair-software/howfairis' >> urls.txt
         - name: Test with input argument 'repositories'
-        - uses: ./
+          uses: ./
           with:
             repositories: urls.txt
         - name: Check the resulting directory tree
