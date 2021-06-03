@@ -31,22 +31,23 @@ jobs:
 
         - name: Test without any input arguments
           uses: ./
-          run: tree -a -L 5 -I '.git' .
+        - run: tree -a -L 5 -I '.git' .
 
 
         - name: Test with a curations file from the internets
           uses: ./
-            with:
-              curations: https://raw.githubusercontent.com/NLeSC/tortellini-on-rsd/main/config/curations.yml
-          run: tree -a -L 5 -I '.git' .
+          with:
+            curations: https://raw.githubusercontent.com/NLeSC/tortellini-on-rsd/main/config/curations.yml
+        - run: tree -a -L 5 -I '.git' .
 
  
         - name: Test with a local curations file
           run: curl https://raw.githubusercontent.com/NLeSC/tortellini-on-rsd/main/config/curations.yml > curations.yml
-          uses: ./
-            with:
-              curations: curations.yml
-          run: tree -a -L 5 -I '.git' .
+        - uses: ./
+          with:
+            curations: curations.yml
+        - run: |
+            tree -a -L 5 -I '.git' .
 
   
         - name: Test with input argument 'repositories'
@@ -54,8 +55,8 @@ jobs:
             echo 'https://github.com/tortellini-tools/action' > urls.txt
             echo 'https://github.com/fair-software/howfairis' >> urls.txt
         - uses: ./
-            with:
-              repositories: urls.txt
-          run: |
+          with:
+            repositories: urls.txt
+        - run: |
             tree -a -L 5 -I '.git' .
             rm urls.txt
