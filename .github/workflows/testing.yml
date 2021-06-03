@@ -172,14 +172,14 @@ jobs:
         - name: Check the resulting directory tree
           run: tree -a -L 5 -I '.git' .
         - name: Verify that we have the result for tortellini-tools/action from ort analyze
-          run: ls -l .tortellini/tortellini-tools/action/out/analyzer-result.yml
+          run: ls -l .tortellini/out/tortellini-tools/action/analyzer-result.yml
         - name: Verify that we have the result for tortellini-tools/action from ort evaluate
-          run: ls -l .tortellini/tortellini-tools/action/out/evaluation-result.yml
+          run: ls -l .tortellini/out/tortellini-tools/action/evaluation-result.yml
         - name: Verify that we have the result for tortellini-tools/action from ort report
-          run: ls -l .tortellini/tortellini-tools/action/out/gl-license-scanning-report.json
+          run: ls -l .tortellini/out/tortellini-tools/action/gl-license-scanning-report.json
         - name: Verify that we have the result for fair-software/howfairis from ort analyze          
-          run: ls -l .tortellini/fair-software/howfairis/out/analyzer-result.yml
+          run: ls -l .tortellini/out/fair-software/howfairis/analyzer-result.yml
         - name: Verify that we have the result for fair-software/howfairis from ort evaluate
-          run: ls -l .tortellini/fair-software/howfairis/out/evaluation-result.yml
+          run: ls -l .tortellini/out/fair-software/howfairis/evaluation-result.yml
         - name: Verify that we have the result for fair-software/howfairis from ort report
-          run: ls -l .tortellini/fair-software/howfairis/gl-license-scanning-report.json
+          run: ls -l .tortellini/out/fair-software/howfairis/gl-license-scanning-report.json
