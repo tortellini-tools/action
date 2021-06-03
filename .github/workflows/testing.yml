@@ -11,44 +11,57 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: |
-          npm install
-      - run: |
-          npm run build
-      - run: |
-          npm run package
-      - run: |
-          npm run test
+      - run: npm install
+      - run: npm run build
+      - run: npm run package
+      - run: npm run test
 
-  test-action: # make sure the action works on a clean machine without building
+
+  test-action-1:
       runs-on: ubuntu-latest
       steps:
-
-
         - name: Clone this repository
           uses: actions/checkout@v2
-
-
         - name: Test without any input arguments
           uses: ./
+        - name: Check the resulting directory tree
           run: tree -a -L 5 -I '.git' .
 
 
+  test-action-2:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Clone this repository
+          uses: actions/checkout@v2
         - name: Test with a curations file from the internets
           uses: ./
             with:
               curations: https://raw.githubusercontent.com/NLeSC/tortellini-on-rsd/main/config/curations.yml
+        - name: Check the resulting directory tree
           run: tree -a -L 5 -I '.git' .
 
- 
+
+  test-action-3:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Clone this repository
+          uses: actions/checkout@v2
         - name: Test with a local curations file
           run: curl https://raw.githubusercontent.com/NLeSC/tortellini-on-rsd/main/config/curations.yml > curations.yml
           uses: ./
             with:
               curations: curations.yml
+        - name: Check the resulting directory tree
           run: tree -a -L 5 -I '.git' .
+        - name: Cleanup
+          run: rm curations.yml
 
-  
+
+  test-action-4:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Clone this repository
+          uses: actions/checkout@v2
         - name: Test with input argument 'repositories'
         - run: |
             echo 'https://github.com/tortellini-tools/action' > urls.txt
@@ -56,6 +69,7 @@ jobs:
         - uses: ./
             with:
               repositories: urls.txt
-          run: |
-            tree -a -L 5 -I '.git' .
-            rm urls.txt
+        - name: Check the resulting directory tree
+          run: tree -a -L 5 -I '.git' .
+        - name: Cleanup
+          run: rm urls.txt
