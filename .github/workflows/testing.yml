@@ -66,8 +66,6 @@ jobs:
           run: tree -a -L 5 -I '.git' .
         - name: Verify that we have the analyze result
           run: ls -l out/analyzer-result.yml
-        - name: Cleanup
-          run: rm curations.yml
 
 
   rules-url:
@@ -100,8 +98,6 @@ jobs:
           run: tree -a -L 5 -I '.git' .
         - name: Verify that we have the analyze result
           run: ls -l out/analyzer-result.yml
-        - name: Cleanup
-          run: rm rules.kts
 
 
 
@@ -135,8 +131,6 @@ jobs:
           run: tree -a -L 5 -I '.git' .
         - name: Verify that we have the analyze result
           run: ls -l out/analyzer-result.yml
-        - name: Cleanup
-          run: rm classifications.yml
 
 
 
@@ -157,5 +151,3 @@ jobs:
           run: tree -a -L 5 -I '.git' .
         - name: Verify that we have the analyze result
           run: ls -l out/analyzer-result.yml
-        - name: Cleanup
-          run: rm urls.txt
