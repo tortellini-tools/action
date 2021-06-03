@@ -34,14 +34,11 @@ export async function check_urls(
 
         // clone each repo and run analyze
         for (const [i_gitrepo, gitrepo] of gitrepos.entries()) {
-            core.startGroup(
-                `${i_gitrepo + 1}/${n_gitrepos}: ${gitrepo.owner}/${
-                    gitrepo.repo
-                }`
-            )
-            const input_path = `${input_dir}/${gitrepo.owner}/${gitrepo.repo}`
-            const output_path = `${output_dir}/${gitrepo.owner}/${gitrepo.repo}`
-            await run_git_clone(gitrepo.url, input_path)
+            const {owner, repo, url} = gitrepo
+            core.startGroup(`${i_gitrepo + 1}/${n_gitrepos}: ${owner}/${repo}`)
+            const input_path = `${input_dir}/${owner}/${repo}`
+            const output_path = `${output_dir}/${owner}/${repo}`
+            await run_git_clone(url, input_path)
             await analyze(input_path, output_path)
             await evaluate(output_path, config_dir)
             await report(output_path)
