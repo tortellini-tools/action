@@ -35,8 +35,8 @@ jobs:
           uses: actions/checkout@v2
         - name: Test with a curations file from the internets
           uses: ./
-            with:
-              curations: https://raw.githubusercontent.com/NLeSC/tortellini-on-rsd/main/config/curations.yml
+          with:
+            curations: https://raw.githubusercontent.com/NLeSC/tortellini-on-rsd/main/config/curations.yml
         - name: Check the resulting directory tree
           run: tree -a -L 5 -I '.git' .
 
@@ -49,8 +49,8 @@ jobs:
         - name: Test with a local curations file
           run: curl https://raw.githubusercontent.com/NLeSC/tortellini-on-rsd/main/config/curations.yml > curations.yml
           uses: ./
-            with:
-              curations: curations.yml
+          with:
+            curations: curations.yml
         - name: Check the resulting directory tree
           run: tree -a -L 5 -I '.git' .
         - name: Cleanup
@@ -67,8 +67,8 @@ jobs:
             echo 'https://github.com/tortellini-tools/action' > urls.txt
             echo 'https://github.com/fair-software/howfairis' >> urls.txt
         - uses: ./
-            with:
-              repositories: urls.txt
+          with:
+            repositories: urls.txt
         - name: Check the resulting directory tree
           run: tree -a -L 5 -I '.git' .
         - name: Cleanup
