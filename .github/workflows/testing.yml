@@ -17,7 +17,7 @@ jobs:
       - run: npm run test
 
 
-  test-action-1:
+  no-args:
       runs-on: ubuntu-latest
       steps:
         - name: Clone this repository
@@ -28,7 +28,7 @@ jobs:
           run: tree -a -L 5 -I '.git' .
 
 
-  test-action-2:
+  curations-url:
       runs-on: ubuntu-latest
       steps:
         - name: Clone this repository
@@ -41,7 +41,7 @@ jobs:
           run: tree -a -L 5 -I '.git' .
 
 
-  test-action-3:
+  curations-local-file:
       runs-on: ubuntu-latest
       steps:
         - name: Clone this repository
@@ -57,7 +57,7 @@ jobs:
           run: rm curations.yml
 
 
-  test-action-4:
+  repositories:
       runs-on: ubuntu-latest
       steps:
         - name: Clone this repository
