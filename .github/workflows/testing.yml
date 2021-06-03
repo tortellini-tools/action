@@ -68,7 +68,7 @@ jobs:
             echo 'https://github.com/tortellini-tools/action' > urls.txt
             echo 'https://github.com/fair-software/howfairis' >> urls.txt
         - name: Test with input argument 'repositories'
-        - uses: ./
+          uses: ./
           with:
             repositories: urls.txt
         - name: Check the resulting directory tree
