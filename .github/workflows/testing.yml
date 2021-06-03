@@ -40,7 +40,7 @@ jobs:
               curations: https://raw.githubusercontent.com/NLeSC/tortellini-on-rsd/main/config/curations.yml
           run: tree -a -L 5 -I '.git' .
 
-  
+ 
         - name: Test with a local curations file
           run: curl https://raw.githubusercontent.com/NLeSC/tortellini-on-rsd/main/config/curations.yml > curations.yml
           uses: ./
