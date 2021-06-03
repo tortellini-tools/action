@@ -100,17 +100,15 @@ const git_1 = __nccwpck_require__(374);
 const ort_1 = __nccwpck_require__(249);
 const fs = __importStar(__nccwpck_require__(747));
 const core = __importStar(__nccwpck_require__(186));
-function check_directory(input_dir = '.', output_dir = '.tortellini/out'
-// config_dir = '.tortellini/config' // contains rules.kts, curations.yml, license-classifications.yml
-) {
+function check_directory(input_dir = '.', output_dir = '.tortellini/out', config_dir = '.tortellini/config') {
     return __awaiter(this, void 0, void 0, function* () {
         yield ort_1.analyze(input_dir, output_dir);
+        yield ort_1.evaluate(output_dir, config_dir);
+        yield ort_1.report(output_dir);
     });
 }
 exports.check_directory = check_directory;
-function check_urls(repositories, input_dir = '.tortellini/in', output_dir = '.tortellini/out'
-// config_dir = '.tortellini/config' // contains rules.kts, curations.yml, license-classifications.yml
-) {
+function check_urls(repositories, input_dir = '.tortellini/in', output_dir = '.tortellini/out', config_dir = '.tortellini/config') {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             // read the list of urls from file
@@ -130,6 +128,8 @@ function check_urls(repositories, input_dir = '.tortellini/in', output_dir = '.t
                 const output_path = `${output_dir}/${owner}/${repo}`;
                 yield git_1.run_git_clone(url, input_path);
                 yield ort_1.analyze(input_path, output_path);
+                yield ort_1.evaluate(output_path, config_dir);
+                yield ort_1.report(output_path);
                 core.endGroup();
             }
         }
@@ -183,34 +183,37 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.set_up_configuration = void 0;
 const core = __importStar(__nccwpck_require__(186));
 const io = __importStar(__nccwpck_require__(436));
-const promises_1 = __nccwpck_require__(225);
+const fs = __importStar(__nccwpck_require__(747));
 const path_1 = __importDefault(__nccwpck_require__(622));
 const node_fetch_1 = __importDefault(__nccwpck_require__(467));
 function set_up_configuration(config_dir = path_1.default.join('.tortellini', 'config')) {
     return __awaiter(this, void 0, void 0, function* () {
         yield io.mkdirP(config_dir);
         yield Promise.all([
-            set_up_configuration_file_or_url('curations', path_1.default.join(config_dir, 'curations.yml'), true),
+            set_up_configuration_file_or_url('curations', path_1.default.join(config_dir, 'curations.yml')),
             set_up_configuration_file_or_url('rules', path_1.default.join(config_dir, 'rules.kts')),
             set_up_configuration_file_or_url('classifications', path_1.default.join(config_dir, 'license-classifications.yml'))
         ]);
     });
 }
 exports.set_up_configuration = set_up_configuration;
-function set_up_configuration_file_or_url(name, target_filename, optional = false) {
+function set_up_configuration_file_or_url(name, target_filename) {
     return __awaiter(this, void 0, void 0, function* () {
         const source = core.getInput(name);
-        if (source === '' && optional) {
+        if (name === 'curations' && source === '') {
             // TODO check that ort understands empty curations.yml file
-            yield promises_1.writeFile(target_filename, '');
+            yield fs.promises.writeFile(target_filename, '- id: "PyPI::doenstexist930845729305784:version238923894"\n  curations:\n    comment: "Not a real curation."\n    concluded_license: "MIT"');
+            return;
         }
         if (source.startsWith('http')) {
             const response = yield node_fetch_1.default(source);
             const body = yield response.text();
-            yield promises_1.writeFile(target_filename, body);
+            yield fs.promises.writeFile(target_filename, body);
+            return;
         }
         else {
             yield io.cp(source, target_filename);
+            return;
         }
     });
 }
@@ -239,10 +242,7 @@ const path_1 = __nccwpck_require__(622);
 function run_docker_container(docker_args, ort_args, image = 'philipssoftware/ort') {
     return __awaiter(this, void 0, void 0, function* () {
         const cmd = 'docker';
-        let args = ['run', '--rm'];
-        args = args.concat(docker_args);
-        args.push(image);
-        args = args.concat(ort_args);
+        const args = ['run', '--rm', ...docker_args, image, ...ort_args];
         let docker_stdout = '';
         let docker_stderr = '';
         const options = {
@@ -373,7 +373,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.analyze = void 0;
+exports.report = exports.evaluate = exports.analyze = void 0;
 const docker_1 = __nccwpck_require__(758);
 /**
  *
@@ -392,6 +392,49 @@ function analyze(input_dir, output_dir) {
     });
 }
 exports.analyze = analyze;
+function evaluate(output_dir, config_dir) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const volumes = {
+            [output_dir]: '/out',
+            [config_dir]: '/config'
+        };
+        const docker_args = docker_1.volume2dockerargs(volumes);
+        const ort_args = [
+            'evaluate',
+            '--package-curations-file',
+            '/config/curations.yml',
+            '--rules-file',
+            '/config/rules.kts',
+            '--license-classifications-file',
+            '/config/license-classifications.yml',
+            '-i',
+            '/out/analyzer-result.yml',
+            '-o',
+            '/out'
+        ];
+        yield docker_1.run_docker_container(docker_args, ort_args);
+    });
+}
+exports.evaluate = evaluate;
+function report(output_dir) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const volumes = {
+            [output_dir]: '/out'
+        };
+        const docker_args = docker_1.volume2dockerargs(volumes);
+        const ort_args = [
+            'report',
+            '-f',
+            'GitLabLicenseModel',
+            '-i',
+            '/out/evaluation-result.yml',
+            '-o',
+            '/out'
+        ];
+        yield docker_1.run_docker_container(docker_args, ort_args);
+    });
+}
+exports.report = report;
 //# sourceMappingURL=ort.js.map
 
 /***/ }),
@@ -3737,14 +3780,6 @@ module.exports = require("events");;
 
 "use strict";
 module.exports = require("fs");;
-
-/***/ }),
-
-/***/ 225:
-/***/ ((module) => {
-
-"use strict";
-module.exports = require("fs/promises");;
 
 /***/ }),
 
