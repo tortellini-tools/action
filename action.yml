@@ -4,8 +4,19 @@ author: 'Netherlands eScience Center'
 inputs:
   repositories:
     required: false
-    description: 'A file contains list of GitHub repository urls'
+    description: 'A file containing list of GitHub repository urls'
     default: ''
+  curations:
+    required: false
+    description: 'A file or URL containing curations correct invalid or missing package metadata and set the concluded license for packages. See https://github.com/oss-review-toolkit/ort/blob/master/docs/config-file-curations-yml.md'
+  rules:
+    required: true
+    description: 'A file or URL containing ort rules to detect license violations. See https://github.com/oss-review-toolkit/ort/blob/master/docs/file-rules-kts.md'
+    default: https://github.com/NLeSC/tortellini-on-rsd/raw/main/config/rules.kts
+  classifications:
+    required: true
+    description: 'A file or URL containing classes for each license. See https://github.com/oss-review-toolkit/ort/blob/master/docs/config-file-license-classifications-yml.md'
+    default: https://github.com/NLeSC/tortellini-on-rsd/raw/main/config/license-classifications.yml
 runs:
   using: 'node12'
   main: 'dist/index.js'
