@@ -23,7 +23,30 @@ jobs:
   test-action: # make sure the action works on a clean machine without building
       runs-on: ubuntu-latest
       steps:
-        - uses: actions/checkout@v2
-        - uses: ./
-        - name: Check that result file is generated
-          run: ls -l out/analyzer-result.yml
+        - name: Clone this repository
+          uses: actions/checkout@v2
+
+
+        - name: test without any input arguments
+          uses: ./
+        - name: Check the resulting directory tree
+          run: tree -a -L 5 -I '.git' .
+
+        - name: thename
+          uses: ./
+            with:
+              repositories: urls.txt
+        - name: Check the resulting directory tree
+          run: tree -a -L 5 -I '.git' .
+      
+  
+        - run: |
+            echo 'https://github.com/tortellini-tools/action' > urls.txt
+            echo 'https://github.com/fair-software/howfairis' >> urls.txt
+        - name: test with input argument repositories
+          uses: ./
+            with:
+              repositories: urls.txt
+        - name: Check the resulting directory tree
+          run: tree -a -L 5 -I '.git' .
+
