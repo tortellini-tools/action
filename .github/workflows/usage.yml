@@ -22,6 +22,5 @@ jobs:
           echo 'https://github.com/fair-software/howfairis' >> urls.txt
       - uses: tortellini-tools/action@main
         with:
-          repositories: 'urls.txt'
-      - run: |
-          tree -a -I '.git' -L 5 ./
+          repositories: urls.txt
+      - run: tree -a -I '.git' -L 5 ./
