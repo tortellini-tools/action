@@ -2,6 +2,7 @@ import {run_git_clone, get_owner_and_repo, GitRepo} from './git'
 import {analyze, evaluate, report} from './ort'
 import * as fs from 'fs'
 import * as core from '@actions/core'
+import * as io from '@actions/io'
 
 export async function check_directory(
     input_dir = '.',
@@ -44,6 +45,7 @@ export async function check_urls(
             await report(output_path)
             core.endGroup()
         }
+        await io.rmRF(input_dir)
     } catch (err) {
         console.error(err)
     }
