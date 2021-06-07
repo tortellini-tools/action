@@ -1,0 +1,35 @@
+{
+    "creators": [
+        {
+            "affiliation": "Netherlands eScience Center",
+            "name": "Verhoeven, Stefan",
+            "orcid": "0000-0002-5821-2060"
+        },
+        {
+            "affiliation": "Netherlands eScience Center",
+            "name": "Diblen, Faruk",
+            "orcid": "0000-0002-0989-929X"
+        },
+        {
+            "affiliation": "Netherlands eScience Center",
+            "name": "Spaaks, Jurriaan H.",
+            "orcid": "0000-0002-7064-4069"
+        },
+        {
+            "affiliation": "Netherlands eScience Center",
+            "name": "Tjong Kim Sang, Erik",
+            "orcid": "0000-0002-8431-081X"
+        }
+    ],
+    "description": "GitHub Action to check  software dependency licence issues using ort.",
+    "keywords": [
+        "software license",
+        "ort",
+        "oss review toolkit",
+        "legal"
+    ],
+    "license": {
+        "id": "Apache-2.0"
+    },
+    "title": "tortellini"
+}
