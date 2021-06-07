@@ -24,3 +24,10 @@ jobs:
         with:
           repositories: urls.txt
       - run: tree -a -I '.git' -L 5 ./
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: tortellini-results
+          path: |
+            .tortellini
+            !.tortellini/in
