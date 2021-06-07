@@ -141,13 +141,11 @@ function check_urls(repositories, input_dir = '.tortellini/in', output_dir = '.t
                 core.endGroup();
             }
             // clean up input dir
-            console.log(`** removing --> ${input_dir}`);
+            console.log(`** removing ${input_dir}`);
             yield io.rmRF(input_dir);
             // clean up intermediate files
             // const patterns = [`${output_dir}/*/*/*--result.yml`]
-            const patterns = [
-                `${output_dir}/out/fair-software/howfairis/*--result.yml`
-            ];
+            const patterns = [`${output_dir}/**/*result.yml`];
             console.log(`** pattern --> ${patterns}`);
             const globber = yield glob.create(patterns.join('\n'), {
                 followSymbolicLinks: true
@@ -155,7 +153,7 @@ function check_urls(repositories, input_dir = '.tortellini/in', output_dir = '.t
             try {
                 for (var _b = __asyncValues(globber.globGenerator()), _c; _c = yield _b.next(), !_c.done;) {
                     const ortfile = _c.value;
-                    console.log(`** removing --> ${ortfile}`);
+                    console.log(`** removing ${ortfile}`);
                     yield io.rmRF(ortfile);
                 }
             }
