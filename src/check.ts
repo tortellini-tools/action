@@ -44,9 +44,11 @@ export async function check_urls(
             await analyze(input_path, output_path)
             await evaluate(output_path, config_dir)
             await report(output_path)
+            console.log(`removing ${intermediate_files}`)
             await io.rmRF(intermediate_files)
             core.endGroup()
         }
+        console.log(`removing ${input_dir}`)
         await io.rmRF(input_dir)
     } catch (err) {
         console.error(err)

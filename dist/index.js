@@ -132,9 +132,11 @@ function check_urls(repositories, input_dir = '.tortellini/in', output_dir = '.t
                 yield ort_1.analyze(input_path, output_path);
                 yield ort_1.evaluate(output_path, config_dir);
                 yield ort_1.report(output_path);
+                console.log(`removing ${intermediate_files}`);
                 yield io.rmRF(intermediate_files);
                 core.endGroup();
             }
+            console.log(`removing ${input_dir}`);
             yield io.rmRF(input_dir);
         }
         catch (err) {
