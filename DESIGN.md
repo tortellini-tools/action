@@ -4,35 +4,35 @@ This document describes the goal, requirements and plan of this project.
 
 ## Goal
 
-Gain insight in the license compatibility in software and its dependencies.
+Gain insight in potential problems regarding the licensing of software packages we develop at eScienceCenter
 
 ## Purpose
 
-This tool should produce a report about the license compatibility for 1 on more pieces of software and their dependencies.
+This tool should produce a report about the license compatibility for 1 or more pieces of software and their dependencies.
 
 ## Background
 
-To use open source software a license needs to applied to it.
-Most software have dependencies which also have licenses.
+To use open source software, a license needs to be applied to it.
+Most software have dependencies which themselves have licenses.
 Not all licenses can be combined with each other.
-It is often difficult to find out the licenses of the dependencies and conflicts.
+It is often difficult to find out the licenses of the dependencies, and to gain insight into whether there are any conflicting licenses in use in a software package.
 
 ## Personas
 
-At Netherlands eScience Center (NLeSC) there is need of more attention to the licensing issues. Personas in the center are
+At the Netherlands eScience Center (NLeSC) there is a need for more attention to licensing issues. Personas in the center are
 
--   program manager, someone responsible for software created in a program.
--   research software engineer, someone writing software for a project in a program
+-   program manager, someone accountable for software adhering to guidelines and best practices.
+-   research software engineer, someone writing software
 
 ## User stories
 
-### Does this program have software that have potential license problems
+### Does this project have software with license problems
 
-As a program manager at the NLeSC I would like have a tool that can find potential license problems in the software created in a program.
+As a program manager at NLeSC I would like have a tool that can find potential license problems in the software created in a project.
 
 ### Does my piece of software have potential license problems
 
-As a research software engineer at the NLeSC I would like to find out if the dependencies of my piece of software has license violations.
+As a research software engineer at NLeSC I would like to find out if my piece of software has any license violations.
 
 ## Theoretical steps
 
@@ -93,6 +93,8 @@ The action has 2 modes:
 
 ### List of repos
 
+This mode targets program managers.
+
 Steps in a Github workflow:
 
 1. Weekly scheduled (eg [fairtally-test](https://github.com/jmaassen/fairtally-test/blob/main/.github/workflows/fairtally.yml))
@@ -148,7 +150,9 @@ jobs:
 
 ### Single repo
 
-Using action for single repo is very similar to multi repo, but works on the currently checkout repository instead of a list of URLs.
+This mode targets engineers.
+
+Using the GitHub Action for a single repo is very similar to using it for multiple repositories, but works on the currently checked out repository instead of on a list of URLs.
 
 ```yaml
 on:
@@ -172,7 +176,7 @@ jobs:
 
 Action repo will have:
 
--   action.yml, Action def file
+-   action.yml, GitHub Action definition file
 -   src/index.ts which will clone repos, start ort container, save output to repos/<OWNER>/<REPO>, render index-latest.json
 -   package.json with docker library
 -   README/LICENSE

@@ -59,7 +59,7 @@ $ npm test
 ...
 ```
 
-To get information the test coverage, run the tests with
+To get information about the test coverage, run the tests with
 `coverage npm test -- --coverage` and
 examine the file `coverage/lcov-report/index.html`
 
