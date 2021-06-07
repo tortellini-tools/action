@@ -138,11 +138,9 @@ function check_urls(repositories, input_dir = '.tortellini/in', output_dir = '.t
                 const output_path = `${output_dir}/${owner}/${repo}`;
                 yield git_1.run_git_clone(url, input_path);
                 yield check_directory(input_path, output_path, config_dir);
-                yield io.rmRF(`${output_path}/analyzer-result.yml`);
-                yield io.rmRF(`${output_path}/evaluation-result.yml`);
                 core.endGroup();
             }
-            // await io.rmRF(input_dir)
+            yield io.rmRF(input_dir);
             const patterns = [`${output_dir}/**/*--result.yml`];
             const globber = yield glob.create(patterns.join('\n'), {
                 followSymbolicLinks: true
@@ -151,6 +149,7 @@ function check_urls(repositories, input_dir = '.tortellini/in', output_dir = '.t
                 for (var _b = __asyncValues(globber.globGenerator()), _c; _c = yield _b.next(), !_c.done;) {
                     const file = _c.value;
                     console.log(file);
+                    yield io.rmRF(file);
                 }
             }
             catch (e_1_1) { e_1 = { error: e_1_1 }; }

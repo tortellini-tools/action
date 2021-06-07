@@ -42,11 +42,10 @@ export async function check_urls(
             const output_path = `${output_dir}/${owner}/${repo}`
             await run_git_clone(url, input_path)
             await check_directory(input_path, output_path, config_dir)
-            await io.rmRF(`${output_path}/analyzer-result.yml`)
-            await io.rmRF(`${output_path}/evaluation-result.yml`)
             core.endGroup()
         }
-        // await io.rmRF(input_dir)
+
+        await io.rmRF(input_dir)
 
         const patterns = [`${output_dir}/**/*--result.yml`]
         const globber = await glob.create(patterns.join('\n'), {
@@ -54,7 +53,7 @@ export async function check_urls(
         })
         for await (const file of globber.globGenerator()) {
             console.log(file)
-            // await io.rmRF(file)
+            await io.rmRF(file)
         }
     } catch (err) {
         console.error(err)
