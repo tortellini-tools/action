@@ -46,10 +46,15 @@ export async function check_urls(
         }
 
         // clean up input dir
+        console.log(`** removing --> ${input_dir}`)
         await io.rmRF(input_dir)
 
         // clean up intermediate files
-        const patterns = [`${output_dir}/*/*/*--result.yml`]
+        // const patterns = [`${output_dir}/*/*/*--result.yml`]
+        const patterns = [
+            `${output_dir}/out/fair-software/howfairis/*--result.yml`
+        ]
+        console.log(`** pattern --> ${patterns}`)
         const globber = await glob.create(patterns.join('\n'), {
             followSymbolicLinks: true
         })
