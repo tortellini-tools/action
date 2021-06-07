@@ -94,21 +94,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __asyncValues = (this && this.__asyncValues) || function (o) {
-    if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
-    var m = o[Symbol.asyncIterator], i;
-    return m ? m.call(o) : (o = typeof __values === "function" ? __values(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i);
-    function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
-    function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.check_urls = exports.check_directory = void 0;
 const git_1 = __nccwpck_require__(374);
 const ort_1 = __nccwpck_require__(249);
 const fs = __importStar(__nccwpck_require__(747));
 const core = __importStar(__nccwpck_require__(186));
-const io = __importStar(__nccwpck_require__(436));
-const glob = __importStar(__nccwpck_require__(90));
+const tools_1 = __nccwpck_require__(740);
 function check_directory(input_dir = '.', output_dir = '.tortellini/out', config_dir = '.tortellini/config') {
     return __awaiter(this, void 0, void 0, function* () {
         yield ort_1.analyze(input_dir, output_dir);
@@ -118,7 +110,6 @@ function check_directory(input_dir = '.', output_dir = '.tortellini/out', config
 }
 exports.check_directory = check_directory;
 function check_urls(repositories, input_dir = '.tortellini/in', output_dir = '.tortellini/out', config_dir = '.tortellini/config') {
-    var e_1, _a;
     return __awaiter(this, void 0, void 0, function* () {
         try {
             // read the list of urls from file
@@ -140,30 +131,7 @@ function check_urls(repositories, input_dir = '.tortellini/in', output_dir = '.t
                 yield check_directory(input_path, output_path, config_dir);
                 core.endGroup();
             }
-            // clean up input dir
-            console.log(`** removing ${input_dir}`);
-            yield io.rmRF(input_dir);
-            // clean up intermediate files
-            // const patterns = [`${output_dir}/*/*/*--result.yml`]
-            const patterns = [`${output_dir}/**/*result.yml`];
-            console.log(`** pattern --> ${patterns}`);
-            const globber = yield glob.create(patterns.join('\n'), {
-                followSymbolicLinks: true
-            });
-            try {
-                for (var _b = __asyncValues(globber.globGenerator()), _c; _c = yield _b.next(), !_c.done;) {
-                    const ortfile = _c.value;
-                    console.log(`** removing ${ortfile}`);
-                    yield io.rmRF(ortfile);
-                }
-            }
-            catch (e_1_1) { e_1 = { error: e_1_1 }; }
-            finally {
-                try {
-                    if (_c && !_c.done && (_a = _b.return)) yield _a.call(_b);
-                }
-                finally { if (e_1) throw e_1.error; }
-            }
+            yield tools_1.clean_artifacts([input_dir]);
         }
         catch (err) {
             console.error(err);
@@ -468,6 +436,78 @@ function report(output_dir) {
 }
 exports.report = report;
 //# sourceMappingURL=ort.js.map
+
+/***/ }),
+
+/***/ 740:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __asyncValues = (this && this.__asyncValues) || function (o) {
+    if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+    var m = o[Symbol.asyncIterator], i;
+    return m ? m.call(o) : (o = typeof __values === "function" ? __values(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i);
+    function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
+    function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.clean_artifacts = void 0;
+const io = __importStar(__nccwpck_require__(436));
+const glob = __importStar(__nccwpck_require__(90));
+function clean_artifacts(pattern) {
+    var e_1, _a;
+    return __awaiter(this, void 0, void 0, function* () {
+        console.log(`** using pattern: ${pattern}`);
+        const globber = yield glob.create(pattern.join('\n'), {
+            followSymbolicLinks: true
+        });
+        try {
+            for (var _b = __asyncValues(globber.globGenerator()), _c; _c = yield _b.next(), !_c.done;) {
+                const artifact_file = _c.value;
+                console.log(`** removing ${artifact_file}`);
+                yield io.rmRF(artifact_file);
+            }
+        }
+        catch (e_1_1) { e_1 = { error: e_1_1 }; }
+        finally {
+            try {
+                if (_c && !_c.done && (_a = _b.return)) yield _a.call(_b);
+            }
+            finally { if (e_1) throw e_1.error; }
+        }
+    });
+}
+exports.clean_artifacts = clean_artifacts;
+//# sourceMappingURL=tools.js.map
 
 /***/ }),
 
