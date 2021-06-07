@@ -20,7 +20,7 @@ jobs:
       - run: |
           echo 'https://github.com/tortellini-tools/action' > urls.txt
           echo 'https://github.com/fair-software/howfairis' >> urls.txt
-      - uses: tortellini-tools/action@jspaaks-path-1
+      - uses: tortellini-tools/action@jspaaks-patch-1
         with:
           repositories: urls.txt
       - run: tree -a -I '.git' -L 5 ./
