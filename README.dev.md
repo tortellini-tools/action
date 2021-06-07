@@ -113,7 +113,7 @@ The analyses will be stored in the directories
 ## How to create a release
 
 1. Update the citation metadata in `CITATION.cff`. Afterwards, follow the instructions from the `cffconvert` workfow to sync the information in `.zenodo.json` with that in `CITATION.cff`
-1. Actions are run from GitHub repos so we need to generate the Javascript files in the`dist` folder and push the results:
+1. Actions are run from GitHub repos so we need to generate the Javascript files in the `dist` folder and push the results:
     
     ```bash
     $ cd $(mktemp --directory --tmpdir tortellini-prep-release.XXXXXX)
