@@ -3,6 +3,7 @@ import {analyze, evaluate, report} from './ort'
 import * as fs from 'fs'
 import * as core from '@actions/core'
 import * as io from '@actions/io'
+import * as glob from '@actions/glob'
 
 export async function check_directory(
     input_dir = '.',
@@ -45,7 +46,14 @@ export async function check_urls(
             await io.rmRF(`${output_path}/evaluation-result.yml`)
             core.endGroup()
         }
-        await io.rmRF(input_dir)
+        // await io.rmRF(input_dir)
+
+        const patterns = [`${output_dir}/*/*/*--result.yml`]
+        const globber = await glob.create(patterns.join('\n'))
+        for await (const file of globber.globGenerator()) {
+            console.log(file)
+            // await io.rmRF(file)
+        }
     } catch (err) {
         console.error(err)
     }
