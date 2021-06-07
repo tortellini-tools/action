@@ -425,7 +425,7 @@ function report(output_dir) {
         const ort_args = [
             'report',
             '-f',
-            'GitLabLicenseModel',
+            'GitLabLicenseModel,WebApp',
             '-i',
             '/out/evaluation-result.yml',
             '-o',
