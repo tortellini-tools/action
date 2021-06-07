@@ -100,6 +100,7 @@ const git_1 = __nccwpck_require__(374);
 const ort_1 = __nccwpck_require__(249);
 const fs = __importStar(__nccwpck_require__(747));
 const core = __importStar(__nccwpck_require__(186));
+const io = __importStar(__nccwpck_require__(436));
 function check_directory(input_dir = '.', output_dir = '.tortellini/out', config_dir = '.tortellini/config') {
     return __awaiter(this, void 0, void 0, function* () {
         yield ort_1.analyze(input_dir, output_dir);
@@ -126,12 +127,15 @@ function check_urls(repositories, input_dir = '.tortellini/in', output_dir = '.t
                 core.startGroup(`${i_gitrepo + 1}/${n_gitrepos}: ${owner}/${repo}`);
                 const input_path = `${input_dir}/${owner}/${repo}`;
                 const output_path = `${output_dir}/${owner}/${repo}`;
+                const intermediate_files = `${output_path}/*.yml`;
                 yield git_1.run_git_clone(url, input_path);
                 yield ort_1.analyze(input_path, output_path);
                 yield ort_1.evaluate(output_path, config_dir);
                 yield ort_1.report(output_path);
+                yield io.rmRF(intermediate_files);
                 core.endGroup();
             }
+            yield io.rmRF(input_dir);
         }
         catch (err) {
             console.error(err);
