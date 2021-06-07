@@ -31,3 +31,5 @@ jobs:
           path: |
             .tortellini
             !.tortellini/in
+            !.tortellini/out/**/analyzer-result.yml
+            !.tortellini/out/**/evaluation-result.yml
