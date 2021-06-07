@@ -31,7 +31,9 @@ jobs:
         - name: Verify that we have the result from ort evaluate
           run: ls -l .tortellini/out/evaluation-result.yml
         - name: Verify that we have the result from ort report
-          run: ls -l .tortellini/out/gl-license-scanning-report.json
+          run: |
+            ls -l .tortellini/out/gl-license-scanning-report.json
+            ls -l .tortellini/out/scan-report-web-app.html
 
 
   curations-url:
@@ -50,7 +52,9 @@ jobs:
         - name: Verify that we have the result from ort evaluate
           run: ls -l .tortellini/out/evaluation-result.yml
         - name: Verify that we have the result from ort report
-          run: ls -l .tortellini/out/gl-license-scanning-report.json
+          run: |
+            ls -l .tortellini/out/gl-license-scanning-report.json
+            ls -l .tortellini/out/scan-report-web-app.html
 
 
   curations-local-file:
@@ -71,7 +75,9 @@ jobs:
         - name: Verify that we have the result from ort evaluate
           run: ls -l .tortellini/out/evaluation-result.yml
         - name: Verify that we have the result from ort report
-          run: ls -l .tortellini/out/gl-license-scanning-report.json
+          run: |
+            ls -l .tortellini/out/gl-license-scanning-report.json
+            ls -l .tortellini/out/scan-report-web-app.html
 
 
   rules-url:
@@ -90,7 +96,9 @@ jobs:
         - name: Verify that we have the result from ort evaluate
           run: ls -l .tortellini/out/evaluation-result.yml
         - name: Verify that we have the result from ort report
-          run: ls -l .tortellini/out/gl-license-scanning-report.json
+          run: |
+            ls -l .tortellini/out/gl-license-scanning-report.json
+            ls -l .tortellini/out/scan-report-web-app.html
 
 
   rules-local-file:
@@ -111,7 +119,9 @@ jobs:
         - name: Verify that we have the result from ort evaluate
           run: ls -l .tortellini/out/evaluation-result.yml
         - name: Verify that we have the result from ort report
-          run: ls -l .tortellini/out/gl-license-scanning-report.json
+          run: |
+            ls -l .tortellini/out/gl-license-scanning-report.json
+            ls -l .tortellini/out/scan-report-web-app.html
 
 
 
@@ -131,7 +141,9 @@ jobs:
         - name: Verify that we have the result from ort evaluate
           run: ls -l .tortellini/out/evaluation-result.yml
         - name: Verify that we have the result from ort report
-          run: ls -l .tortellini/out/gl-license-scanning-report.json
+          run: |
+            ls -l .tortellini/out/gl-license-scanning-report.json
+            ls -l .tortellini/out/scan-report-web-app.html
 
 
   classifications-local-file:
@@ -152,8 +164,9 @@ jobs:
         - name: Verify that we have the result from ort evaluate
           run: ls -l .tortellini/out/evaluation-result.yml
         - name: Verify that we have the result from ort report
-          run: ls -l .tortellini/out/gl-license-scanning-report.json
-
+          run: |
+            ls -l .tortellini/out/gl-license-scanning-report.json
+            ls -l .tortellini/out/scan-report-web-app.html
 
 
   repositories:
@@ -176,10 +189,14 @@ jobs:
         - name: Verify that we have the result for tortellini-tools/action from ort evaluate
           run: ls -l .tortellini/out/tortellini-tools/action/evaluation-result.yml
         - name: Verify that we have the result for tortellini-tools/action from ort report
-          run: ls -l .tortellini/out/tortellini-tools/action/gl-license-scanning-report.json
+          run: |
+            ls -l .tortellini/out/tortellini-tools/action/gl-license-scanning-report.json
+            ls -l .tortellini/out/tortellini-tools/action/scan-report-web-app.html
         - name: Verify that we have the result for fair-software/howfairis from ort analyze          
           run: ls -l .tortellini/out/fair-software/howfairis/analyzer-result.yml
         - name: Verify that we have the result for fair-software/howfairis from ort evaluate
           run: ls -l .tortellini/out/fair-software/howfairis/evaluation-result.yml
         - name: Verify that we have the result for fair-software/howfairis from ort report
-          run: ls -l .tortellini/out/fair-software/howfairis/gl-license-scanning-report.json
+          run: |
+            ls -l .tortellini/out/fair-software/howfairis/gl-license-scanning-report.json
+            ls -l .tortellini/out/fair-software/howfairis/scan-report-web-app.html
