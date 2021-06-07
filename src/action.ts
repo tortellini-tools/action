@@ -13,7 +13,7 @@ export async function main(): Promise<void> {
         } else {
             await check_urls(repositories)
         }
-        await clean_artifacts(['.tortellini/in', '.tortellini/out'])
+        await clean_artifacts(['.tortellini/out'])
     } catch (error) {
         core.setFailed(error.message)
     }

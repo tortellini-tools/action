@@ -51,7 +51,7 @@ function main() {
             else {
                 yield check_1.check_urls(repositories);
             }
-            yield tools_1.clean_artifacts(['.tortellini/in', '.tortellini/out']);
+            yield tools_1.clean_artifacts(['.tortellini/out']);
         }
         catch (error) {
             core.setFailed(error.message);
