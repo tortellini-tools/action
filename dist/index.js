@@ -103,9 +103,15 @@ const core = __importStar(__nccwpck_require__(186));
 const tools_1 = __nccwpck_require__(740);
 function check_directory(input_dir = '.', output_dir = '.tortellini/out', config_dir = '.tortellini/config') {
     return __awaiter(this, void 0, void 0, function* () {
+        core.startGroup('analyze');
         yield ort_1.analyze(input_dir, output_dir);
+        core.endGroup();
+        core.startGroup('evaluate');
         yield ort_1.evaluate(output_dir, config_dir);
+        core.endGroup();
+        core.startGroup('report');
         yield ort_1.report(output_dir);
+        core.endGroup();
     });
 }
 exports.check_directory = check_directory;

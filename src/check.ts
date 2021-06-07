@@ -9,9 +9,15 @@ export async function check_directory(
     output_dir = '.tortellini/out',
     config_dir = '.tortellini/config'
 ): Promise<void> {
+    core.startGroup('analyze')
     await analyze(input_dir, output_dir)
+    core.endGroup()
+    core.startGroup('evaluate')
     await evaluate(output_dir, config_dir)
+    core.endGroup()
+    core.startGroup('report')
     await report(output_dir)
+    core.endGroup()
 }
 
 export async function check_urls(
