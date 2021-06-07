@@ -40,9 +40,7 @@ export async function check_urls(
             const input_path = `${input_dir}/${owner}/${repo}`
             const output_path = `${output_dir}/${owner}/${repo}`
             await run_git_clone(url, input_path)
-            await analyze(input_path, output_path)
-            await evaluate(output_path, config_dir)
-            await report(output_path)
+            await check_directory(input_path, output_path, config_dir)
             await io.rmRF(`${output_path}/analyzer-result.yml`)
             await io.rmRF(`${output_path}/evaluation-result.yml`)
             core.endGroup()
