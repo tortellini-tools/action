@@ -140,16 +140,18 @@ function check_urls(repositories, input_dir = '.tortellini/in', output_dir = '.t
                 yield check_directory(input_path, output_path, config_dir);
                 core.endGroup();
             }
+            // clean up input dir
             yield io.rmRF(input_dir);
-            const patterns = [`${output_dir}/**/*--result.yml`];
+            // clean up intermediate files
+            const patterns = [`${output_dir}/*/*/*--result.yml`];
             const globber = yield glob.create(patterns.join('\n'), {
                 followSymbolicLinks: true
             });
             try {
                 for (var _b = __asyncValues(globber.globGenerator()), _c; _c = yield _b.next(), !_c.done;) {
-                    const file = _c.value;
-                    console.log(file);
-                    yield io.rmRF(file);
+                    const ortfile = _c.value;
+                    console.log(`** removing --> ${ortfile}`);
+                    yield io.rmRF(ortfile);
                 }
             }
             catch (e_1_1) { e_1 = { error: e_1_1 }; }

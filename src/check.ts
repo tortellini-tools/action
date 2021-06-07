@@ -45,15 +45,17 @@ export async function check_urls(
             core.endGroup()
         }
 
+        // clean up input dir
         await io.rmRF(input_dir)
 
-        const patterns = [`${output_dir}/**/*--result.yml`]
+        // clean up intermediate files
+        const patterns = [`${output_dir}/*/*/*--result.yml`]
         const globber = await glob.create(patterns.join('\n'), {
             followSymbolicLinks: true
         })
-        for await (const file of globber.globGenerator()) {
-            console.log(file)
-            await io.rmRF(file)
+        for await (const ortfile of globber.globGenerator()) {
+            console.log(`** removing --> ${ortfile}`)
+            await io.rmRF(ortfile)
         }
     } catch (err) {
         console.error(err)
