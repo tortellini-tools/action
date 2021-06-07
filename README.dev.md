@@ -1,17 +1,18 @@
 # Developer documentation
 
-This [action](https://docs.github.com/en/actions/creating-actions/creating-a-javascript-action) is written in 
-[Typescript](https://www.typescriptlang.org) 
+This [action](https://docs.github.com/en/actions/creating-actions/creating-a-javascript-action) is written in
+[Typescript](https://www.typescriptlang.org)
 and makes use of the
-[Github @actions packages](https://github.com/actions/toolkit/blob/master/README.md#packages).
+[Github @actions packages](https://github.com/actions/toolkit/blob/master/README.md#packages)
 
+The underlining design can be found in <DESIGN.md>.
 
 ## Requirements
 
-This tool relies on the availability of [Node.js](https://nodejs.org/) and 
+This tool relies on the availability of [Node.js](https://nodejs.org/) and
 [Docker](https://docs.docker.com/get-docker/).
 
-Please verify that you have `Node.js` and the related package manager `npm`, and `docker` available on your 
+Please verify that you have `Node.js` and the related package manager `npm`, and `docker` available on your
 system. Make sure that the version of `Node.js` is at least `12`.
 
 ```bash
@@ -27,25 +28,26 @@ Docker version 20.10.6, build 370c289
 [instructions for upgrading `Node.js`](https://phoenixnap.com/kb/update-node-js-version#ftoc-heading-3).
 
 Install the dependencies
+
 ```bash
 $ npm install
 ```
 
-
 ## Build
 
 Build the typescript and package it for distribution
+
 ```bash
 $ npm run build && npm run package
 ```
 
-
 ## Run unit test
 
-The tests are stored in the directory `__tests__` and are written using 
-[jestjs](https://jestjs.io/). 
+The tests are stored in the directory `__tests__` and are written using
+[jestjs](https://jestjs.io/).
 
 Run the tests :heavy_check_mark:
+
 ```bash
 $ npm test
 
@@ -57,8 +59,8 @@ $ npm test
 ...
 ```
 
-To get information the test coverage, run the tests with 
-`coverage npm test -- --coverage` and 
+To get information about the test coverage, run the tests with
+`coverage npm test -- --coverage` and
 examine the file `coverage/lcov-report/index.html`
 
 ## Linting
@@ -77,13 +79,12 @@ Some of the linting error can be fixed with formatting:
 npm run format
 ```
 
-
 ## Run the analysis
 
 ### On the current repository
 
-The tool will analyze the license dependencies in current Github 
-repository and store reports of the analyses in the `out/` 
+The tool will analyze the license dependencies in current Github
+repository and store reports of the analyses in the `out/`
 directory.
 
 ```shell
@@ -95,7 +96,7 @@ node dist/index.js
 
 ### On other repositories
 
-You can also analyze other repositories  on Github by storing their addresses in
+You can also analyze other repositories on Github by storing their addresses in
 a file and running node on the file.
 
 ```
@@ -105,10 +106,8 @@ echo 'https://github.com/fair-software/howfairis' >> urls.txt
 INPUT_REPOSITORIES=urls.txt node dist/index.js
 ```
 
-The analyses will be stored in the directories 
+The analyses will be stored in the directories
 `out/<organization>/<repository>/` .
-
-
 
 ## How to create a release
 
@@ -126,7 +125,7 @@ $ git push origin main
 
 Next, check if the top three actions on the [action page](https://github.com/tortellini-tools/action/actions?query=branch%3Amain+workflow%3Atortellini+event%3Apush) are green.
 
-Create a release on the Github page via 
+Create a release on the Github page via
 [Create a new release](https://github.com/tortellini-tools/action/releases/new).
 
 On the new release page, for `Tag version` use `v` and the next version number, for example `v3`.
@@ -137,6 +136,6 @@ Your action is now published! :rocket:
 
 Check if the new version has been published on the [Github Marketplace](https://github.com/marketplace/actions/tortellini-action).
 
-You can now validate the action by going to 
+You can now validate the action by going to
 [this workflow](https://github.com/tortellini-tools/action/actions/workflows/tortellini.yml)
 and then clicking on the button `Run workflow`.
