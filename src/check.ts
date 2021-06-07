@@ -48,8 +48,8 @@ export async function check_urls(
             await run_git_clone(url, input_path)
             await check_directory(input_path, output_path, config_dir)
             core.endGroup()
+            await clean_artifacts([`${output_path}/**/*-result.yml`])
         }
-        await clean_artifacts([input_dir])
     } catch (err) {
         console.error(err)
     }

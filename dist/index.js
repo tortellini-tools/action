@@ -136,8 +136,8 @@ function check_urls(repositories, input_dir = '.tortellini/in', output_dir = '.t
                 yield git_1.run_git_clone(url, input_path);
                 yield check_directory(input_path, output_path, config_dir);
                 core.endGroup();
+                yield tools_1.clean_artifacts([`${output_path}/**/*-result.yml`]);
             }
-            yield tools_1.clean_artifacts([input_dir]);
         }
         catch (err) {
             console.error(err);
