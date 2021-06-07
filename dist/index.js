@@ -127,16 +127,14 @@ function check_urls(repositories, input_dir = '.tortellini/in', output_dir = '.t
                 core.startGroup(`${i_gitrepo + 1}/${n_gitrepos}: ${owner}/${repo}`);
                 const input_path = `${input_dir}/${owner}/${repo}`;
                 const output_path = `${output_dir}/${owner}/${repo}`;
-                const intermediate_files = `${output_path}/*.yml`;
                 yield git_1.run_git_clone(url, input_path);
                 yield ort_1.analyze(input_path, output_path);
                 yield ort_1.evaluate(output_path, config_dir);
                 yield ort_1.report(output_path);
-                console.log(`removing ${intermediate_files}`);
-                yield io.rmRF(intermediate_files);
+                yield io.rmRF(`${output_path}/analyzer-result.yml`);
+                yield io.rmRF(`${output_path}/evaluation-result.yml`);
                 core.endGroup();
             }
-            console.log(`removing ${input_dir}`);
             yield io.rmRF(input_dir);
         }
         catch (err) {
