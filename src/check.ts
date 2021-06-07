@@ -39,16 +39,14 @@ export async function check_urls(
             core.startGroup(`${i_gitrepo + 1}/${n_gitrepos}: ${owner}/${repo}`)
             const input_path = `${input_dir}/${owner}/${repo}`
             const output_path = `${output_dir}/${owner}/${repo}`
-            const intermediate_files = `${output_path}/*.yml`
             await run_git_clone(url, input_path)
             await analyze(input_path, output_path)
             await evaluate(output_path, config_dir)
             await report(output_path)
-            console.log(`removing ${intermediate_files}`)
-            await io.rmRF(intermediate_files)
+            await io.rmRF(`${output_path}/analyzer-result.yml`)
+            await io.rmRF(`${output_path}/evaluation-result.yml`)
             core.endGroup()
         }
-        console.log(`removing ${input_dir}`)
         await io.rmRF(input_dir)
     } catch (err) {
         console.error(err)
