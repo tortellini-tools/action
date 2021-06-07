@@ -48,7 +48,7 @@ export async function check_urls(
         }
         // await io.rmRF(input_dir)
 
-        const patterns = [`${output_dir}/*/*/*--result.yml`]
+        const patterns = [`${output_dir}/**/*--result.yml`]
         const globber = await glob.create(patterns.join('\n'), {
             followSymbolicLinks: true
         })

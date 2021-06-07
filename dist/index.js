@@ -143,7 +143,7 @@ function check_urls(repositories, input_dir = '.tortellini/in', output_dir = '.t
                 core.endGroup();
             }
             // await io.rmRF(input_dir)
-            const patterns = [`${output_dir}/*/*/*--result.yml`];
+            const patterns = [`${output_dir}/**/*--result.yml`];
             const globber = yield glob.create(patterns.join('\n'), {
                 followSymbolicLinks: true
             });
