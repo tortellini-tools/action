@@ -314,7 +314,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.volume2dockerargs = exports.run_docker_container = void 0;
 const exec_1 = __nccwpck_require__(514);
 const path_1 = __nccwpck_require__(622);
-function run_docker_container(docker_args, ort_args, image = 'philipssoftware/ort') {
+function run_docker_container(docker_args, ort_args, image = 'philipssoftware/ort:2021-05-23') {
     return __awaiter(this, void 0, void 0, function* () {
         const cmd = 'docker';
         const args = ['run', '--rm', ...docker_args, image, ...ort_args];
