@@ -471,6 +471,7 @@ function write_overview(output_dir, data) {
         const app = template.replace('{{node inserts the data here}}', JSON.stringify(data));
         const filename = path_1.default.join(output_dir, 'index.html');
         yield fs_1.default.promises.writeFile(filename, app, 'utf8');
+        return;
     });
 }
 exports.write_overview = write_overview;
