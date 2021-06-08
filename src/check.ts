@@ -1,8 +1,9 @@
 import {run_git_clone, get_owner_and_repo, GitRepo} from './git'
-import {analyze, evaluate, report} from './ort'
+import {analyze, chown, evaluate, report} from './ort'
 import * as fs from 'fs'
 import * as core from '@actions/core'
 // import {clean_artifacts} from './tools'
+import * as io from '@actions/io'
 
 export async function check_directory(
     input_dir = '.',
@@ -46,7 +47,17 @@ export async function check_urls(
             const input_path = `${input_dir}/${owner}/${repo}`
             const output_path = `${output_dir}/${owner}/${repo}`
             await run_git_clone(url, input_path)
-            await check_directory(input_path, output_path, config_dir)
+
+            // await check_directory(input_path, output_path, config_dir)
+
+            await analyze(input_path, output_path)
+            await evaluate(output_path, config_dir)
+            await report(output_path)
+
+            await chown(input_dir, output_dir)
+            await io.rmRF(`${input_path}`)
+            await io.rmRF(`${output_path}/analyzer-result.yml`)
+            await io.rmRF(`${output_path}/evaluation-result.yml`)
             core.endGroup()
             // await clean_artifacts([`${output_path}/**/*-result.yml`])
         }
