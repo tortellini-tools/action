@@ -1,8 +1,7 @@
-import {run_git_clone, get_owner_and_repo, GitRepo} from './git'
-import {analyze, evaluate, report} from './ort'
 import * as fs from 'fs'
 import * as core from '@actions/core'
-// import {clean_artifacts} from './tools'
+import {run_git_clone, get_owner_and_repo, GitRepo} from './git'
+import {analyze, evaluate, report} from './ort'
 import {clean_artifacts} from './clean_artifacts'
 
 export async function check_directory(
@@ -49,7 +48,6 @@ export async function check_urls(
             await run_git_clone(url, input_path)
 
             await check_directory(input_path, output_path, config_dir)
-
             await clean_artifacts(input_dir, output_dir, output_path)
             core.endGroup()
         }

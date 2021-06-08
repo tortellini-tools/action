@@ -39,7 +39,6 @@ exports.main = void 0;
 const core = __importStar(__nccwpck_require__(186));
 const check_1 = __nccwpck_require__(657);
 const config_1 = __nccwpck_require__(88);
-// import {clean_artifacts} from './tools'
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -51,7 +50,6 @@ function main() {
             else {
                 yield check_1.check_urls(repositories);
             }
-            // await clean_artifacts(['.tortellini/out'])
         }
         catch (error) {
             core.setFailed(error.message);
@@ -98,11 +96,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.check_urls = exports.check_directory = void 0;
-const git_1 = __nccwpck_require__(374);
-const ort_1 = __nccwpck_require__(249);
 const fs = __importStar(__nccwpck_require__(747));
 const core = __importStar(__nccwpck_require__(186));
-// import {clean_artifacts} from './tools'
+const git_1 = __nccwpck_require__(374);
+const ort_1 = __nccwpck_require__(249);
 const clean_artifacts_1 = __nccwpck_require__(982);
 function check_directory(input_dir = '.', output_dir = '.tortellini/out', config_dir = '.tortellini/config') {
     return __awaiter(this, void 0, void 0, function* () {
