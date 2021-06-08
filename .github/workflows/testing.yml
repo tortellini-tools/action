@@ -183,7 +183,7 @@ jobs:
           with:
             repositories: urls.txt
         - name: Check the resulting directory tree
-          run: tree -a -L 5 -I '.git' .
+          run: tree -a -p -u -g -L 5 -I '.git' .
         - name: Verify that we have the result for tortellini-tools/action from ort analyze
           run: ls -l .tortellini/out/tortellini-tools/action/analyzer-result.yml
         - name: Verify that we have the result for tortellini-tools/action from ort evaluate
@@ -192,7 +192,7 @@ jobs:
           run: |
             ls -l .tortellini/out/tortellini-tools/action/gl-license-scanning-report.json
             ls -l .tortellini/out/tortellini-tools/action/scan-report-web-app.html
-        - name: Verify that we have the result for fair-software/howfairis from ort analyze          
+        - name: Verify that we have the result for fair-software/howfairis from ort analyze
           run: ls -l .tortellini/out/fair-software/howfairis/analyzer-result.yml
         - name: Verify that we have the result for fair-software/howfairis from ort evaluate
           run: ls -l .tortellini/out/fair-software/howfairis/evaluation-result.yml
