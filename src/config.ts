@@ -1,8 +1,8 @@
 import * as core from '@actions/core'
 import * as io from '@actions/io'
 import * as fs from 'fs'
-import path from 'path'
 import fetch from 'node-fetch'
+import * as path from 'path'
 
 export interface Config {
     curations: string

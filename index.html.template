@@ -55,7 +55,7 @@
               <a :href="props.row.url" target="_blank">{{ props.row.url }}</a>
             </q-td>
             <q-td>
-              <a :href="props.row.report" target="_blank">{{ props.row.report }}</a>
+              <a :href="props.row.report" target="_blank">{{ "report" }}</a>
             </q-td>
           </q-tr>
         </template>
@@ -70,38 +70,21 @@
 
   <script>
     const { ref } = Vue
-    const columns = [
-      {
+    const columns = [{
         name: 'url',
         required: true,
         label: 'url',
         field: 'url',
         sortable: true,
         align: 'left'
-      },
-      {
-        name: 'owner',
-        required: true,
-        label: 'owner',
-        field: 'owner',
-        sortable: true,
-        align: 'center'
-      }, {
-        name: 'repo',
-        required: true,
-        label: 'repo',
-        field: 'repo',
-        sortable: true,
-        align: 'center'
-      }, {
+    }, {
         name: 'report',
         required: true,
         label: 'report',
         field: 'report',
         sortable: true,
         align: 'center'
-      }
-    ];
+    }];
     const rows = {{node inserts the data here}};
 
     const app = Vue.createApp({

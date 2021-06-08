@@ -1,4 +1,4 @@
-import fs from 'fs'
+import * as fs from 'fs'
 import path from 'path'
 import {GitRepo} from './git'
 
@@ -16,7 +16,6 @@ export async function write_overview(
         '{{node inserts the data here}}',
         JSON.stringify(data)
     )
-    const filename = path.join(output_dir, 'index.html')
-    await fs.promises.writeFile(filename, app, 'utf8')
+    await fs.promises.writeFile('.tortellini/index.html', app, 'utf8')
     return
 }

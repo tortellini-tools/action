@@ -33,6 +33,7 @@ export async function check_urls(
         // get the total number of repositories
         const n_gitrepos = gitrepos.length
 
+        // initialize the summary statistics array
         const summary_statistics: SummaryStatistics = []
 
         // clone each repo and run analyze
@@ -47,10 +48,11 @@ export async function check_urls(
             await report(output_path)
             summary_statistics.push({
                 ...gitrepo,
-                report: `${output_path}/scan-report-web-app.html`
+                report: `out/${owner}/${repo}/scan-report-web-app.html`
             })
             core.endGroup()
         }
+        // write the summary statistics to a webapp file
         await write_overview(output_dir, summary_statistics)
     } catch (err) {
         console.error(err)

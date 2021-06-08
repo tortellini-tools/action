@@ -121,6 +121,7 @@ function check_urls(repositories, input_dir = '.tortellini/in', output_dir = '.t
             const gitrepos = urls.map(git_1.get_owner_and_repo);
             // get the total number of repositories
             const n_gitrepos = gitrepos.length;
+            // initialize the summary statistics array
             const summary_statistics = [];
             // clone each repo and run analyze
             for (const [i_gitrepo, gitrepo] of gitrepos.entries()) {
@@ -132,9 +133,10 @@ function check_urls(repositories, input_dir = '.tortellini/in', output_dir = '.t
                 yield ort_1.analyze(input_path, output_path);
                 yield ort_1.evaluate(output_path, config_dir);
                 yield ort_1.report(output_path);
-                summary_statistics.push(Object.assign(Object.assign({}, gitrepo), { report: `${output_path}/scan-report-web-app.html` }));
+                summary_statistics.push(Object.assign(Object.assign({}, gitrepo), { report: `out/${owner}/${repo}/scan-report-web-app.html` }));
                 core.endGroup();
             }
+            // write the summary statistics to a webapp file
             yield webapp_1.write_overview(output_dir, summary_statistics);
         }
         catch (err) {
@@ -188,15 +190,15 @@ exports.set_up_configuration = void 0;
 const core = __importStar(__nccwpck_require__(186));
 const io = __importStar(__nccwpck_require__(436));
 const fs = __importStar(__nccwpck_require__(747));
-const path_1 = __importDefault(__nccwpck_require__(622));
 const node_fetch_1 = __importDefault(__nccwpck_require__(467));
-function set_up_configuration(config_dir = path_1.default.join('.tortellini', 'config')) {
+const path = __importStar(__nccwpck_require__(622));
+function set_up_configuration(config_dir = path.join('.tortellini', 'config')) {
     return __awaiter(this, void 0, void 0, function* () {
         yield io.mkdirP(config_dir);
         yield Promise.all([
-            set_up_configuration_file_or_url('curations', path_1.default.join(config_dir, 'curations.yml')),
-            set_up_configuration_file_or_url('rules', path_1.default.join(config_dir, 'rules.kts')),
-            set_up_configuration_file_or_url('classifications', path_1.default.join(config_dir, 'license-classifications.yml'))
+            set_up_configuration_file_or_url('curations', path.join(config_dir, 'curations.yml')),
+            set_up_configuration_file_or_url('rules', path.join(config_dir, 'rules.kts')),
+            set_up_configuration_file_or_url('classifications', path.join(config_dir, 'license-classifications.yml'))
         ]);
     });
 }
@@ -448,6 +450,25 @@ exports.report = report;
 
 "use strict";
 
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -462,15 +483,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.write_overview = void 0;
-const fs_1 = __importDefault(__nccwpck_require__(747));
+const fs = __importStar(__nccwpck_require__(747));
 const path_1 = __importDefault(__nccwpck_require__(622));
 function write_overview(output_dir, data) {
     return __awaiter(this, void 0, void 0, function* () {
         const template_filename = path_1.default.join(__dirname, 'index.html.template');
-        const template = yield fs_1.default.promises.readFile(template_filename, 'utf8');
+        const template = yield fs.promises.readFile(template_filename, 'utf8');
         const app = template.replace('{{node inserts the data here}}', JSON.stringify(data));
-        const filename = path_1.default.join(output_dir, 'index.html');
-        yield fs_1.default.promises.writeFile(filename, app, 'utf8');
+        yield fs.promises.writeFile('.tortellini/index.html', app, 'utf8');
         return;
     });
 }
