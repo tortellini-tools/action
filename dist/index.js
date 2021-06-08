@@ -100,6 +100,7 @@ const git_1 = __nccwpck_require__(374);
 const ort_1 = __nccwpck_require__(249);
 const fs = __importStar(__nccwpck_require__(747));
 const core = __importStar(__nccwpck_require__(186));
+const webapp_1 = __nccwpck_require__(314);
 function check_directory(input_dir = '.', output_dir = '.tortellini/out', config_dir = '.tortellini/config') {
     return __awaiter(this, void 0, void 0, function* () {
         yield ort_1.analyze(input_dir, output_dir);
@@ -120,6 +121,7 @@ function check_urls(repositories, input_dir = '.tortellini/in', output_dir = '.t
             const gitrepos = urls.map(git_1.get_owner_and_repo);
             // get the total number of repositories
             const n_gitrepos = gitrepos.length;
+            const summary_statistics = [];
             // clone each repo and run analyze
             for (const [i_gitrepo, gitrepo] of gitrepos.entries()) {
                 const { owner, repo, url } = gitrepo;
@@ -130,8 +132,10 @@ function check_urls(repositories, input_dir = '.tortellini/in', output_dir = '.t
                 yield ort_1.analyze(input_path, output_path);
                 yield ort_1.evaluate(output_path, config_dir);
                 yield ort_1.report(output_path);
+                summary_statistics.push(Object.assign(Object.assign({}, gitrepo), { report: `${output_path}/scan-report-web-app.html` }));
                 core.endGroup();
             }
+            yield webapp_1.write_overview(output_dir, summary_statistics);
         }
         catch (err) {
             console.error(err);
@@ -436,6 +440,41 @@ function report(output_dir) {
 }
 exports.report = report;
 //# sourceMappingURL=ort.js.map
+
+/***/ }),
+
+/***/ 314:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.write_overview = void 0;
+const fs_1 = __importDefault(__nccwpck_require__(747));
+const path_1 = __importDefault(__nccwpck_require__(622));
+function write_overview(output_dir, data) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const template_filename = path_1.default.join(__dirname, 'index.html.template');
+        const template = yield fs_1.default.promises.readFile(template_filename, 'utf8');
+        const app = template.replace('{{node inserts the data here}}', JSON.stringify(data));
+        const filename = path_1.default.join(output_dir, 'index.html');
+        yield fs_1.default.promises.writeFile(filename, app, 'utf8');
+    });
+}
+exports.write_overview = write_overview;
+//# sourceMappingURL=webapp.js.map
 
 /***/ }),
 
