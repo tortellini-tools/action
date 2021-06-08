@@ -137,7 +137,7 @@ function check_urls(repositories, input_dir = '.tortellini/in', output_dir = '.t
                 core.endGroup();
             }
             // write the summary statistics to a webapp file
-            yield webapp_1.write_overview(output_dir, summary_statistics);
+            yield webapp_1.write_overview(summary_statistics);
         }
         catch (err) {
             console.error(err);
@@ -485,7 +485,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.write_overview = void 0;
 const fs = __importStar(__nccwpck_require__(747));
 const path_1 = __importDefault(__nccwpck_require__(622));
-function write_overview(output_dir, data) {
+function write_overview(data) {
     return __awaiter(this, void 0, void 0, function* () {
         const template_filename = path_1.default.join(__dirname, 'index.html.template');
         const template = yield fs.promises.readFile(template_filename, 'utf8');

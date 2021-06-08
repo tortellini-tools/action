@@ -53,7 +53,7 @@ export async function check_urls(
             core.endGroup()
         }
         // write the summary statistics to a webapp file
-        await write_overview(output_dir, summary_statistics)
+        await write_overview(summary_statistics)
     } catch (err) {
         console.error(err)
     }
