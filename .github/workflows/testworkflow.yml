@@ -1,4 +1,4 @@
-name: usage
+name: testworkflow
 
 on: # run any PRs and main branch changes
   pull_request:
@@ -12,17 +12,16 @@ on: # run any PRs and main branch changes
 
 jobs:
 
-  tortellini:
+  testworkflow:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
-      - run: |
-          echo 'https://github.com/tortellini-tools/action' > urls.txt
-          echo 'https://github.com/fair-software/howfairis' >> urls.txt
+      - run: echo 'https://github.com/fair-software/howfairis' > urls.txt
       - uses: tortellini-tools/action@main
         with:
           repositories: urls.txt
+      - run: ls -l .tortellini/out/fair-software/howfairis/analyzer-result.yml
       - run: tree -a -I '.git' -L 5 ./
 
       - uses: actions/upload-artifact@v2
