@@ -23,7 +23,7 @@ jobs:
           repositories: urls.txt
       - run: tree -a -I '.git' -L 5 ./
 
-      - run: ls -l .tortellini/out/fair-software/howfairis/analyzer-result.yml
+      - run: ls -l .tortellini/out/fair-software/howfairis/analyzer-result.yml-fail
       - run: |
           curl -o file.json -s http://145.100.59.103/tmp/gl-license-scanning-report.json
           jq --argfile a file.json --argfile b .tortellini/out/fair-software/howfairis/gl-license-scanning-report.json -n '($a | (.. | arrays) |= sort) as $a | ($b | (.. | arrays) |= sort) as $b | $a == $b'
