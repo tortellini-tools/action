@@ -103,7 +103,7 @@ const ort_1 = __nccwpck_require__(249);
 const fs = __importStar(__nccwpck_require__(747));
 const core = __importStar(__nccwpck_require__(186));
 // import {clean_artifacts} from './tools'
-const io = __importStar(__nccwpck_require__(436));
+const clean_artifacts_1 = __nccwpck_require__(982);
 function check_directory(input_dir = '.', output_dir = '.tortellini/out', config_dir = '.tortellini/config') {
     return __awaiter(this, void 0, void 0, function* () {
         core.startGroup('analyze');
@@ -137,16 +137,9 @@ function check_urls(repositories, input_dir = '.tortellini/in', output_dir = '.t
                 const input_path = `${input_dir}/${owner}/${repo}`;
                 const output_path = `${output_dir}/${owner}/${repo}`;
                 yield git_1.run_git_clone(url, input_path);
-                // await check_directory(input_path, output_path, config_dir)
-                yield ort_1.analyze(input_path, output_path);
-                yield ort_1.evaluate(output_path, config_dir);
-                yield ort_1.report(output_path);
-                yield ort_1.chown(input_dir, output_dir);
-                yield io.rmRF(`${input_path}`);
-                yield io.rmRF(`${output_path}/analyzer-result.yml`);
-                yield io.rmRF(`${output_path}/evaluation-result.yml`);
+                yield check_directory(input_path, output_path, config_dir);
+                yield clean_artifacts_1.clean_artifacts(input_dir, output_dir, output_path);
                 core.endGroup();
-                // await clean_artifacts([`${output_path}/**/*-result.yml`])
             }
         }
         catch (err) {
@@ -156,6 +149,72 @@ function check_urls(repositories, input_dir = '.tortellini/in', output_dir = '.t
 }
 exports.check_urls = check_urls;
 //# sourceMappingURL=check.js.map
+
+/***/ }),
+
+/***/ 982:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.clean_artifacts = void 0;
+const os_1 = __nccwpck_require__(87);
+const io = __importStar(__nccwpck_require__(436));
+const docker_1 = __nccwpck_require__(758);
+function clean_artifacts(input_dir, output_dir, output_path) {
+    return __awaiter(this, void 0, void 0, function* () {
+        yield chown(input_dir, output_dir);
+        yield Promise.all([
+            io.rmRF(`${input_dir}`),
+            io.rmRF(`${output_path}/analyzer-result.yml`),
+            io.rmRF(`${output_path}/evaluation-result.yml`)
+        ]);
+    });
+}
+exports.clean_artifacts = clean_artifacts;
+function chown(input_dir, output_dir) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const volumes = {
+            [input_dir]: '/in',
+            [output_dir]: '/out'
+        };
+        const docker_args = docker_1.volume2dockerargs(volumes);
+        const { uid, gid } = os_1.userInfo();
+        docker_args.push('--entrypoint', 'chown');
+        const chown_args = ['-R', `${uid}:${gid}`, '/in', '/out'];
+        yield docker_1.run_docker_container(docker_args, chown_args);
+    });
+}
+//# sourceMappingURL=clean_artifacts.js.map
 
 /***/ }),
 
@@ -389,8 +448,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.chown = exports.report = exports.evaluate = exports.analyze = void 0;
-const os_1 = __nccwpck_require__(87);
+exports.report = exports.evaluate = exports.analyze = void 0;
 const docker_1 = __nccwpck_require__(758);
 /**
  *
@@ -452,20 +510,6 @@ function report(output_dir) {
     });
 }
 exports.report = report;
-function chown(input_dir, output_dir) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const volumes = {
-            [input_dir]: '/in',
-            [output_dir]: '/out'
-        };
-        const docker_args = docker_1.volume2dockerargs(volumes);
-        const { uid, gid } = os_1.userInfo();
-        docker_args.push('--entrypoint', 'chown');
-        const chown_args = ['-R', `${uid}:${gid}`, '/in', '/out'];
-        yield docker_1.run_docker_container(docker_args, chown_args);
-    });
-}
-exports.chown = chown;
 //# sourceMappingURL=ort.js.map
 
 /***/ }),
