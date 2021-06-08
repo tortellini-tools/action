@@ -84,7 +84,7 @@ npm run format
 ### On the current repository
 
 The tool will analyze the license dependencies in current Github
-repository and store reports of the analyses in the `out/`
+repository and store reports of the analyses in the `.tortellini/out/`
 directory.
 
 ```shell
@@ -97,17 +97,27 @@ node dist/index.js
 ### On other repositories
 
 You can also analyze other repositories on Github by storing their addresses in
-a file and running node on the file.
+a file and running node on the file, e.g.:
 
-```
-sudo rm -r in out
+```shell
 echo 'https://github.com/tortellini-tools/action' > urls.txt
 echo 'https://github.com/fair-software/howfairis' >> urls.txt
-INPUT_REPOSITORIES=urls.txt node dist/index.js
+```
+
+The analysis expects a few environment variables. Here are their names and suggested values:
+
+```
+export INPUT_REPOSITORIES=urls.txt
+export INPUT_CURATIONS=''
+export INPUT_CLASSIFICATIONS=https://github.com/NLeSC/tortellini-on-rsd/raw/main/config/license-classifications.yml
+export INPUT_RULES=https://github.com/NLeSC/tortellini-on-rsd/raw/main/config/rules.kts
+sudo rm -r .tortellini
+mkdir .tortellini
+node dist/index.js
 ```
 
 The analyses will be stored in the directories
-`out/<organization>/<repository>/` .
+`.tortellini/out/<owner>/<repository>/` .
 
 ## How to create a release
 
