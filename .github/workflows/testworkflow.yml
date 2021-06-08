@@ -26,7 +26,13 @@ jobs:
       - run: ls -l .tortellini/out/fair-software/howfairis/gl-license-scanning-report.json
       - run: |
           curl -o file.json -s http://145.100.59.103/tmp/gl-license-scanning-report.json
-          jq --argfile a file.json --argfile b .tortellini/out/fair-software/howfairis/gl-license-scanning-report.json -n '($a | (.. | arrays) |= sort) as $a | ($b | (.. | arrays) |= sort) as $b | $a == $b'
+          JQRESULT=$(jq --argfile a file.json --argfile b .tortellini/out/fair-software/howfairis/gl-license-scanning-report.json -n '($a | (.. | arrays) |= sort) as $a | ($b | (.. | arrays) |= sort) as $b | $a == $b')
+          if [ "$JQRESULT" == "true" ]
+          then
+          exit 0
+          else
+          exit 1
+          fi
       - uses: actions/upload-artifact@v2
         with:
           name: tortellini-results
