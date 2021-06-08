@@ -26,7 +26,7 @@ jobs:
       - run: ls -l .tortellini/out/fair-software/howfairis/analyzer-result.yml
       - run: |
         curl -o file.json -s http://145.100.59.103/tmp/gl-license-scanning-report.json
-        jq --argfile a file.json --argfile b .tortellini/out/fair-software/howfairis/analyzer-result.yml -n '($a | (.. | arrays) |= sort) as $a | ($b | (.. | arrays) |= sort) as $b | $a == $b'
+        jq --argfile a file.json --argfile b .tortellini/out/fair-software/howfairis/gl-license-scanning-report.json -n '$a == $b'
 
       - uses: actions/upload-artifact@v2
         with:
