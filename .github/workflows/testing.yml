@@ -1,0 +1,196 @@
+name: testing
+on: # rebuild any PRs and main branch changes
+  pull_request:
+  push:
+    branches:
+      - main
+      - 'releases/*'
+
+jobs:
+  unittest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: npm install
+      - run: npm run build
+      - run: npm run package
+      - run: npm run test
+
+
+  no-args:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Clone this repository
+          uses: actions/checkout@v2
+        - name: Test without any input arguments
+          uses: ./
+        - name: Check the resulting directory tree
+          run: tree -a -L 5 -I '.git' .
+        - name: Verify that we have the result from ort analyze
+          run: ls -l .tortellini/out/analyzer-result.yml
+        - name: Verify that we have the result from ort evaluate
+          run: ls -l .tortellini/out/evaluation-result.yml
+        - name: Verify that we have the result from ort report
+          run: |
+            ls -l .tortellini/out/gl-license-scanning-report.json
+            ls -l .tortellini/out/scan-report-web-app.html
+
+
+  curations-url:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Clone this repository
+          uses: actions/checkout@v2
+        - name: Test with a curations file from the internets
+          uses: ./
+          with:
+            curations: https://raw.githubusercontent.com/NLeSC/tortellini-on-rsd/main/config/curations.yml
+        - name: Check the resulting directory tree
+          run: tree -a -L 5 -I '.git' .
+        - name: Verify that we have the result from ort analyze
+          run: ls -l .tortellini/out/analyzer-result.yml
+        - name: Verify that we have the result from ort evaluate
+          run: ls -l .tortellini/out/evaluation-result.yml
+        - name: Verify that we have the result from ort report
+          run: |
+            ls -l .tortellini/out/gl-license-scanning-report.json
+            ls -l .tortellini/out/scan-report-web-app.html
+
+
+  curations-local-file:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Clone this repository
+          uses: actions/checkout@v2
+        - name: Get a copy of a curations file
+          run: curl https://raw.githubusercontent.com/NLeSC/tortellini-on-rsd/main/config/curations.yml > curations.yml
+        - name: Test with a local curations file
+          uses: ./
+          with:
+            curations: curations.yml
+        - name: Check the resulting directory tree
+          run: tree -a -L 5 -I '.git' .
+        - name: Verify that we have the result from ort analyze
+          run: ls -l .tortellini/out/analyzer-result.yml
+        - name: Verify that we have the result from ort evaluate
+          run: ls -l .tortellini/out/evaluation-result.yml
+        - name: Verify that we have the result from ort report
+          run: |
+            ls -l .tortellini/out/gl-license-scanning-report.json
+            ls -l .tortellini/out/scan-report-web-app.html
+
+
+  rules-url:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Clone this repository
+          uses: actions/checkout@v2
+        - name: Test with a rules file from the internets
+          uses: ./
+          with:
+            rules: https://raw.githubusercontent.com/NLeSC/tortellini-on-rsd/main/config/rules.kts
+        - name: Check the resulting directory tree
+          run: tree -a -L 5 -I '.git' .
+        - name: Verify that we have the result from ort analyze
+          run: ls -l .tortellini/out/analyzer-result.yml
+        - name: Verify that we have the result from ort evaluate
+          run: ls -l .tortellini/out/evaluation-result.yml
+        - name: Verify that we have the result from ort report
+          run: |
+            ls -l .tortellini/out/gl-license-scanning-report.json
+            ls -l .tortellini/out/scan-report-web-app.html
+
+
+  rules-local-file:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Clone this repository
+          uses: actions/checkout@v2
+        - name: Get a copy of a rules file
+          run: curl https://raw.githubusercontent.com/NLeSC/tortellini-on-rsd/main/config/rules.kts > rules.kts
+        - name: Test with a local rules file
+          uses: ./
+          with:
+            rules: rules.kts
+        - name: Check the resulting directory tree
+          run: tree -a -L 5 -I '.git' .
+        - name: Verify that we have the result from ort analyze
+          run: ls -l .tortellini/out/analyzer-result.yml
+        - name: Verify that we have the result from ort evaluate
+          run: ls -l .tortellini/out/evaluation-result.yml
+        - name: Verify that we have the result from ort report
+          run: |
+            ls -l .tortellini/out/gl-license-scanning-report.json
+            ls -l .tortellini/out/scan-report-web-app.html
+
+
+
+  classifications-url:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Clone this repository
+          uses: actions/checkout@v2
+        - name: Test with a classifications file from the internets
+          uses: ./
+          with:
+            classifications: https://raw.githubusercontent.com/NLeSC/tortellini-on-rsd/main/config/license-classifications.yml
+        - name: Check the resulting directory tree
+          run: tree -a -L 5 -I '.git' .
+        - name: Verify that we have the result from ort analyze
+          run: ls -l .tortellini/out/analyzer-result.yml
+        - name: Verify that we have the result from ort evaluate
+          run: ls -l .tortellini/out/evaluation-result.yml
+        - name: Verify that we have the result from ort report
+          run: |
+            ls -l .tortellini/out/gl-license-scanning-report.json
+            ls -l .tortellini/out/scan-report-web-app.html
+
+
+  classifications-local-file:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Clone this repository
+          uses: actions/checkout@v2
+        - name: Get a copy of a classifications file
+          run: curl https://raw.githubusercontent.com/NLeSC/tortellini-on-rsd/main/config/license-classifications.yml > classifications.yml
+        - name: Test with a local classifications file
+          uses: ./
+          with:
+            classifications: classifications.yml
+        - name: Check the resulting directory tree
+          run: tree -a -L 5 -I '.git' .
+        - name: Verify that we have the result from ort analyze
+          run: ls -l .tortellini/out/analyzer-result.yml
+        - name: Verify that we have the result from ort evaluate
+          run: ls -l .tortellini/out/evaluation-result.yml
+        - name: Verify that we have the result from ort report
+          run: |
+            ls -l .tortellini/out/gl-license-scanning-report.json
+            ls -l .tortellini/out/scan-report-web-app.html
+
+
+  repositories:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Clone this repository
+          uses: actions/checkout@v2
+        - name: Create a file with urls to github repositories
+          run: |
+            echo 'https://github.com/tortellini-tools/action' > urls.txt
+            echo 'https://github.com/fair-software/howfairis' >> urls.txt
+        - name: Test with input argument 'repositories'
+          uses: ./
+          with:
+            repositories: urls.txt
+        - name: Check the resulting directory tree
+          run: tree -a -p -u -g -L 5 -I '.git' .
+
+        - name: Verify that we have the result for tortellini-tools/action from ort report
+          run: |
+            ls -l .tortellini/out/tortellini-tools/action/gl-license-scanning-report.json
+            ls -l .tortellini/out/tortellini-tools/action/scan-report-web-app.html
+        - name: Verify that we have the result for fair-software/howfairis from ort report
+          run: |
+            ls -l .tortellini/out/fair-software/howfairis/gl-license-scanning-report.json
+            ls -l .tortellini/out/fair-software/howfairis/scan-report-web-app.html
+
