@@ -2,6 +2,9 @@ import {run_git_clone, get_owner_and_repo, GitRepo} from './git'
 import {analyze, evaluate, report} from './ort'
 import * as fs from 'fs'
 import * as core from '@actions/core'
+import { write_overview } from './webapp'
+import { SummaryStatistics } from './webapp'
+
 
 export async function check_directory(
     input_dir = '.',
@@ -32,6 +35,8 @@ export async function check_urls(
         // get the total number of repositories
         const n_gitrepos = gitrepos.length
 
+        const summary_statistics: SummaryStatistics = []
+
         // clone each repo and run analyze
         for (const [i_gitrepo, gitrepo] of gitrepos.entries()) {
             const {owner, repo, url} = gitrepo
@@ -42,8 +47,12 @@ export async function check_urls(
             await analyze(input_path, output_path)
             await evaluate(output_path, config_dir)
             await report(output_path)
+            summary_statistics.push({
+                ...gitrepo, report: `${output_path}/scan-report-web-app.html`
+            })
             core.endGroup()
         }
+        await write_overview(output_dir, summary_statistics)
     } catch (err) {
         console.error(err)
     }

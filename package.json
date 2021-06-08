@@ -1,5 +1,8 @@
 {
   "name": "tortellini",
+  "files": [
+    "dist"
+  ],
   "version": "0.1.0",
   "private": true,
   "description": "check dependency licence issues using ort",
@@ -9,7 +12,7 @@
     "format": "prettier --write **/*.ts",
     "format-check": "prettier --check **/*.ts",
     "lint": "eslint src/**/*.ts",
-    "package": "ncc build --source-map --license licenses.txt",
+    "package": "ncc build --source-map --license licenses.txt && cp index.html.template dist/index.html.template",
     "test": "jest",
     "all": "npm run build && npm run format && npm run lint && npm run package && npm test"
   },
