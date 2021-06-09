@@ -96,16 +96,23 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.check_urls = exports.check_directory = void 0;
-const git_1 = __nccwpck_require__(374);
-const ort_1 = __nccwpck_require__(249);
 const fs = __importStar(__nccwpck_require__(747));
 const core = __importStar(__nccwpck_require__(186));
 const webapp_1 = __nccwpck_require__(314);
+const git_1 = __nccwpck_require__(374);
+const ort_1 = __nccwpck_require__(249);
+const clean_artifacts_1 = __nccwpck_require__(982);
 function check_directory(input_dir = '.', output_dir = '.tortellini/out', config_dir = '.tortellini/config') {
     return __awaiter(this, void 0, void 0, function* () {
+        core.startGroup('analyze');
         yield ort_1.analyze(input_dir, output_dir);
+        core.endGroup();
+        core.startGroup('evaluate');
         yield ort_1.evaluate(output_dir, config_dir);
+        core.endGroup();
+        core.startGroup('report');
         yield ort_1.report(output_dir);
+        core.endGroup();
     });
 }
 exports.check_directory = check_directory;
@@ -130,11 +137,10 @@ function check_urls(repositories, input_dir = '.tortellini/in', output_dir = '.t
                 const input_path = `${input_dir}/${owner}/${repo}`;
                 const output_path = `${output_dir}/${owner}/${repo}`;
                 yield git_1.run_git_clone(url, input_path);
-                yield ort_1.analyze(input_path, output_path);
-                yield ort_1.evaluate(output_path, config_dir);
-                yield ort_1.report(output_path);
-                summary_statistics.push(Object.assign(Object.assign({}, gitrepo), { report: `out/${owner}/${repo}/scan-report-web-app.html` }));
+                yield check_directory(input_path, output_path, config_dir);
+                yield clean_artifacts_1.clean_artifacts(input_dir, output_dir, output_path);
                 core.endGroup();
+                summary_statistics.push(Object.assign(Object.assign({}, gitrepo), { report: `out/${owner}/${repo}/scan-report-web-app.html` }));
             }
             // write the summary statistics to a webapp file
             yield webapp_1.write_overview(summary_statistics);
@@ -146,6 +152,72 @@ function check_urls(repositories, input_dir = '.tortellini/in', output_dir = '.t
 }
 exports.check_urls = check_urls;
 //# sourceMappingURL=check.js.map
+
+/***/ }),
+
+/***/ 982:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.clean_artifacts = void 0;
+const os_1 = __nccwpck_require__(87);
+const io = __importStar(__nccwpck_require__(436));
+const docker_1 = __nccwpck_require__(758);
+function clean_artifacts(input_dir, output_dir, output_path) {
+    return __awaiter(this, void 0, void 0, function* () {
+        yield chown(input_dir, output_dir);
+        yield Promise.all([
+            io.rmRF(`${input_dir}`),
+            io.rmRF(`${output_path}/analyzer-result.yml`),
+            io.rmRF(`${output_path}/evaluation-result.yml`)
+        ]);
+    });
+}
+exports.clean_artifacts = clean_artifacts;
+function chown(input_dir, output_dir) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const volumes = {
+            [input_dir]: '/in',
+            [output_dir]: '/out'
+        };
+        const docker_args = docker_1.volume2dockerargs(volumes);
+        const { uid, gid } = os_1.userInfo();
+        docker_args.push('--entrypoint', 'chown');
+        const chown_args = ['-R', `${uid}:${gid}`, '/in', '/out'];
+        yield docker_1.run_docker_container(docker_args, chown_args);
+    });
+}
+//# sourceMappingURL=clean_artifacts.js.map
 
 /***/ }),
 
@@ -245,7 +317,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.volume2dockerargs = exports.run_docker_container = void 0;
 const exec_1 = __nccwpck_require__(514);
 const path_1 = __nccwpck_require__(622);
-function run_docker_container(docker_args, ort_args, image = 'philipssoftware/ort') {
+function run_docker_container(docker_args, ort_args, image = 'philipssoftware/ort:2021-05-23') {
     return __awaiter(this, void 0, void 0, function* () {
         const cmd = 'docker';
         const args = ['run', '--rm', ...docker_args, image, ...ort_args];

@@ -10,7 +10,7 @@ interface RunResult {
 export async function run_docker_container(
     docker_args: string[],
     ort_args: string[],
-    image = 'philipssoftware/ort'
+    image = 'philipssoftware/ort:2021-05-23'
 ): Promise<RunResult> {
     const cmd = 'docker'
     const args = ['run', '--rm', ...docker_args, image, ...ort_args]
