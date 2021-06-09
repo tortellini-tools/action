@@ -36,9 +36,15 @@ jobs:
           fi
      
       - run: |
+          git clone --depth 1 https://github.com/oss-review-toolkit/ort.git /tmp/ort
+          DOCKER_BUILDKIT=1 docker build -t ort/ort /tmp/ort
+          mkdir -p conf
+          curl -L https://github.com/oss-review-toolkit/ort/raw/master/examples/rules.kts > conf/rules.kts
+          curl -L https://github.com/oss-review-toolkit/ort/raw/master/examples/license-classifications.yml > conf/license-classifications.yml
+          curl -L https://github.com/oss-review-toolkit/ort/raw/master/examples/curations.yml > conf/curations.yml
           git clone https://github.com/fair-software/howfairis
           mkdir .ort
-          docker run --rm -v $PWD/howfairis:/project -v $PWD/.ort:/out ort:local analyze -i /project -o /out
+          docker run --rm -v $PWD/howfairis:/project -v $PWD/.ort:/out ort analyze -i /project -o /out
       - run: tree -a -I '.git' -L 5 ./
 
       - uses: actions/upload-artifact@v2
