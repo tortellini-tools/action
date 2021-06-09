@@ -6,7 +6,7 @@ describe('parse_html()', () => {
 
         beforeEach(() => {
             webapp_content = `<!doctype html>
-                <html lang = "en"> 
+                <html lang = "en">
                     <body>
                         <script type = "application/gzip" id = "ort-report-data">
                             a huge blob

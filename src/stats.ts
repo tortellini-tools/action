@@ -34,7 +34,7 @@ export function parse_html(content: string): string {
 }
 
 interface Issue {
-    message: string
+    message?: string
 }
 
 interface EvaluatedModel {
@@ -59,4 +59,6 @@ export function decode_blob(blob: string): EvaluatedModel {
     return JSON.parse(new TextDecoder('utf-8').decode(data))
 }
 
-// export function evaluated_model2stats(evaluated_model) { }
+// export function evaluated_model2stats(evaluated_model) {
+
+// }
