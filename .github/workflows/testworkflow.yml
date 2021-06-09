@@ -38,7 +38,7 @@ jobs:
       - run: |
           git clone https://github.com/fair-software/howfairis
           mkdir .ort
-          docker run --rm -ti -v $PWD/howfairis:/project -v $PWD/.ort:/out ort analyze -i /project -o /out
+          docker run --rm -v $PWD/howfairis:/project -v $PWD/.ort:/out ort analyze -i /project -o /out
       - run: tree -a -I '.git' -L 5 ./
 
       - uses: actions/upload-artifact@v2
