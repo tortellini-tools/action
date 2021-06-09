@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<!--
+    WARNING! Make sure that you match all Quasar related
+    tags to the same version! (Below it's "@2.0.0-beta.8")
+  -->
+
+<head>
+<title>Tortellini results</title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet"
+    type="text/css">
+  <link href="https://cdn.jsdelivr.net/npm/quasar@2.0.0-beta.8/dist/quasar.prod.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+  <div id="q-app" style="min-height: 100vh;">
+    <div class="q-pa-md">
+      <q-table
+        title="Tortellini results"
+        :rows="rows"
+        :columns="columns"
+        :filter="filter"
+        :filter-method="filterUrl"
+        :pagination.sync="pagination"
+        row-key="url"
+      >
+
+        <template v-slot:top-right>
+          <q-input borderless dense debounce="300" v-model="filter" placeholder="Search url">
+            <template v-slot:append>
+              <q-icon name="search" />
+            </template>
+          </q-input>
+        </template>
+
+        <template v-slot:header="props">
+          <q-tr :props="props">
+            <q-th auto-width></q-th>
+            <q-th
+              v-for="col in props.cols"
+              :key="col.name"
+              :props="props"
+            >
+              {{ col.label }}
+            </q-th>
+          </q-tr>
+        </template>
+
+        <template v-slot:body="props">
+          <q-tr :props="props">
+            <q-td auto-width>
+              <q-btn size="sm" color="accent" round dense @click="props.expand = !props.expand" :icon="props.expand ? 'remove' : 'add'"></q-btn>
+            </q-td>
+            <q-td>
+              <a :href="props.row.url" target="_blank">{{ props.row.url }}</a>
+            </q-td>
+            <q-td>
+              <a :href="props.row.report" target="_blank">{{ "report" }}</a>
+            </q-td>
+          </q-tr>
+        </template>
+
+      </q-table>
+    </div>
+  </div>
+
+  <!-- Add the following at the end of your body tag -->
+  <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/quasar@2.0.0-beta.8/dist/quasar.umd.prod.js"></script>
+
+  <script>
+    const { ref } = Vue
+    const columns = [{
+        name: 'url',
+        required: true,
+        label: 'url',
+        field: 'url',
+        sortable: true,
+        align: 'left'
+    }, {
+        name: 'report',
+        required: true,
+        label: 'report',
+        field: 'report',
+        sortable: true,
+        align: 'center'
+    }];
+    const rows = {{node inserts the data here}};
+
+    const app = Vue.createApp({
+      setup() {
+        return {
+          columns,
+          rows,
+          filter: ref(''),
+          pagination: {
+            rowsPerPage: 0
+          },
+        }
+      },
+      methods: {
+        filterUrl (rows, terms, cols, cellValue) {
+          const lowerTerms = terms ? terms.toLowerCase() : ''
+          return rows.filter(
+            row => cols.filter( col =>
+              col.name === 'url'
+            ).some(col => {
+              const val = cellValue(col, row) + ''
+              const haystack = (val === 'undefined' || val === 'null') ? '' : val.toLowerCase()
+              return haystack.indexOf(lowerTerms) !== -1
+            })
+          )
+        }
+      }
+    })
+
+    app.use(Quasar, { config: {} })
+    app.mount('#q-app')
+
+  </script>
+</body>
+
+</html>

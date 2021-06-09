@@ -98,6 +98,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.check_urls = exports.check_directory = void 0;
 const fs = __importStar(__nccwpck_require__(747));
 const core = __importStar(__nccwpck_require__(186));
+const webapp_1 = __nccwpck_require__(314);
 const git_1 = __nccwpck_require__(374);
 const ort_1 = __nccwpck_require__(249);
 const clean_artifacts_1 = __nccwpck_require__(982);
@@ -127,6 +128,8 @@ function check_urls(repositories, input_dir = '.tortellini/in', output_dir = '.t
             const gitrepos = urls.map(git_1.get_owner_and_repo);
             // get the total number of repositories
             const n_gitrepos = gitrepos.length;
+            // initialize the summary statistics array
+            const summary_statistics = [];
             // clone each repo and run analyze
             for (const [i_gitrepo, gitrepo] of gitrepos.entries()) {
                 const { owner, repo, url } = gitrepo;
@@ -137,7 +140,10 @@ function check_urls(repositories, input_dir = '.tortellini/in', output_dir = '.t
                 yield check_directory(input_path, output_path, config_dir);
                 yield clean_artifacts_1.clean_artifacts(input_dir, output_dir, output_path);
                 core.endGroup();
+                summary_statistics.push(Object.assign(Object.assign({}, gitrepo), { report: `out/${owner}/${repo}/scan-report-web-app.html` }));
             }
+            // write the summary statistics to a webapp file
+            yield webapp_1.write_overview(summary_statistics);
         }
         catch (err) {
             console.error(err);
@@ -508,6 +514,60 @@ function report(output_dir) {
 }
 exports.report = report;
 //# sourceMappingURL=ort.js.map
+
+/***/ }),
+
+/***/ 314:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.write_overview = void 0;
+const fs = __importStar(__nccwpck_require__(747));
+const path_1 = __importDefault(__nccwpck_require__(622));
+function write_overview(data) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const template_filename = path_1.default.join(__dirname, 'index.html.template');
+        const template = yield fs.promises.readFile(template_filename, 'utf8');
+        const app = template.replace('{{node inserts the data here}}', JSON.stringify(data));
+        yield fs.promises.writeFile('.tortellini/index.html', app, 'utf8');
+        return;
+    });
+}
+exports.write_overview = write_overview;
+//# sourceMappingURL=webapp.js.map
 
 /***/ }),
 
