@@ -262,15 +262,15 @@ exports.set_up_configuration = void 0;
 const core = __importStar(__nccwpck_require__(186));
 const io = __importStar(__nccwpck_require__(436));
 const fs = __importStar(__nccwpck_require__(747));
+const path_1 = __importDefault(__nccwpck_require__(622));
 const node_fetch_1 = __importDefault(__nccwpck_require__(467));
-const path = __importStar(__nccwpck_require__(622));
-function set_up_configuration(config_dir = path.join('.tortellini', 'config')) {
+function set_up_configuration(config_dir = path_1.default.join('.tortellini', 'config')) {
     return __awaiter(this, void 0, void 0, function* () {
         yield io.mkdirP(config_dir);
         yield Promise.all([
-            set_up_configuration_file_or_url('curations', path.join(config_dir, 'curations.yml')),
-            set_up_configuration_file_or_url('rules', path.join(config_dir, 'rules.kts')),
-            set_up_configuration_file_or_url('classifications', path.join(config_dir, 'license-classifications.yml'))
+            set_up_configuration_file_or_url('curations', path_1.default.join(config_dir, 'curations.yml')),
+            set_up_configuration_file_or_url('rules', path_1.default.join(config_dir, 'rules.kts')),
+            set_up_configuration_file_or_url('classifications', path_1.default.join(config_dir, 'license-classifications.yml'))
         ]);
     });
 }
