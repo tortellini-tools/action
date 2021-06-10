@@ -88,6 +88,10 @@ repository and store reports of the analyses in the `.tortellini/out/`
 directory.
 
 ```shell
+export INPUT_REPOSITORIES=
+export INPUT_CURATIONS=''
+export INPUT_CLASSIFICATIONS=https://github.com/NLeSC/tortellini-on-rsd/raw/main/config/license-classifications.yml
+export INPUT_RULES=https://github.com/NLeSC/tortellini-on-rsd/raw/main/config/rules.kts
 npm install
 npm run build
 npm run package
