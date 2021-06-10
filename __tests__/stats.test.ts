@@ -364,7 +364,6 @@ describe('evaluated_model2stats()', () => {
                 },
                 licenses: {declared: {MIT: 2}, detected: {}}
             }
-            console.log(actual_stats)
             expect(actual_stats).toEqual(expected_stats)
         })
     })

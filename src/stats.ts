@@ -16,31 +16,6 @@ export interface RepoStats {
     scopes: number
     dependency_levels: number
     violations: number
-
-    // open_issues: {
-    //     errors: number
-    //     warnings: number
-    //     hints: number
-    // }
-    // open_rule_violations: {
-    //     errors: number
-    //     warnings: number
-    //     hints: number
-    // }
-    // dependency_tree: {
-    //     included_projects: number
-    //     excluded_projects: number
-    //     included_packages: number
-    //     excludes_packages: number
-    //     total_tree_depth: number
-    //     included_tree_depth: number
-    //     included_scopes: string[]
-    //     excluded_scopes: string[]
-    // }
-    // licenses: {
-    //     declared: {}
-    //     detected: {}
-    // }
 }
 
 export async function collect_stats(webapp_file: string): Promise<RepoStats> {
