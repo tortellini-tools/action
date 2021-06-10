@@ -1,0 +1,60 @@
+name: testworkflow
+
+on: # run any PRs and main branch changes
+  pull_request:
+  push:
+    branches:
+      - main
+      - 'releases/*'
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+
+  testworkflow:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - run: echo 'https://github.com/fair-software/howfairis' > urls.txt
+      - uses: tortellini-tools/action@main
+        with:
+          repositories: urls.txt
+
+      - run: ls -l .tortellini/out/fair-software/howfairis/gl-license-scanning-report.json
+     
+      - run: |
+          git clone --depth 1 https://github.com/oss-review-toolkit/ort.git /tmp/ort
+          DOCKER_BUILDKIT=1 docker build -t ort /tmp/ort
+          mkdir -p conf
+          curl -L https://github.com/oss-review-toolkit/ort/raw/master/examples/rules.kts > conf/rules.kts
+          curl -L https://github.com/oss-review-toolkit/ort/raw/master/examples/license-classifications.yml > conf/license-classifications.yml
+          curl -L https://github.com/oss-review-toolkit/ort/raw/master/examples/curations.yml > conf/curations.yml
+          git clone https://github.com/fair-software/howfairis
+          mkdir .ort
+          docker run --rm -v $PWD/howfairis:/project -v $PWD/.ort:/out ort analyze -i /project -o /out
+          docker run --rm -v $PWD/howfairis:/project -v $PWD/.ort:/out -v $PWD/conf:/conf ort evaluate --package-curations-file /conf/curations.yml \
+          --rules-file /conf/rules.kts --license-classifications-file /conf/license-classifications.yml -i /out/analyzer-result.yml -o /out || true
+          docker run --rm -v $PWD/howfairis:/project -v $PWD/.ort:/out ort report \
+          -f NoticeTemplate,StaticHtml,WebApp,EvaluatedModel,GitLabLicenseModel,SpdxDocument,StaticHtml,CycloneDx -i /out/evaluation-result.yml -o /out || true
+          JQRESULT=$(jq --argfile a .ort/gl-license-scanning-report.json --argfile b .tortellini/out/fair-software/howfairis/gl-license-scanning-report.json -n '($a | (.. | arrays) |= sort) as $a | ($b | (.. | arrays) |= sort) as $b | $a == $b')
+          if [ "$JQRESULT" == "true" ]
+          then
+          echo Report is exactly like expected
+          exit 0
+          else
+          echo Report is different from expected
+          exit 1
+          fi
+
+      - run: tree -a -I '.git' -L 5 ./
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: tortellini-results
+          path: |
+            .tortellini
+            !.tortellini/in
+            !.tortellini/out/**/analyzer-result.yml
+            !.tortellini/out/**/evaluation-result.yml
