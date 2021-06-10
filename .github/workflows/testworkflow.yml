@@ -23,17 +23,6 @@ jobs:
           repositories: urls.txt
 
       - run: ls -l .tortellini/out/fair-software/howfairis/gl-license-scanning-report.json
-      - run: |
-          curl -o file.json -s http://145.100.59.103/tmp/gl-license-scanning-report.json
-          JQRESULT=$(jq --argfile a file.json --argfile b .tortellini/out/fair-software/howfairis/gl-license-scanning-report.json -n '($a | (.. | arrays) |= sort) as $a | ($b | (.. | arrays) |= sort) as $b | $a == $b')
-          if [ "$JQRESULT" == "true" ]
-          then
-          echo Report is exactly like expected
-          exit 0
-          else
-          echo Report is different from expected
-          exit 1
-          fi
      
       - run: |
           git clone --depth 1 https://github.com/oss-review-toolkit/ort.git /tmp/ort
