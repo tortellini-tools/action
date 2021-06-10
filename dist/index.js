@@ -131,6 +131,7 @@ function check_urls(repositories, input_dir = '.tortellini/in', output_dir = '.t
             const n_gitrepos = gitrepos.length;
             // initialize the summary statistics array
             const summary_statistics = [];
+            const index_html_path = `${output_dir}/index.html`;
             // clone each repo and run analyze
             for (const [i_gitrepo, gitrepo] of gitrepos.entries()) {
                 const { owner, repo, url } = gitrepo;
@@ -138,15 +139,16 @@ function check_urls(repositories, input_dir = '.tortellini/in', output_dir = '.t
                 const input_path = `${input_dir}/${owner}/${repo}`;
                 const output_path = `${output_dir}/${owner}/${repo}`;
                 const webapp_path = `${output_path}/scan-report-web-app.html`;
+                const report_url = `${owner}/${repo}/scan-report-web-app.html`;
                 yield git_1.run_git_clone(url, input_path);
                 yield check_directory(input_path, output_path, config_dir);
                 yield clean_artifacts_1.clean_artifacts(input_dir, output_dir, output_path);
                 core.endGroup();
                 const repo_stats = yield stats_1.collect_stats(webapp_path);
-                summary_statistics.push(Object.assign(Object.assign(Object.assign({}, gitrepo), repo_stats), { report: webapp_path }));
+                summary_statistics.push(Object.assign(Object.assign(Object.assign({}, gitrepo), repo_stats), { report: report_url }));
             }
             // write the summary statistics to a webapp file
-            yield webapp_1.write_overview(summary_statistics);
+            yield webapp_1.write_overview(summary_statistics, index_html_path);
         }
         catch (err) {
             console.error(err);
@@ -648,12 +650,12 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.write_overview = void 0;
 const fs = __importStar(__nccwpck_require__(5747));
 const path_1 = __importDefault(__nccwpck_require__(5622));
-function write_overview(data) {
+function write_overview(data, file_path) {
     return __awaiter(this, void 0, void 0, function* () {
-        const template_filename = path_1.default.join(__dirname, 'index.html.template');
+        const template_filename = path_1.default.join(__dirname, '..', 'templates', 'index.html.template');
         const template = yield fs.promises.readFile(template_filename, 'utf8');
         const app = template.replace('{{node inserts the data here}}', JSON.stringify(data));
-        yield fs.promises.writeFile('.tortellini/index.html', app, 'utf8');
+        yield fs.promises.writeFile(file_path, app, 'utf8');
         return;
     });
 }

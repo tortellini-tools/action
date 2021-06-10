@@ -43,6 +43,7 @@ export async function check_urls(
 
         // initialize the summary statistics array
         const summary_statistics: SummaryStatistics = []
+        const index_html_path = `${output_dir}/index.html`
 
         // clone each repo and run analyze
         for (const [i_gitrepo, gitrepo] of gitrepos.entries()) {
@@ -51,6 +52,7 @@ export async function check_urls(
             const input_path = `${input_dir}/${owner}/${repo}`
             const output_path = `${output_dir}/${owner}/${repo}`
             const webapp_path = `${output_path}/scan-report-web-app.html`
+            const report_url = `${owner}/${repo}/scan-report-web-app.html`
             await run_git_clone(url, input_path)
             await check_directory(input_path, output_path, config_dir)
             await clean_artifacts(input_dir, output_dir, output_path)
@@ -59,11 +61,11 @@ export async function check_urls(
             summary_statistics.push({
                 ...gitrepo,
                 ...repo_stats,
-                report: webapp_path
+                report: report_url
             })
         }
         // write the summary statistics to a webapp file
-        await write_overview(summary_statistics)
+        await write_overview(summary_statistics, index_html_path)
     } catch (err) {
         console.error(err)
     }
