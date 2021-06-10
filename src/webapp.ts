@@ -1,10 +1,12 @@
 import * as fs from 'fs'
 import path from 'path'
 import {GitRepo} from './git'
+import {RepoStats} from './stats'
 
-export type SummaryStatistics = (GitRepo & {
-    report: string
-})[]
+export type SummaryStatistics = (GitRepo &
+    RepoStats & {
+        report: string
+    })[]
 
 export async function write_overview(data: SummaryStatistics): Promise<void> {
     const template_filename = path.join(__dirname, 'index.html.template')

@@ -4,20 +4,13 @@ import atob from 'atob'
 import * as pako from 'pako'
 
 export interface RepoStats {
-    // repo_url: string // url of repository
-    // revision: string
-    // issues: number
-
-    // repo: string // GH repo name
-    // owner: string // GH organization or user
-    // files: number
-    // dependencies: number
-    // licenses: number
-    // report: string // path to web app file
-    // scopes: number
-    // dependency_levels: number
-    // violations: number
-
+    issues: number
+    dependencies: number
+    licenses: number //detected in webapp
+    violations: number
+    scopes: number
+}
+export interface OrtStatistics {
     open_issues: {
         errors: number
         warnings: number
@@ -38,7 +31,9 @@ export interface RepoStats {
         included_scopes: string[]
         excluded_scopes: string[]
     }
-    licenses: {}
+    licenses: {
+        declared: Object
+    }
 }
 
 export async function collect_stats(webapp_file: string): Promise<RepoStats> {
@@ -60,15 +55,9 @@ interface Issue {
     message?: string
 }
 
-export interface RepoInfo {
-    url: string
-    revision: string
-}
-
 export interface EvaluatedModel {
     issues: Issue[]
-    repository: RepoInfo
-    statistics: RepoStats
+    statistics: OrtStatistics
 }
 
 export function decode_blob(blob: string): EvaluatedModel {
@@ -92,5 +81,14 @@ export function decode_blob(blob: string): EvaluatedModel {
 export function evaluated_model2stats(
     evaluated_model: EvaluatedModel
 ): RepoStats {
-    return evaluated_model.statistics
+    return {
+        issues: evaluated_model.statistics.open_issues.errors,
+        dependencies:
+            evaluated_model.statistics.dependency_tree.included_packages,
+        licenses: Object.keys(evaluated_model.statistics.licenses.declared)
+            .length, //detected in webapp
+        violations: evaluated_model.statistics.open_rule_violations.errors,
+        scopes: evaluated_model.statistics.dependency_tree.included_scopes
+            .length
+    }
 }

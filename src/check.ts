@@ -4,6 +4,7 @@ import {write_overview, SummaryStatistics} from './webapp'
 import {run_git_clone, get_owner_and_repo, GitRepo} from './git'
 import {analyze, evaluate, report} from './ort'
 import {clean_artifacts} from './clean_artifacts'
+import {collect_stats} from './stats'
 
 export async function check_directory(
     input_dir = '.',
@@ -49,13 +50,16 @@ export async function check_urls(
             core.startGroup(`${i_gitrepo + 1}/${n_gitrepos}: ${owner}/${repo}`)
             const input_path = `${input_dir}/${owner}/${repo}`
             const output_path = `${output_dir}/${owner}/${repo}`
+            const webapp_path = `out/${owner}/${repo}/scan-report-web-app.html`
             await run_git_clone(url, input_path)
             await check_directory(input_path, output_path, config_dir)
             await clean_artifacts(input_dir, output_dir, output_path)
             core.endGroup()
+            const repo_stats = await collect_stats(webapp_path)
             summary_statistics.push({
                 ...gitrepo,
-                report: `out/${owner}/${repo}/scan-report-web-app.html`
+                ...repo_stats,
+                report: webapp_path
             })
         }
         // write the summary statistics to a webapp file
