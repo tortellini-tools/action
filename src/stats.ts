@@ -16,15 +16,40 @@ export interface RepoStats {
     scopes: number
     dependency_levels: number
     violations: number
+
+    // open_issues: {
+    //     errors: number
+    //     warnings: number
+    //     hints: number
+    // }
+    // open_rule_violations: {
+    //     errors: number
+    //     warnings: number
+    //     hints: number
+    // }
+    // dependency_tree: {
+    //     included_projects: number
+    //     excluded_projects: number
+    //     included_packages: number
+    //     excludes_packages: number
+    //     total_tree_depth: number
+    //     included_tree_depth: number
+    //     included_scopes: string[]
+    //     excluded_scopes: string[]
+    // }
+    // licenses: {
+    //     declared: {}
+    //     detected: {}
+    // }
 }
 
-export async function collect_stats(webapp_file: string): Promise<void> {
+export async function collect_stats(webapp_file: string): Promise<RepoStats> {
     const webapp_content = await fs.promises.readFile(webapp_file, {
         encoding: 'utf-8'
     })
     const blob = parse_html(webapp_content)
     const evaluated_model = decode_blob(blob)
-    // return evaluated_model2stats(evaluated_model)
+    return evaluated_model2stats(evaluated_model)
 }
 
 export function parse_html(content: string): string {
@@ -37,8 +62,9 @@ interface Issue {
     message?: string
 }
 
-interface EvaluatedModel {
+export interface EvaluatedModel {
     issues: Issue[]
+    statistics: RepoStats
 }
 
 export function decode_blob(blob: string): EvaluatedModel {
@@ -59,6 +85,8 @@ export function decode_blob(blob: string): EvaluatedModel {
     return JSON.parse(new TextDecoder('utf-8').decode(data))
 }
 
-// export function evaluated_model2stats(evaluated_model) {
-
-// }
+export function evaluated_model2stats(
+    evaluated_model: EvaluatedModel
+): RepoStats {
+    return evaluated_model.statistics
+}
