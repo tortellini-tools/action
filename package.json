@@ -9,7 +9,7 @@
     "format": "prettier --write **/*.ts",
     "format-check": "prettier --check **/*.ts",
     "lint": "eslint src/**/*.ts",
-    "package": "ncc build --source-map --license licenses.txt",
+    "package": "ncc build --source-map --license licenses.txt && cp index.html.template lib/ && cp index.html.template dist/",
     "test": "jest",
     "all": "npm run build && npm run format && npm run lint && npm run package && npm test"
   },
@@ -36,7 +36,7 @@
   "devDependencies": {
     "@types/atob": "^2.1.2",
     "@types/jest": "^26.0.15",
-    "@types/node": "^15.3.0",
+    "@types/node": "^15.12.2",
     "@types/node-fetch": "^2.5.10",
     "@types/pako": "^1.0.1",
     "@typescript-eslint/parser": "^4.8.1",
