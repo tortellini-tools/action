@@ -6,7 +6,7 @@ import * as pako from 'pako'
 export interface RepoStats {
     issues: number
     dependencies: number
-    licenses: number //detected in webapp
+    licenses: number
     violations: number
     scopes: number
 }
@@ -86,7 +86,7 @@ export function evaluated_model2stats(
         dependencies:
             evaluated_model.statistics.dependency_tree.included_packages,
         licenses: Object.keys(evaluated_model.statistics.licenses.declared)
-            .length, //detected in webapp
+            .length,
         violations: evaluated_model.statistics.open_rule_violations.errors,
         scopes: evaluated_model.statistics.dependency_tree.included_scopes
             .length

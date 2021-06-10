@@ -1,23 +1,14 @@
 <!DOCTYPE html>
 <html>
-    <!--
+      <!--
     WARNING! Make sure that you match all Quasar related
-    tags to the same version! (Below it's "@2.0.0-beta.8")
+    tags to the same version! (Below it's "@2.0.0-rc.1")
   -->
 
-    <head>
-        <title>Tortellini results</title>
-        <link
-            href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons"
-            rel="stylesheet"
-            type="text/css"
-        />
-        <link
-            href="https://cdn.jsdelivr.net/npm/quasar@2.0.0-beta.8/dist/quasar.prod.css"
-            rel="stylesheet"
-            type="text/css"
-        />
-    </head>
+  <head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet" type="text/css">
+    <link href="https://cdn.jsdelivr.net/npm/quasar@2.0.0-rc.1/dist/quasar.prod.css" rel="stylesheet" type="text/css">
+  </head>
 
     <body>
         <div id="q-app" style="min-height: 100vh">
@@ -80,7 +71,7 @@
 
         <!-- Add the following at the end of your body tag -->
         <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/quasar@2.0.0-beta.8/dist/quasar.umd.prod.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/quasar@2.0.0-rc.1/dist/quasar.umd.prod.js"></script>
 
         <script>
             const { ref } = Vue
