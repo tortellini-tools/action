@@ -4,18 +4,41 @@ import atob from 'atob'
 import * as pako from 'pako'
 
 export interface RepoStats {
-    files: number
-    dependencies: number
-    issues: number
-    licenses: number
-    repo: string // GH repo name
-    owner: string // GH organization or user
-    repo_url: string // url of repository
-    revision: string
-    report: string // path to web app file
-    scopes: number
-    dependency_levels: number
-    violations: number
+    // repo_url: string // url of repository
+    // revision: string
+    // issues: number
+
+    // repo: string // GH repo name
+    // owner: string // GH organization or user
+    // files: number
+    // dependencies: number
+    // licenses: number
+    // report: string // path to web app file
+    // scopes: number
+    // dependency_levels: number
+    // violations: number
+
+    open_issues: {
+        errors: number
+        warnings: number
+        hints: number
+    }
+    open_rule_violations: {
+        errors: number
+        warnings: number
+        hints: number
+    }
+    dependency_tree: {
+        included_projects: number
+        excluded_projects: number
+        included_packages: number
+        excludes_packages: number
+        total_tree_depth: number
+        included_tree_depth: number
+        included_scopes: string[]
+        excluded_scopes: string[]
+    }
+    licenses: {}
 }
 
 export async function collect_stats(webapp_file: string): Promise<RepoStats> {
@@ -37,8 +60,14 @@ interface Issue {
     message?: string
 }
 
+export interface RepoInfo {
+    url: string
+    revision: string
+}
+
 export interface EvaluatedModel {
     issues: Issue[]
+    repository: RepoInfo
     statistics: RepoStats
 }
 
