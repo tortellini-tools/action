@@ -50,7 +50,7 @@ export async function check_urls(
             core.startGroup(`${i_gitrepo + 1}/${n_gitrepos}: ${owner}/${repo}`)
             const input_path = `${input_dir}/${owner}/${repo}`
             const output_path = `${output_dir}/${owner}/${repo}`
-            const webapp_path = `out/${owner}/${repo}/scan-report-web-app.html`
+            const webapp_path = `${output_path}/scan-report-web-app.html`
             await run_git_clone(url, input_path)
             await check_directory(input_path, output_path, config_dir)
             await clean_artifacts(input_dir, output_dir, output_path)

@@ -137,7 +137,7 @@ function check_urls(repositories, input_dir = '.tortellini/in', output_dir = '.t
                 core.startGroup(`${i_gitrepo + 1}/${n_gitrepos}: ${owner}/${repo}`);
                 const input_path = `${input_dir}/${owner}/${repo}`;
                 const output_path = `${output_dir}/${owner}/${repo}`;
-                const webapp_path = `out/${owner}/${repo}/scan-report-web-app.html`;
+                const webapp_path = `${output_path}/scan-report-web-app.html`;
                 yield git_1.run_git_clone(url, input_path);
                 yield check_directory(input_path, output_path, config_dir);
                 yield clean_artifacts_1.clean_artifacts(input_dir, output_dir, output_path);

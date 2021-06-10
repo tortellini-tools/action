@@ -45,57 +45,32 @@
                         </q-input>
                     </template>
 
-                    <template v-slot:header="props">
-                        <q-tr :props="props">
-                            <q-th auto-width></q-th>
-                            <q-th
-                                v-for="col in props.cols"
-                                :key="col.name"
-                                :props="props"
-                            >
-                                {{ col.label }}
-                            </q-th>
-                        </q-tr>
-                    </template>
-
                     <template v-slot:body="props">
                         <q-tr :props="props">
                             <q-td>
-                                <a :href="props.row.url" target="_blank"
-                                    >{{ props.row.url }}</a
-                                >
+                                <a :href="props.row.url" target="_blank">
+                                    {{ props.row.url }}
+                                </a>
                             </q-td>
                             <q-td>
-                                <a :href="props.row.issues" target="_blank"
-                                    >{{ "issues" }}</a
-                                >
+                                <span> {{ props.row.issues }} </span>
                             </q-td>
                             <q-td>
-                                <a
-                                    :href="props.row.dependencies"
-                                    target="_blank"
-                                    >{{ "dependencies" }}</a
-                                >
+                                <span> {{ props.row.dependencies }} </span>
                             </q-td>
                             <q-td>
-                                <a :href="props.row.licenses" target="_blank"
-                                    >{{ "licenses" }}</a
-                                >
+                                <span> {{ props.row.licenses }} </span>
                             </q-td>
                             <q-td>
-                                <a :href="props.row.violations" target="_blank"
-                                    >{{ "violations" }}</a
-                                >
+                                <span> {{ props.row.violations }} </span>
                             </q-td>
                             <q-td>
-                                <a :href="props.row.scopes" target="_blank"
-                                    >{{ "scopes" }}</a
-                                >
+                                <span> {{ props.row.scopes }} </span>
                             </q-td>
                             <q-td>
-                                <a :href="props.row.report" target="_blank"
-                                    >{{ "report" }}</a
-                                >
+                                <a :href="props.row.report" target="_blank">
+                                    {{ "report" }}
+                                </a>
                             </q-td>
                         </q-tr>
                     </template>
@@ -109,61 +84,64 @@
 
         <script>
             const { ref } = Vue
-            const columns = [{
-                name: 'url',
-                required: true,
-                label: 'url',
-                field: 'url',
-                sortable: true,
-                align: 'left'
-            },
-            {
-                name: 'issues',
-                required: true,
-                label: 'issues',
-                field: 'issues',
-                sortable: true,
-                align: 'left'
-            },
-             {
-                name: 'dependencies',
-                required: true,
-                label: 'dependencies',
-                field: 'dependencies',
-                sortable: true,
-                align: 'left'
-            },
-            {
-                name: 'licenses',
-                required: true,
-                label: 'licenses',
-                field: 'licenses',
-                sortable: true,
-                align: 'left'
-            },
-            {
-                name: 'violations',
-                required: true,
-                label: 'violations',
-                field: 'violations',
-                sortable: true,
-                align: 'left'
-            },
-            {
-                name: 'scopes',
-                required: true,
-                label: 'scopes',
-                field: 'scopes',
-                sortable: true,
-                align: 'left'
-            }, {
-                name: 'report',
-                required: true,
-                label: 'report',
-                field: 'report',
-                sortable: true,
-                align: 'center'
-            }];
+            const columns = [
+                {
+                    name: 'url',
+                    required: true,
+                    label: 'url',
+                    field: 'url',
+                    sortable: true,
+                    align: 'left'
+                },
+                {
+                    name: 'issues',
+                    required: true,
+                    label: 'issues',
+                    field: 'issues',
+                    sortable: true,
+                    align: 'center'
+                },
+                {
+                    name: 'dependencies',
+                    required: true,
+                    label: 'dependencies',
+                    field: 'dependencies',
+                    sortable: true,
+                    align: 'center'
+                },
+                {
+                    name: 'licenses',
+                    required: true,
+                    label: 'licenses',
+                    field: 'licenses',
+                    sortable: true,
+                    align: 'center'
+                },
+                {
+                    name: 'violations',
+                    required: true,
+                    label: 'violations',
+                    field: 'violations',
+                    sortable: true,
+                    align: 'center'
+                },
+                {
+                    name: 'scopes',
+                    required: true,
+                    label: 'scopes',
+                    field: 'scopes',
+                    sortable: true,
+                    align: 'center'
+                },
+                {
+                    name: 'report',
+                    required: true,
+                    label: 'report',
+                    field: 'report',
+                    sortable: true,
+                    align: 'center'
+                }
+            ];
 
             const rows = {{node inserts the data here}};
 
