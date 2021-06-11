@@ -35,7 +35,7 @@ jobs:
             - uses: tortellini-tools/action@main
             - uses: actions/upload-artifact@v2
               with:
-                  name: tortellini-results
+                  name: tortellini-result
                   path: .tortellini/out
 ```
 
