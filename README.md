@@ -66,7 +66,7 @@ jobs:
 ```
 
 Tortellini action will generate `.tortellini/out/index.html` file and `.tortellini/out/<GitHub user or organization>/<GitHub repository>/scan-report-web-app.html` files.
-The HTML file can be downloaded from the [workflow page](https://github.com/actions/upload-artifact#where-does-the-upload-go) by using the GitHubs upload-artifact action.
+The HTML files can be downloaded from [your workflow page](https://github.com/actions/upload-artifact#where-does-the-upload-go) by using GitHubs upload-artifact action.
 
 To view the HTML files directly you could upload the `.tortellini/out` folder to a web server like an AWS S3 bucket.
 
