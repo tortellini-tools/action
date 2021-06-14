@@ -25,18 +25,18 @@ jobs:
       - run: ls -l .tortellini/out/fair-software/howfairis/gl-license-scanning-report.json
      
       - run: |
-          docker run --name ort philipssoftware/ort:2021-05-23
+          docker run philipssoftware/ort:2021-05-23
           mkdir -p conf
           curl -L https://github.com/oss-review-toolkit/ort/raw/master/examples/rules.kts > conf/rules.kts
           curl -L https://github.com/oss-review-toolkit/ort/raw/master/examples/license-classifications.yml > conf/license-classifications.yml
           curl -L https://github.com/oss-review-toolkit/ort/raw/master/examples/curations.yml > conf/curations.yml
           git clone https://github.com/fair-software/howfairis .ort/in/fair-software/howfairis
           mkdir .ort/out
-          docker run --rm -v $PWD/.ort/in/fair-software/howfairis:/project -v $PWD/.ort/out:/out ort analyze -i /project -o /out
-          docker run --rm -v $PWD/.ort/in/fair-software/howfairis:/project -v $PWD/.ort/out:/out -v $PWD/conf:/conf ort evaluate \
+          docker run --rm -v $PWD/.ort/in/fair-software/howfairis:/project -v $PWD/.ort/out:/out philipssoftware/ort:2021-05-23 analyze -i /project -o /out
+          docker run --rm -v $PWD/.ort/in/fair-software/howfairis:/project -v $PWD/.ort/out:/out -v $PWD/conf:/conf philipssoftware/ort:2021-05-23 evaluate \
           --package-curations-file /conf/curations.yml --rules-file /conf/rules.kts --license-classifications-file /conf/license-classifications.yml \
           -i /out/analyzer-result.yml -o /out || true
-          docker run --rm -v $PWD/.ort/in/fair-software/howfairis:/project -v $PWD/.ort/out:/out ort report -f GitLabLicenseModel -i /out/evaluation-result.yml \
+          docker run --rm -v $PWD/.ort/in/fair-software/howfairis:/project -v $PWD/.ort/out:/out philipssoftware/ort:2021-05-23 report -f GitLabLicenseModel -i /out/evaluation-result.yml \
           -o /out || true
 
           if [ -z "`diff .ort/out/gl-license-scanning-report.json .tortellini/out/fair-software/howfairis/gl-license-scanning-report.json`"]
