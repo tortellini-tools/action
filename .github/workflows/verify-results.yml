@@ -25,7 +25,7 @@ jobs:
       - run: ls -l .tortellini/out/fair-software/howfairis/gl-license-scanning-report.json
      
       - run: |
-          docker run philipssoftware/ort:ort
+          docker run --name ort philipssoftware/ort:2021-05-23
           mkdir -p conf
           curl -L https://github.com/oss-review-toolkit/ort/raw/master/examples/rules.kts > conf/rules.kts
           curl -L https://github.com/oss-review-toolkit/ort/raw/master/examples/license-classifications.yml > conf/license-classifications.yml
