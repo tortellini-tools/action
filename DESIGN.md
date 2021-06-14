@@ -71,7 +71,7 @@ Regardless of whether we choose to use an existing tool/service or make somethin
 
 ## High level implementation plan
 
-After [evaluating existing tools](https://github.com/tortellini-tools/action/issues/2) we decided to wrap [ort](https://github.com/oss-review-toolkit/ort) in a script. As ort can detect licenses of dependences of a freshly cloned repository and produce a nice HTML report and machine readable reports. Ort is also widely used and supported by the OSS community.
+After [evaluating existing tools](https://github.com/tortellini-tools/action/issues/2) we decided to wrap [ort](https://github.com/oss-review-toolkit/ort) in a script. As ort can detect licenses of dependences of a freshly cloned repository and produce a nice HTML report and machine readable reports. Ort is also widely used and supported by the OSS community. The runner up was [https://github.com/pivotal/LicenseFinder](https://github.com/pivotal/LicenseFinder), but it requires that dependencies are already installed while ort installs them for you.
 
 1. Write a script to regularly
     - Clone the repository
