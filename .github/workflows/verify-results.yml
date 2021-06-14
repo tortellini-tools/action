@@ -12,7 +12,7 @@ on: # run any PRs and main branch changes
 
 jobs:
 
-  testworkflow:
+  verifyresults:
     runs-on: ubuntu-latest
 
     steps:
