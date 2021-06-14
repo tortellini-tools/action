@@ -1,7 +1,8 @@
 <p align="center">
   <a href="https://github.com/tortellini-tools/action/actions"><img alt="typescript-action status" src="https://github.com/tortellini-tools/action/workflows/build-test/badge.svg"></a>
   <a href="https://github.com/tortellini-tools/action/actions"><img alt="linting-action status" src="https://github.com/tortellini-tools/action/workflows/linting/badge.svg"></a>
-  <a href="https://github.com/tortellini-tools/action/actions/workflows/usage.yml"><img alt="tortellini-action status" src="https://github.com/tortellini-tools/action/actions/workflows/usage.yml/badge.svg"></a>
+  <a href="https://github.com/tortellini-tools/action/actions/workflows/usage-current-repository.yml"><img alt="tortellini-action status" src="https://github.com/tortellini-tools/action/actions/workflows/usage-current-repository.yml/badge.svg"></a>
+  <a href="https://github.com/tortellini-tools/action/actions/workflows/usage-multiple-repositories.yml"><img alt="tortellini-action status" src="https://github.com/tortellini-tools/action/actions/workflows/usage-multiple-repositories.yml/badge.svg"></a>
 </p>
 
 # Tortellini GitHub Action
