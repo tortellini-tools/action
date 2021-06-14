@@ -9,6 +9,13 @@
 
 This action checks dependency license issues using [ort](https://github.com/oss-review-toolkit/ort).
 
+This GitHub action can
+* Run license analysis on your repository
+* Run license analysis on list of repositories given
+* Detect licensing violations
+* Summarize potential licensing issues
+* Generate a report with summary
+
 ## Inputs
 
 ### `repositories`
