@@ -9,17 +9,32 @@
 
 This action checks dependency license issues using [ort](https://github.com/oss-review-toolkit/ort).
 
-<!-- ## Inputs
+## Inputs
 
-### `who-to-greet`
+### `repositories`
 
-**Required** The name of the person to greet. Default `"World"`.
+A file containing list of GitHub repository urls. Format is a single url (`https://github.com/<owner>/<repo>`) on each line. If set then action will run check on each url and generate an overview HTML page.
+If not set the action runs check on currently checked out repository (`.` directory).
+By default the `repositories` input is not set.
 
-## Outputs -->
+### `rules`
+
+**Required** A file or URL containing [ort rules](https://github.com/oss-review-toolkit/ort/blob/master/docs/file-rules-kts.md) to detect license violations. Default is [https://github.com/NLeSC/tortellini-on-rsd/raw/main/config/rules.kts](https://github.com/NLeSC/tortellini-on-rsd/raw/main/config/rules.kts).
+
+### `classifications`
+
+**Required** A file or URL containing classes for each license. For format see [ort documentation](https://github.com/oss-review-toolkit/ort/blob/master/docs/config-file-license-classifications-yml.md). Default is [https://github.com/NLeSC/tortellini-on-rsd/raw/main/config/rules.kts](https://github.com/NLeSC/tortellini-on-rsd/raw/main/config/rules.kts).
+
+### `curations`
+
+A file or URL containing curations correct invalid or missing package metadata and set the concluded license for packages. See [ort documentation](https://github.com/oss-review-toolkit/ort/blob/master/docs/config-file-curations-yml.md) for format. If not set then action will not use any curations.
+
+## Outputs
+
+No action outputs are defined for this actions.
+The action will write files to `.tortellini/out/` directory.
 
 ## Usage
-
-See [action.yml](action.yml)
 
 ### Own repository
 
