@@ -27,7 +27,7 @@ By default the `repositories` input is not set.
 
 ### `curations`
 
-A file or URL containing curations correct invalid or missing package metadata and set the concluded license for packages. See [ort documentation](https://github.com/oss-review-toolkit/ort/blob/master/docs/config-file-curations-yml.md) for format. Input is optional, if not given will not use any curations.
+A file or URL containing curations correct invalid or missing package metadata and set the concluded license for packages. See [ort documentation](https://github.com/oss-review-toolkit/ort/blob/master/docs/config-file-curations-yml.md) for format. If not set then action will not use any curations.
 
 ## Outputs
 
