@@ -144,6 +144,7 @@ The analyses will be stored in the directories
 1. On the new release page, for `Tag version` use `v` and the next version number, for example `v3`.
    See the [versioning documentation](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md)
    for more information.
+1. Make sure that usage workflows are using the new version tag and the examples in README.md are updated.
 
 Your action is now published! :rocket:
 
