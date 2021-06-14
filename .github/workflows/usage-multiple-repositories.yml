@@ -1,4 +1,4 @@
-name: usage
+name: usage on multiple repositories
 
 on: # run any PRs and main branch changes
   push:
@@ -10,17 +10,7 @@ on: # run any PRs and main branch changes
   workflow_dispatch:
 
 jobs:
-  current-repository:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: tortellini-tools/action@main
-      - uses: actions/upload-artifact@v2
-        with:
-          name: tortellini-result
-          path: .tortellini/out
-
-  multiple-repositories:
+  tortellini:
     runs-on: ubuntu-latest
     steps:
       - name: Create list of GitHub urls to perform check on
