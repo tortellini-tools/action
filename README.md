@@ -23,7 +23,7 @@ By default the `repositories` input is not set.
 
 ### `classifications`
 
-**Required** A file or URL containing classes for each license. For format see [ort documentation](https://github.com/oss-review-toolkit/ort/blob/master/docs/config-file-license-classifications-yml.md). Default is [https://github.com/NLeSC/tortellini-on-rsd/raw/main/config/rules.kts](https://github.com/NLeSC/tortellini-on-rsd/raw/main/config/rules.kts).
+**Required** A file or URL containing classes for each license. For format see [ort documentation](https://github.com/oss-review-toolkit/ort/blob/master/docs/config-file-license-classifications-yml.md). Default is [https://github.com/NLeSC/tortellini-on-rsd/raw/main/config/license-classifications.yml](https://github.com/NLeSC/tortellini-on-rsd/raw/main/config/license-classifications.yml).
 
 ### `curations`
 
