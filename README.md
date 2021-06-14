@@ -35,8 +35,6 @@ However the action will write files to `.tortellini/out/` directory.
 
 ## Usage
 
-See [action.yml](action.yml)
-
 ### Own repository
 
 ```yaml
