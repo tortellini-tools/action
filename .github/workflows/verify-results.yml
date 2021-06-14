@@ -32,7 +32,7 @@ jobs:
           curl -L https://github.com/oss-review-toolkit/ort/raw/master/examples/curations.yml > conf/curations.yml
           git clone https://github.com/fair-software/howfairis .ort/in/fair-software/howfairis
           mkdir .ort/out
-          docker run --rm -v $PWD/.ort/in/fair-software/howfairis:/project -v $PWD/.ort/out:/out philipssoftware/ort:2021-05-23 analyze -i /project -o /out
+          docker run --rm -v $PWD/.ort/in/fair-software/howfairis:/project -v $PWD/.ort/out:/out philipssoftware/ort:2021-05-23 analyze -i /project -o /out || true
           docker run --rm -v $PWD/.ort/in/fair-software/howfairis:/project -v $PWD/.ort/out:/out -v $PWD/conf:/conf philipssoftware/ort:2021-05-23 evaluate \
           --package-curations-file /conf/curations.yml --rules-file /conf/rules.kts --license-classifications-file /conf/license-classifications.yml \
           -i /out/analyzer-result.yml -o /out || true
