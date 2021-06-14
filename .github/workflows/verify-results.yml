@@ -35,6 +35,7 @@ jobs:
           docker run --rm -v $PWD/.ort/in/fair-software/howfairis:/project -v $PWD/.ort/out:/out philipssoftware/ort:2021-05-23 analyze -i /project -o /out || true
           ls -l .ort/out/analyzer-result.yml
           docker run --rm -v $PWD/.ort/in/fair-software/howfairis:/project -v $PWD/.ort/out:/out -v $PWD/conf:/conf philipssoftware/ort:2021-05-23 evaluate \
+          --rules-file /conf/rules.kts \
           -i /out/analyzer-result.yml -o /out || true
           ls -l .ort/out/evaluation-result.yml
           # --package-curations-file /conf/curations.yml --rules-file /conf/rules.kts --license-classifications-file /conf/license-classifications.yml
