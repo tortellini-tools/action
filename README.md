@@ -40,7 +40,7 @@ jobs:
 ```
 
 Tortellini action will generate `.tortellini/out/scan-report-web-app.html` file.
-The HTML file can be downloaded from the [workflow page](https://github.com/actions/upload-artifact#where-does-the-upload-go) by using the GitHubs upload-artifact action.
+The HTML file can be downloaded from the workflow page (see the documentation of the [`Upload a Build Artifact` GitHub action](https://github.com/actions/upload-artifact#where-does-the-upload-go)). After unzipping the `scan-report-web-app.html` can be viewed in a web browser.
 
 ### Multiple repositories
 
@@ -53,7 +53,8 @@ jobs:
     tortellini:
         runs-on: ubuntu-latest
         steps:
-            - run: |
+            - name: Create list of GitHub urls to perform check on
+              run: |
                   echo 'https://github.com/tortellini-tools/action' > urls.txt
                   echo 'https://github.com/fair-software/howfairis' >> urls.txt
             - uses: tortellini-tools/action@main
@@ -66,9 +67,8 @@ jobs:
 ```
 
 Tortellini action will generate `.tortellini/out/index.html` file and `.tortellini/out/<GitHub user or organization>/<GitHub repository>/scan-report-web-app.html` files.
-The HTML files can be downloaded from [your workflow page](https://github.com/actions/upload-artifact#where-does-the-upload-go) by using GitHubs upload-artifact action.
 
-To view the HTML files directly you could upload the `.tortellini/out` folder to a web server like an AWS S3 bucket.
+The HTML files can be downloaded from the workflow page (see the documentation of the [`Upload a Build Artifact` GitHub action](https://github.com/actions/upload-artifact#where-does-the-upload-go)). After unzipping the `index.html` can be viewed in a web browser.
 
 ## Developer documentation
 
