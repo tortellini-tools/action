@@ -5,7 +5,7 @@ This [action](https://docs.github.com/en/actions/creating-actions/creating-a-jav
 and makes use of the
 [Github @actions packages](https://github.com/actions/toolkit/blob/master/README.md#packages)
 
-The underlining design can be found in <DESIGN.md>.
+The underlining design can be found in [DESIGN.md](DESIGN.md).
 
 ## Requirements
 
