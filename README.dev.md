@@ -138,7 +138,7 @@ The analyses will be stored in the directories
     $ git push origin main
     ```
 
-1. Next, check if the top three actions on the [action page](https://github.com/tortellini-tools/action/actions?query=branch%3Amain+workflow%3Atortellini+event%3Apush) are green.
+1. Next, check if the workflows of the lastest commit on the main branch are green on the [action page](https://github.com/tortellini-tools/action/actions?query=branch%3Amain).
 1. Create a release on the Github page via
    [Create a new release](https://github.com/tortellini-tools/action/releases/new).
 1. On the new release page, for `Tag version` use `v` and the next version number, for example `v3`.
