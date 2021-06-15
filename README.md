@@ -3,6 +3,9 @@
   <a href="https://github.com/tortellini-tools/action/actions"><img alt="linting-action status" src="https://github.com/tortellini-tools/action/workflows/linting/badge.svg"></a>
   <a href="https://github.com/tortellini-tools/action/actions/workflows/usage-current-repository.yml"><img alt="tortellini-action status" src="https://github.com/tortellini-tools/action/actions/workflows/usage-current-repository.yml/badge.svg"></a>
   <a href="https://github.com/tortellini-tools/action/actions/workflows/usage-multiple-repositories.yml"><img alt="tortellini-action status" src="https://github.com/tortellini-tools/action/actions/workflows/usage-multiple-repositories.yml/badge.svg"></a>
+  <a href="https://doi.org/10.5281/zenodo.4956072"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.4956072.svg" alt="DOI"></a>
+  <a href="https://www.research-software.nl/software/tortellini-github-action">
+  <img src="https://img.shields.io/badge/rsd-tortellini-00a3e3.svg" alt="Research Software Directory"></a>
 </p>
 
 # Tortellini GitHub Action
