@@ -24,7 +24,8 @@ jobs:
 
       - run: ls -l .tortellini/out/fair-software/howfairis/gl-license-scanning-report.json
      
-      - run: |
+      - name: ort anlysis
+        run: |
           docker run philipssoftware/ort:2021-05-23
           mkdir -p conf
           curl -L https://raw.githubusercontent.com/NLeSC/tortellini-on-rsd/main/config/rules.kts > conf/rules.kts
@@ -42,6 +43,8 @@ jobs:
           -o /out || true
           ls -l .ort/out/gl-license-scanning-report.json .tortellini/out/fair-software/howfairis/gl-license-scanning-report.json
 
+      - name: check results
+        run: |
           if [ -z "`diff .ort/out/gl-license-scanning-report.json .tortellini/out/fair-software/howfairis/gl-license-scanning-report.json`"]
           then
           echo Report is exactly like expected
