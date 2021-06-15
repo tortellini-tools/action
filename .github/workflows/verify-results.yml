@@ -1,0 +1,63 @@
+name: verify-results
+
+on: # run any PRs and main branch changes
+  pull_request:
+  push:
+    branches:
+      - main
+      - 'releases/*'
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+
+  verifyresults:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - run: echo 'https://github.com/fair-software/howfairis' > urls.txt
+      - name: generate license report with tortellini
+        uses: tortellini-tools/action@main
+        with:
+          repositories: urls.txt
+     
+      - name: generate license report with ort
+        run: |
+          docker pull philipssoftware/ort:2021-05-23
+          mkdir -p conf
+          curl -L https://raw.githubusercontent.com/NLeSC/tortellini-on-rsd/main/config/rules.kts > conf/rules.kts
+          curl -L https://raw.githubusercontent.com/NLeSC/tortellini-on-rsd/main/config/license-classifications.yml > conf/license-classifications.yml
+          curl -L https://raw.githubusercontent.com/NLeSC/tortellini-on-rsd/main/config/curations.yml > conf/curations.yml
+          git clone https://github.com/fair-software/howfairis .ort/in/fair-software/howfairis
+          mkdir .ort/out
+          docker run --rm -v $PWD/.ort/in/fair-software/howfairis:/project -v $PWD/.ort/out:/out philipssoftware/ort:2021-05-23 analyze -i /project -o /out || true
+          ls -l .ort/out/analyzer-result.yml
+          docker run --rm -v $PWD/.ort/in/fair-software/howfairis:/project -v $PWD/.ort/out:/out -v $PWD/conf:/conf philipssoftware/ort:2021-05-23 evaluate \
+          --package-curations-file /conf/curations.yml --rules-file /conf/rules.kts --license-classifications-file /conf/license-classifications.yml \
+          -i /out/analyzer-result.yml -o /out || true
+          ls -l .ort/out/evaluation-result.yml
+          docker run --rm -v $PWD/.ort/in/fair-software/howfairis:/project -v $PWD/.ort/out:/out philipssoftware/ort:2021-05-23 report -f GitLabLicenseModel -i /out/evaluation-result.yml \
+          -o /out || true
+         
+      - name: compare license reports from tortellini and ort
+        run: |
+          ls -l .ort/out/gl-license-scanning-report.json .tortellini/out/fair-software/howfairis/gl-license-scanning-report.json
+          if [ -z "`diff .ort/out/gl-license-scanning-report.json .tortellini/out/fair-software/howfairis/gl-license-scanning-report.json`"]
+          then
+          echo Report is exactly like expected
+          exit 0
+          else
+          echo Report is different from expected
+          exit 1
+          fi
+
+      - run: tree -a -I '.git' -L 5 ./
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: verify-results
+          path: |
+            .ort/out/gl-license-scanning-report.json
+            .tortellini/out/fair-software/howfairis/gl-license-scanning-report.json
