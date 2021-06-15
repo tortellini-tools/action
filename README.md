@@ -55,7 +55,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v2
-            - uses: tortellini-tools/action@main
+            - uses: tortellini-tools/action@v3
             - uses: actions/upload-artifact@v2
               with:
                   name: tortellini-result
@@ -80,7 +80,7 @@ jobs:
               run: |
                   echo 'https://github.com/tortellini-tools/action' > urls.txt
                   echo 'https://github.com/fair-software/howfairis' >> urls.txt
-            - uses: tortellini-tools/action@main
+            - uses: tortellini-tools/action@v3
               with:
                   repositories: urls.txt
             - uses: actions/upload-artifact@v2
