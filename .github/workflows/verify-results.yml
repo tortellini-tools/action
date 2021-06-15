@@ -18,15 +18,14 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: echo 'https://github.com/fair-software/howfairis' > urls.txt
-      - uses: tortellini-tools/action@main
+      - name: generate license report with tortellini
+        uses: tortellini-tools/action@main
         with:
           repositories: urls.txt
-
-      - run: ls -l .tortellini/out/fair-software/howfairis/gl-license-scanning-report.json
      
-      - name: ort anlysis
+      - name: generate license report with ort
         run: |
-          docker run philipssoftware/ort:2021-05-23
+          docker pull philipssoftware/ort:2021-05-23
           mkdir -p conf
           curl -L https://raw.githubusercontent.com/NLeSC/tortellini-on-rsd/main/config/rules.kts > conf/rules.kts
           curl -L https://raw.githubusercontent.com/NLeSC/tortellini-on-rsd/main/config/license-classifications.yml > conf/license-classifications.yml
@@ -41,10 +40,10 @@ jobs:
           ls -l .ort/out/evaluation-result.yml
           docker run --rm -v $PWD/.ort/in/fair-software/howfairis:/project -v $PWD/.ort/out:/out philipssoftware/ort:2021-05-23 report -f GitLabLicenseModel -i /out/evaluation-result.yml \
           -o /out || true
-          ls -l .ort/out/gl-license-scanning-report.json .tortellini/out/fair-software/howfairis/gl-license-scanning-report.json
-
-      - name: check results
+         
+      - name: compare license reports from tortellini and ort
         run: |
+          ls -l .ort/out/gl-license-scanning-report.json .tortellini/out/fair-software/howfairis/gl-license-scanning-report.json
           if [ -z "`diff .ort/out/gl-license-scanning-report.json .tortellini/out/fair-software/howfairis/gl-license-scanning-report.json`"]
           then
           echo Report is exactly like expected
