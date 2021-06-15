@@ -23,7 +23,7 @@ authors:
     given-names: Erik
     orcid: "https://orcid.org/0000-0002-8431-081X"
 cff-version: "1.1.0"
-date-released: 2021-06-01
+date-released: 2021-06-15
 keywords: 
   - "software license"
   - ort
@@ -33,5 +33,5 @@ license: "Apache-2.0"
 message: "If you use this software, please cite it using these metadata."
 repository-code: "https://github.com/tortellini-tools/action"
 title: tortellini
-version: v2
+version: v3
 ...
