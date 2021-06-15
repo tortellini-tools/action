@@ -21,7 +21,7 @@
             "orcid": "0000-0002-8431-081X"
         }
     ],
-    "description": "GitHub Action to check  software dependency licence issues using ort.",
+    "description": "GitHub action to check whether any licensing issues exist for given software.",
     "keywords": [
         "software license",
         "ort",
