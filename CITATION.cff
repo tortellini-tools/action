@@ -1,6 +1,6 @@
 # YAML 1.2
 ---
-abstract: "GitHub Action to check  software dependency licence issues using ort."
+abstract: "GitHub action to check whether any licensing issues exist for given software."
 authors: 
   -
     affiliation: "Netherlands eScience Center"
