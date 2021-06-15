@@ -151,5 +151,5 @@ Your action is now published! :rocket:
 Check if the new version has been published on the [Github Marketplace](https://github.com/marketplace/actions/tortellini-action).
 
 You can now validate the action by going to
-[this workflow](https://github.com/tortellini-tools/action/actions/workflows/usage-current-repository.yml) and [this workflow]([this workflow](https://github.com/tortellini-tools/action/actions/workflows/usage-multiple-repositories.yml))
+[this workflow](https://github.com/tortellini-tools/action/actions/workflows/usage-current-repository.yml) and [this workflow](https://github.com/tortellini-tools/action/actions/workflows/usage-multiple-repositories.yml)
 and then clicking on the button `Run workflow`.
